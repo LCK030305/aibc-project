@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-05-28T08:25:11.162210+00:00",
+  "source_records": 307,
+  "total_chunks": 2147,
+  "by_section": {
+    "tagline": 307,
+    "highlights": 307,
+    "about": 307,
+    "who": 307,
+    "apply": 307,
+    "help": 217,
+    "whole": 307,
+    "expect": 88
+  },
+  "by_kind": {
+    "scheme": 1531,
+    "service": 616
+  },
+  "char_stats": {
+    "min": 14,
+    "max": 5132,
+    "mean": 524,
+    "median": 238
+  },
+  "output_file": "data\\chunks\\chunks.jsonl"
+}

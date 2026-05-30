@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.ipynb_checkpoints/
+
+# Scraped corpus is big and reproducible from scraper.py
+# Comment these out if you want to commit the corpus
+# data/raw/
+# samples/
+
+# Large personal demo assets — too big for GitHub free tier (>50 MB warning,
+# >100 MB hard block). Stored on disk but not versioned in git.
+# Use Git LFS if you want to track these later.
+*.mp4
+*.mov
+*.avi
+Capstone 1 of 2/*video*

@@ -1,0 +1,1038 @@
+<!DOCTYPE html><html lang="en" data-react-helmet="lang"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#FFFFFF">
+    <meta name="google-site-verification" content="olxuneupJM7523bi5laouepmUw7gbP1b6JRmj19Qm48">
+
+    <meta property="og:title" content="SupportGoWhere">
+    <meta property="og:image" content="https://supportgowhere.life.gov.sg/logo512.png">
+    <meta property="og:description" content="Find support schemes and services for individuals and families in Singapore with ease.">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="120x120" href="/touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/touch-icon-167x167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/touch-icon-180x180.png">
+    <link rel="stylesheet" type="text/css" href="https://assets.life.gov.sg/react-design-system/v3/css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://assets.life.gov.sg/react-design-system/v3/css/libre-franklin.css">
+    <link rel="manifest" href="/manifest.json">
+    <title>SupportGoWhere</title>
+
+    <script async="" src="https://assets.wogaa.sg/snowplow/3.13.1/sp.js"></script><script src="https://assets.wogaa.sg/scripts/wogaa.js"></script><script async="" src="https://assets.wogaa.sg/scripts/wogaa.js?url=https%3A%2F%2Fsupportgowhere.life.gov.sg%2F"></script>
+    <script src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js"></script>
+
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=MOCKID"></script>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "MOCKID");
+    </script>
+    <script type="module" crossorigin="" src="/static/index-72375ba3.js"></script>
+    <link rel="stylesheet" href="/static/index-990aab3b.css">
+  <style type="text/css">.transform-component-module_wrapper__SPB86 {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  overflow: hidden;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  margin: 0;
+  padding: 0;
+}
+.transform-component-module_content__FBWxo {
+  display: flex;
+  flex-wrap: wrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+  transform-origin: 0% 0%;
+}
+.transform-component-module_content__FBWxo img {
+  pointer-events: none;
+}
+</style><style type="text/css" id="lifesg-ds-masthead-stylesheet-day">:root {
+  /* Primitive - Product Primary Color */
+  --sgds-product-primary-100: #f4f2fe;
+  --sgds-product-primary-200: #e1dbfb;
+  --sgds-product-primary-300: #c8bdf7;
+  --sgds-product-primary-400: #a999f3;
+  --sgds-product-primary-500: #8a72ef;
+  --sgds-product-primary-600: #6b4feb;
+  --sgds-product-primary-700: #523abc;
+  --sgds-product-primary-800: #3c2b8a;
+  --sgds-product-primary-900: #2a1e61;
+
+  /* Primitive - Purple Color */
+  --sgds-purple-100: #fbf0fe;
+  --sgds-purple-200: #f2d6fc;
+  --sgds-purple-300: #e6adf9;
+  --sgds-purple-400: #d983f6;
+  --sgds-purple-500: #c94cf2;
+  --sgds-purple-600: #ac1cdb;
+  --sgds-purple-700: #8516a9;
+  --sgds-purple-800: #641180;
+  --sgds-purple-900: #460c5a;
+
+  /* Primitive - Cyan Color */
+  --sgds-cyan-100: #DBf9fd;
+  --sgds-cyan-200: #94edfa;
+  --sgds-cyan-300: #24d5ee;
+  --sgds-cyan-400: #1fb5ca;
+  --sgds-cyan-500: #1993a4;
+  --sgds-cyan-600: #147583;
+  --sgds-cyan-700: #0f5a65;
+  --sgds-cyan-800: #0b434b;
+  --sgds-cyan-900: #082e34;
+
+  /* Primitive - Green Color */
+  --sgds-green-100: #e3f9ed;
+  --sgds-green-200: #b1edcb;
+  --sgds-green-300: #62db96;
+  --sgds-green-400: #16bd5e;
+  --sgds-green-500: #129a4d;
+  --sgds-green-600: #0e7c3d;
+  --sgds-green-700: #0b5e2f;
+  --sgds-green-800: #084523;
+  --sgds-green-900: #063119;
+
+  /* Primitive - Blue Color */
+  --sgds-blue-100: #ecf5fe;
+  --sgds-blue-200: #c8e2fb;
+  --sgds-blue-300: #96c7f7;
+  --sgds-blue-400: #60aaf4;
+  --sgds-blue-500: #1e87ef;
+  --sgds-blue-600: #0269d0;
+  --sgds-blue-700: #0151a0;
+  --sgds-blue-800: #013c77;
+  --sgds-blue-900: #012a54;
+
+  /* Primitive - Yellow Color */
+  --sgds-yellow-100: #fef4cb;
+  --sgds-yellow-200: #fcde63;
+  --sgds-yellow-300: #e5bf29;
+  --sgds-yellow-400: #c2a223;
+  --sgds-yellow-500: #9d841c;
+  --sgds-yellow-600: #7e6917;
+  --sgds-yellow-700: #605111;
+  --sgds-yellow-800: #483c0d;
+  --sgds-yellow-900: #322909;
+
+  /* Primitive - Red Color */
+  --sgds-red-100: #fcf1f1;
+  --sgds-red-200: #f8d7d7;
+  --sgds-red-300: #f1b2b2;
+  --sgds-red-400: #e98b8b;
+  --sgds-red-500: #e05959;
+  --sgds-red-600: #cf2323;
+  --sgds-red-700: #a11b1b;
+  --sgds-red-800: #791414;
+  --sgds-red-900: #550e0e;
+
+  /* Primitive - Gray Color */
+  --sgds-gray-000: #ffffff;
+  --sgds-gray-100: #f3f3f3;
+  --sgds-gray-200: #dfdfdf;
+  --sgds-gray-300: #c6c6c6;
+  --sgds-gray-400: #a5a5a5;
+  --sgds-gray-500: #868686;
+  --sgds-gray-600: #6b6b6b;
+  --sgds-gray-700: #525252;
+  --sgds-gray-800: #3b3b3b;
+  --sgds-gray-900: #2a2a2a;
+  --sgds-gray-1000: #1a1a1a;
+  --sgds-gray-1100: #0e0e0e;
+
+  /* Primitive - Border Width */
+  --sgds-border-width-0: 0px;
+  --sgds-border-width-1: 1px;
+  --sgds-border-width-2: 2px;
+  --sgds-border-width-3: 3px;
+  --sgds-border-width-4: 4px;
+  --sgds-form-border-width-default: var(--sgds-border-width-1);
+  --sgds-form-border-width-thick: var(--sgds-border-width-2);
+
+  /* Primitive - Border Radius */
+  --sgds-border-radius-none: 0px;
+  --sgds-border-radius-xs: 2px;
+  --sgds-border-radius-sm: 4px;
+  --sgds-border-radius-md: 8px;
+  --sgds-border-radius-lg: 12px;
+  --sgds-border-radius-xl: 16px;
+  --sgds-border-radius-2-xl: 24px;
+  --sgds-border-radius-full: 999px;
+  --sgds-form-border-radius-none: var(--sgds-border-radius-none);
+  --sgds-form-border-radius-xs: var(--sgds-border-radius-xs);
+  --sgds-form-border-radius-sm: var(--sgds-border-radius-sm);
+  --sgds-form-border-radius-md: var(--sgds-border-radius-md);
+  --sgds-form-border-radius-full: var(--sgds-border-radius-full);
+
+  /* Primitive - Breakpoint */
+  --sgds-breakpoint-xs: var(--sgds-dimension-320);
+  --sgds-breakpoint-sm: var(--sgds-dimension-512);
+  --sgds-breakpoint-md: var(--sgds-dimension-768);
+  --sgds-breakpoint-lg: var(--sgds-dimension-1024);
+  --sgds-breakpoint-xl: var(--sgds-dimension-1280);
+  --sgds-breakpoint-2-xl: var(--sgds-dimension-1440);
+
+  /* Primitive - Font Family */
+  --sgds-font-family-brand: "Inter", system-ui, sans-serif;
+
+  /* Primitive - Font Weight */
+  --sgds-font-weight-light: 300;
+  --sgds-font-weight-regular: 400;
+  --sgds-font-weight-semibold: 600;
+  --sgds-font-weight-bold: 700;
+
+  /* Primitive - Font Size */
+  --sgds-font-size-1: 0.875rem;
+  --sgds-font-size-2: 1rem;
+  --sgds-font-size-3: 1.25rem;
+  --sgds-font-size-4: 1.5rem;
+  --sgds-font-size-5: 1.75rem;
+  --sgds-font-size-6: 2rem;
+  --sgds-font-size-7: 2.5rem;
+  --sgds-font-size-8: 3rem;
+  --sgds-font-size-9: 3.5rem;
+
+  /* Primitive - Icon Size */
+  --sgds-icon-size-sm: 1rem;
+  --sgds-icon-size-md: 1.25rem;
+  --sgds-icon-size-lg: 1.5rem;
+  --sgds-icon-size-xl: 2rem;
+  --sgds-icon-size-2-xl: 3rem;
+  --sgds-icon-size-3-xl: 4rem;
+
+  /* Primitive - Letter Spacing */
+  --sgds-letter-spacing-tighter: -1px;
+  --sgds-letter-spacing-tight: -0.4px;
+  --sgds-letter-spacing-normal: 0px;
+  --sgds-letter-spacing-wide: 1px;
+  --sgds-letter-spacing-wider: 2px;
+
+  /* Primitive - Line Height */
+  --sgds-line-height-body: 1.5;
+  --sgds-line-height-heading: 1.2;
+  --sgds-line-height-min: 20px;
+
+  /* Primitive - Opacity */
+  --sgds-opacity-0: 0;
+  --sgds-opacity-5: 0.05;
+  --sgds-opacity-10: 0.1;
+  --sgds-opacity-20: 0.2;
+  --sgds-opacity-30: 0.3;
+  --sgds-opacity-40: 0.4;
+  --sgds-opacity-50: 0.5;
+  --sgds-opacity-60: 0.6;
+  --sgds-opacity-70: 0.7;
+  --sgds-opacity-80: 0.8;
+  --sgds-opacity-90: 0.9;
+  --sgds-opacity-100: 1;
+
+  /* Primitive - Paragraph Spacing */
+  --sgds-paragraph-spacing-none: 0;
+  --sgds-paragraph-spacing-sm: 0.5rem;
+  --sgds-paragraph-spacing-md: 1rem;
+  --sgds-paragraph-spacing-lg: 1.5rem;
+  --sgds-paragraph-spacing-xl: 2rem;
+
+  /* Primitive - Spacer */
+  --sgds-spacer-0: 0rem;
+  --sgds-spacer-1: 0.125rem;
+  --sgds-spacer-2: 0.25rem;
+  --sgds-spacer-3: 0.5rem;
+  --sgds-spacer-4: 0.75rem;
+  --sgds-spacer-5: 1rem;
+  --sgds-spacer-6: 1.25rem;
+  --sgds-spacer-7: 1.5rem;
+  --sgds-spacer-8: 2rem;
+  --sgds-spacer-9: 3rem;
+  --sgds-spacer-10: 4rem;
+  --sgds-spacer-11: 6rem;
+  --sgds-spacer-12: 8rem;
+
+  /* Primitive - Dimension */
+  --sgds-dimension-0: 0px;
+  --sgds-dimension-1: 1px;
+  --sgds-dimension-2: 2px;
+  --sgds-dimension-4: 4px;
+  --sgds-dimension-8: 8px;
+  --sgds-dimension-12: 12px;
+  --sgds-dimension-16: 16px;
+  --sgds-dimension-20: 20px;
+  --sgds-dimension-24: 24px;
+  --sgds-dimension-32: 32px;
+  --sgds-dimension-40: 40px;
+  --sgds-dimension-48: 48px;
+  --sgds-dimension-52: 52px;
+  --sgds-dimension-56: 56px;
+  --sgds-dimension-60: 60px;
+  --sgds-dimension-64: 64px;
+  --sgds-dimension-72: 72px;
+  --sgds-dimension-76: 76px;
+  --sgds-dimension-80: 80px;
+  --sgds-dimension-88: 88px;
+  --sgds-dimension-96: 96px;
+  --sgds-dimension-112: 112px;
+  --sgds-dimension-120: 120px;
+  --sgds-dimension-128: 128px;
+  --sgds-dimension-132: 132px;
+  --sgds-dimension-136: 136px;
+  --sgds-dimension-144: 144px;
+  --sgds-dimension-168: 168px;
+  --sgds-dimension-192: 192px;
+  --sgds-dimension-224: 224px;
+  --sgds-dimension-256: 256px;
+  --sgds-dimension-280: 280px;
+  --sgds-dimension-288: 288px;
+  --sgds-dimension-320: 320px;
+  --sgds-dimension-328: 328px;
+  --sgds-dimension-340: 340px;
+  --sgds-dimension-384: 384px;
+  --sgds-dimension-480: 480px;
+  --sgds-dimension-512: 512px;
+  --sgds-dimension-688: 688px;
+  --sgds-dimension-768: 768px;
+  --sgds-dimension-1024: 1024px;
+  --sgds-dimension-1280: 1280px;
+  --sgds-dimension-1440: 1440px;
+
+  /* Semantic - Padding */
+  --sgds-padding-none: var(--sgds-spacer-0);
+  --sgds-padding-3-xs: var(--sgds-spacer-1);
+  --sgds-padding-2-xs: var(--sgds-spacer-2);
+  --sgds-padding-xs: var(--sgds-spacer-3);
+  --sgds-padding-sm: var(--sgds-spacer-4);
+  --sgds-padding-md: var(--sgds-spacer-5);
+  --sgds-padding-lg: var(--sgds-spacer-6);
+  --sgds-padding-xl: var(--sgds-spacer-7);
+  --sgds-padding-2-xl: var(--sgds-spacer-8);
+  --sgds-padding-3-xl: var(--sgds-spacer-9);
+  --sgds-padding-4-xl: var(--sgds-spacer-10);
+  --sgds-padding-5-xl: var(--sgds-spacer-11);
+  --sgds-form-padding-x: var(--sgds-padding-md);
+  --sgds-form-padding-y: var(--sgds-padding-sm);
+  --sgds-form-padding-inline-xs: var(--sgds-padding-3-xs);
+  --sgds-form-padding-inline-sm: var(--sgds-padding-2-xs);
+  --sgds-form-padding-inline-md: var(--sgds-padding-xs);
+  --sgds-form-padding-inline-lg: var(--sgds-padding-sm);
+  --sgds-form-padding-inline-xl: var(--sgds-padding-md);
+
+  --sgds-margin-none: var(--sgds-spacer-0);
+  --sgds-margin-3-xs: var(--sgds-spacer-3);
+  --sgds-margin-2-xs: var(--sgds-spacer-5);
+  --sgds-margin-xs: var(--sgds-spacer-6);
+  --sgds-margin-sm: var(--sgds-spacer-7);
+  --sgds-margin-md: var(--sgds-spacer-8);
+  --sgds-margin-lg: var(--sgds-spacer-9);
+  --sgds-margin-xl: var(--sgds-spacer-10);
+  --sgds-margin-2-xl: var(--sgds-spacer-11);
+  --sgds-margin-3-xl: var(--sgds-spacer-12);
+
+  --sgds-gap-none: var(--sgds-spacer-0);
+  --sgds-gap-2-xs: var(--sgds-spacer-2);
+  --sgds-gap-xs: var(--sgds-spacer-3);
+  --sgds-gap-sm: var(--sgds-spacer-4);
+  --sgds-gap-md: var(--sgds-spacer-5);
+  --sgds-gap-lg: var(--sgds-spacer-6);
+  --sgds-gap-xl: var(--sgds-spacer-7);
+  --sgds-gap-2-xl: var(--sgds-spacer-8);
+  --sgds-form-gap-sm: var(--sgds-gap-2-xs);
+  --sgds-form-gap-md: var(--sgds-gap-xs);
+  --sgds-form-gap-lg: var(--sgds-gap-sm);
+  --sgds-form-gap-xl: var(--sgds-gap-md);
+  --sgds-form-gap-2-xl: var(--sgds-gap-xl);
+
+  --sgds-form-height-3-xs: var(--sgds-dimension-12);
+  --sgds-form-height-2-xs: var(--sgds-dimension-16);
+  --sgds-form-height-xs: var(--sgds-dimension-20);
+  --sgds-form-height-sm: var(--sgds-dimension-24);
+  --sgds-form-height-md: var(--sgds-dimension-32);
+  --sgds-form-height-lg: var(--sgds-dimension-40);
+  --sgds-form-height-xl: var(--sgds-dimension-48);
+  --sgds-form-height-2-xl: var(--sgds-dimension-56);
+
+  --sgds-form-width-3-xs: var(--sgds-dimension-12);
+  --sgds-form-width-2-xs: var(--sgds-dimension-16);
+  --sgds-form-width-xs: var(--sgds-dimension-24);
+  --sgds-form-width-sm: var(--sgds-dimension-32);
+  --sgds-form-width-md: var(--sgds-dimension-40);
+  --sgds-form-width-lg: var(--sgds-dimension-48);
+  --sgds-form-width-xl: var(--sgds-dimension-56);
+  --sgds-form-width-2-xl: var(--sgds-dimension-64);
+  --sgds-form-width-3-xl: var(--sgds-dimension-72);
+  --sgds-form-width-4-xl: var(--sgds-dimension-80);
+
+  /* Semantic - Form Icon Size */
+  --sgds-form-icon-size-sm: var(--sgds-icon-size-sm);
+  --sgds-form-icon-size-md: var(--sgds-icon-size-md);
+  --sgds-form-icon-size-lg: var(--sgds-icon-size-lg);
+
+  --sgds-box-shadow-focus: 0px 0px 0px 4px var(--sgds-blue-400);
+  --sgds-form-box-shadow-focus: var(--sgds-box-shadow-focus);
+
+  /* Masthead and Mainnav Max Width and Padding */
+  --sgds-mainnav-max-width: 1440px;
+  --sgds-mainnav-padding-x: 2rem;
+  --sgds-mainnav-mobile-padding-x: 1.25rem;
+}
+:root {
+  color-scheme: only light;
+
+  /* Semantic - Default Colors */
+  --sgds-bg-default: var(--sgds-gray-000);
+  --sgds-bg-alternate: var(--sgds-gray-100);
+  --sgds-bg-fixed-light: var(--sgds-gray-000);
+  --sgds-bg-fixed-dark: var(--sgds-gray-1100);
+  --sgds-bg-overlay: oklch(from var(--sgds-gray-1100) l c h / 0.4);
+  --sgds-bg-translucent: oklch(from var(--sgds-gray-1100) l c h / 0.1);
+  --sgds-bg-translucent-subtle: oklch(from var(--sgds-gray-1100) l c h / 0.05);
+  --sgds-bg-transparent: transparent;
+  --sgds-surface-default: var(--sgds-gray-000);
+  --sgds-surface-raised: var(--sgds-gray-100);
+  --sgds-surface-inverse: var(--sgds-gray-900);
+  --sgds-surface-fixed-light: var(--sgds-gray-000);
+  --sgds-surface-fixed-dark: var(--sgds-gray-900);
+  --sgds-color-default: var(--sgds-gray-1000);
+  --sgds-color-subtle: var(--sgds-gray-700);
+  --sgds-color-muted: var(--sgds-gray-300);
+  --sgds-color-inverse: var(--sgds-gray-100);
+  --sgds-color-fixed-light: var(--sgds-gray-100);
+  --sgds-color-fixed-dark: var(--sgds-gray-1000);
+  --sgds-color-transparent: transparent;
+  --sgds-border-color-default: var(--sgds-gray-500);
+  --sgds-border-color-emphasis: var(--sgds-gray-800);
+  --sgds-border-color-muted: var(--sgds-gray-200);
+  --sgds-border-color-fixed-light: var(--sgds-gray-000);
+  --sgds-border-color-fixed-dark: var(--sgds-gray-1000);
+  --sgds-border-color-translucent: oklch(from var(--sgds-gray-1100) l c h / 0.05);
+  --sgds-border-color-transparent: transparent;
+
+  /* Semantic - Primary Colors */
+  --sgds-primary-bg-default: var(--sgds-product-primary-700);
+  --sgds-primary-bg-muted: var(--sgds-product-primary-100);
+  --sgds-primary-bg-translucent: oklch(from var(--sgds-product-primary-700) l c h / 0.1);
+  --sgds-primary-surface-default: var(--sgds-product-primary-700);
+  --sgds-primary-surface-emphasis: var(--sgds-product-primary-800);
+  --sgds-primary-surface-muted: var(--sgds-product-primary-100);
+  --sgds-primary-surface-translucent: oklch(from var(--sgds-product-primary-700) l c h / 0.1);
+  --sgds-primary-color-default: var(--sgds-product-primary-600);
+  --sgds-primary-color-emphasis: var(--sgds-product-primary-700);
+  --sgds-primary-color-fixed-light: var(--sgds-product-primary-400);
+  --sgds-primary-color-fixed-dark: var(--sgds-product-primary-700);
+  --sgds-primary-border-color-default: var(--sgds-product-primary-500);
+  --sgds-primary-border-color-emphasis: var(--sgds-product-primary-700);
+  --sgds-primary-border-color-muted: var(--sgds-product-primary-300);
+
+  /* Semantic - Success Colors */
+  --sgds-success-bg-default: var(--sgds-green-700);
+  --sgds-success-bg-muted: var(--sgds-green-100);
+  --sgds-success-surface-default: var(--sgds-green-700);
+  --sgds-success-surface-emphasis: var(--sgds-green-800);
+  --sgds-success-surface-muted: var(--sgds-green-100);
+  --sgds-success-color-default: var(--sgds-green-600);
+  --sgds-success-color-emphasis: var(--sgds-green-700);
+  --sgds-success-color-fixed-light: var(--sgds-green-400);
+  --sgds-success-color-fixed-dark: var(--sgds-green-700);
+  --sgds-success-border-color-default: var(--sgds-green-500);
+  --sgds-success-border-color-emphasis: var(--sgds-green-700);
+  --sgds-success-border-color-muted: var(--sgds-green-300);
+
+  /* Semantic - Danger Colors */
+  --sgds-danger-bg-default: var(--sgds-red-700);
+  --sgds-danger-bg-muted: var(--sgds-red-100);
+  --sgds-danger-surface-default: var(--sgds-red-700);
+  --sgds-danger-surface-emphasis: var(--sgds-red-800);
+  --sgds-danger-surface-muted: var(--sgds-red-100);
+  --sgds-danger-color-default: var(--sgds-red-600);
+  --sgds-danger-color-emphasis: var(--sgds-red-700);
+  --sgds-danger-color-fixed-light: var(--sgds-red-400);
+  --sgds-danger-color-fixed-dark: var(--sgds-red-700);
+  --sgds-danger-border-color-default: var(--sgds-red-500);
+  --sgds-danger-border-color-emphasis: var(--sgds-red-700);
+  --sgds-danger-border-color-muted: var(--sgds-red-300);
+
+  /* Semantic - Warning Colors */
+  --sgds-warning-bg-default: var(--sgds-yellow-200);
+  --sgds-warning-bg-muted: var(--sgds-yellow-100);
+  --sgds-warning-surface-default: var(--sgds-yellow-200);
+  --sgds-warning-surface-emphasis: var(--sgds-yellow-700);
+  --sgds-warning-surface-muted: var(--sgds-yellow-100);
+  --sgds-warning-color-default: var(--sgds-yellow-600);
+  --sgds-warning-color-emphasis: var(--sgds-yellow-700);
+  --sgds-warning-color-fixed-light: var(--sgds-yellow-300);
+  --sgds-warning-color-fixed-dark: var(--sgds-yellow-700);
+  --sgds-warning-border-color-default: var(--sgds-yellow-500);
+  --sgds-warning-border-color-emphasis: var(--sgds-yellow-700);
+  --sgds-warning-border-color-muted: var(--sgds-yellow-300);
+
+  /* Semantic - Neutral Colors */
+  --sgds-neutral-bg-default: var(--sgds-gray-700);
+  --sgds-neutral-bg-muted: var(--sgds-gray-100);
+  --sgds-neutral-surface-default: var(--sgds-gray-800);
+  --sgds-neutral-surface-emphasis: var(--sgds-gray-800);
+  --sgds-neutral-surface-muted: var(--sgds-gray-100);
+  --sgds-neutral-color-default: var(--sgds-gray-600);
+  --sgds-neutral-color-emphasis: var(--sgds-gray-700);
+  --sgds-neutral-color-fixed-light: var(--sgds-gray-400);
+  --sgds-neutral-color-fixed-dark: var(--sgds-gray-700);
+  --sgds-neutral-border-color-default: var(--sgds-gray-500);
+  --sgds-neutral-border-color-emphasis: var(--sgds-gray-700);
+  --sgds-neutral-border-color-subtle: var(--sgds-gray-300);
+
+  /* Semantic - Display Colors */
+  --sgds-display-color-default: var(--sgds-gray-1000);
+  --sgds-display-color-subtle: var(--sgds-gray-800);
+
+  /* Semantic - Header Colors */
+  --sgds-header-color-default: var(--sgds-gray-900);
+  --sgds-header-color-subtle: var(--sgds-gray-800);
+
+  /* Semantic - Body Colors */
+  --sgds-body-color-default: var(--sgds-gray-1000);
+  --sgds-body-color-subtle: var(--sgds-gray-700);
+
+  /* Semantic - Label Colors */
+  --sgds-label-color-default: var(--sgds-gray-900);
+  --sgds-label-color-subtle: var(--sgds-gray-700);
+
+  /* Semantic - Caption Color */
+  --sgds-caption-color: var(--sgds-gray-600);
+
+  /* Semantic - Link Color */
+  --sgds-link-color-default: var(--sgds-blue-600);
+  --sgds-link-color-emphasis: var(--sgds-blue-700);
+
+  /* Semantic - Form Color */
+  --sgds-form-surface-default: var(--sgds-gray-000);
+  --sgds-form-surface-emphasis: var(--sgds-gray-700);
+  --sgds-form-surface-subtle: var(--sgds-gray-400);
+  --sgds-form-surface-muted: var(--sgds-gray-200);
+  --sgds-form-surface-inverse: var(--sgds-gray-900);
+  --sgds-form-surface-fixed-light: var(--sgds-gray-000);
+  --sgds-form-surface-fixed-dark: var(--sgds-gray-900);
+  --sgds-form-color-default: var(--sgds-gray-900);
+  --sgds-form-color-subtle: var(--sgds-gray-700);
+  --sgds-form-color-muted: var(--sgds-gray-300);
+  --sgds-form-color-inverse: var(--sgds-gray-100);
+  --sgds-form-color-fixed-light: var(--sgds-gray-000);
+  --sgds-form-color-fixed-dark: var(--sgds-gray-1100);
+  --sgds-form-primary-surface-default: var(--sgds-product-primary-700);
+  --sgds-form-primary-surface-emphasis: var(--sgds-product-primary-800);
+  --sgds-form-primary-color-default: var(--sgds-product-primary-700);
+  --sgds-form-success-surface-default: var(--sgds-green-700);
+  --sgds-form-success-color-default: var(--sgds-green-600);
+  --sgds-form-success-border-color-default: var(--sgds-green-500);
+  --sgds-form-danger-surface-default: var(--sgds-red-700);
+  --sgds-form-danger-color-default: var(--sgds-red-600);
+  --sgds-form-danger-border-color-default: var(--sgds-red-500);
+}
+</style><style type="text/css" id="lifesg-ds-masthead-stylesheet-night">:root {
+  /* Primitive - Product Primary Color */
+  --sgds-product-primary-100: #f4f2fe;
+  --sgds-product-primary-200: #e1dbfb;
+  --sgds-product-primary-300: #c8bdf7;
+  --sgds-product-primary-400: #a999f3;
+  --sgds-product-primary-500: #8a72ef;
+  --sgds-product-primary-600: #6b4feb;
+  --sgds-product-primary-700: #523abc;
+  --sgds-product-primary-800: #3c2b8a;
+  --sgds-product-primary-900: #2a1e61;
+
+  /* Primitive - Purple Color */
+  --sgds-purple-100: #fbf0fe;
+  --sgds-purple-200: #f2d6fc;
+  --sgds-purple-300: #e6adf9;
+  --sgds-purple-400: #d983f6;
+  --sgds-purple-500: #c94cf2;
+  --sgds-purple-600: #ac1cdb;
+  --sgds-purple-700: #8516a9;
+  --sgds-purple-800: #641180;
+  --sgds-purple-900: #460c5a;
+
+  /* Primitive - Cyan Color */
+  --sgds-cyan-100: #DBf9fd;
+  --sgds-cyan-200: #94edfa;
+  --sgds-cyan-300: #24d5ee;
+  --sgds-cyan-400: #1fb5ca;
+  --sgds-cyan-500: #1993a4;
+  --sgds-cyan-600: #147583;
+  --sgds-cyan-700: #0f5a65;
+  --sgds-cyan-800: #0b434b;
+  --sgds-cyan-900: #082e34;
+
+  /* Primitive - Green Color */
+  --sgds-green-100: #e3f9ed;
+  --sgds-green-200: #b1edcb;
+  --sgds-green-300: #62db96;
+  --sgds-green-400: #16bd5e;
+  --sgds-green-500: #129a4d;
+  --sgds-green-600: #0e7c3d;
+  --sgds-green-700: #0b5e2f;
+  --sgds-green-800: #084523;
+  --sgds-green-900: #063119;
+
+  /* Primitive - Blue Color */
+  --sgds-blue-100: #ecf5fe;
+  --sgds-blue-200: #c8e2fb;
+  --sgds-blue-300: #96c7f7;
+  --sgds-blue-400: #60aaf4;
+  --sgds-blue-500: #1e87ef;
+  --sgds-blue-600: #0269d0;
+  --sgds-blue-700: #0151a0;
+  --sgds-blue-800: #013c77;
+  --sgds-blue-900: #012a54;
+
+  /* Primitive - Yellow Color */
+  --sgds-yellow-100: #fef4cb;
+  --sgds-yellow-200: #fcde63;
+  --sgds-yellow-300: #e5bf29;
+  --sgds-yellow-400: #c2a223;
+  --sgds-yellow-500: #9d841c;
+  --sgds-yellow-600: #7e6917;
+  --sgds-yellow-700: #605111;
+  --sgds-yellow-800: #483c0d;
+  --sgds-yellow-900: #322909;
+
+  /* Primitive - Red Color */
+  --sgds-red-100: #fcf1f1;
+  --sgds-red-200: #f8d7d7;
+  --sgds-red-300: #f1b2b2;
+  --sgds-red-400: #e98b8b;
+  --sgds-red-500: #e05959;
+  --sgds-red-600: #cf2323;
+  --sgds-red-700: #a11b1b;
+  --sgds-red-800: #791414;
+  --sgds-red-900: #550e0e;
+
+  /* Primitive - Gray Color */
+  --sgds-gray-000: #ffffff;
+  --sgds-gray-100: #f3f3f3;
+  --sgds-gray-200: #dfdfdf;
+  --sgds-gray-300: #c6c6c6;
+  --sgds-gray-400: #a5a5a5;
+  --sgds-gray-500: #868686;
+  --sgds-gray-600: #6b6b6b;
+  --sgds-gray-700: #525252;
+  --sgds-gray-800: #3b3b3b;
+  --sgds-gray-900: #2a2a2a;
+  --sgds-gray-1000: #1a1a1a;
+  --sgds-gray-1100: #0e0e0e;
+
+  /* Primitive - Border Width */
+  --sgds-border-width-0: 0px;
+  --sgds-border-width-1: 1px;
+  --sgds-border-width-2: 2px;
+  --sgds-border-width-3: 3px;
+  --sgds-border-width-4: 4px;
+  --sgds-form-border-width-default: var(--sgds-border-width-1);
+  --sgds-form-border-width-thick: var(--sgds-border-width-2);
+
+  /* Primitive - Border Radius */
+  --sgds-border-radius-none: 0px;
+  --sgds-border-radius-xs: 2px;
+  --sgds-border-radius-sm: 4px;
+  --sgds-border-radius-md: 8px;
+  --sgds-border-radius-lg: 12px;
+  --sgds-border-radius-xl: 16px;
+  --sgds-border-radius-2-xl: 24px;
+  --sgds-border-radius-full: 999px;
+  --sgds-form-border-radius-none: var(--sgds-border-radius-none);
+  --sgds-form-border-radius-xs: var(--sgds-border-radius-xs);
+  --sgds-form-border-radius-sm: var(--sgds-border-radius-sm);
+  --sgds-form-border-radius-md: var(--sgds-border-radius-md);
+  --sgds-form-border-radius-full: var(--sgds-border-radius-full);
+
+  /* Primitive - Breakpoint */
+  --sgds-breakpoint-xs: var(--sgds-dimension-320);
+  --sgds-breakpoint-sm: var(--sgds-dimension-512);
+  --sgds-breakpoint-md: var(--sgds-dimension-768);
+  --sgds-breakpoint-lg: var(--sgds-dimension-1024);
+  --sgds-breakpoint-xl: var(--sgds-dimension-1280);
+  --sgds-breakpoint-2-xl: var(--sgds-dimension-1440);
+
+  /* Primitive - Font Family */
+  --sgds-font-family-brand: "Inter", system-ui, sans-serif;
+
+  /* Primitive - Font Weight */
+  --sgds-font-weight-light: 300;
+  --sgds-font-weight-regular: 400;
+  --sgds-font-weight-semibold: 600;
+  --sgds-font-weight-bold: 700;
+
+  /* Primitive - Font Size */
+  --sgds-font-size-1: 0.875rem;
+  --sgds-font-size-2: 1rem;
+  --sgds-font-size-3: 1.25rem;
+  --sgds-font-size-4: 1.5rem;
+  --sgds-font-size-5: 1.75rem;
+  --sgds-font-size-6: 2rem;
+  --sgds-font-size-7: 2.5rem;
+  --sgds-font-size-8: 3rem;
+  --sgds-font-size-9: 3.5rem;
+
+  /* Primitive - Icon Size */
+  --sgds-icon-size-sm: 1rem;
+  --sgds-icon-size-md: 1.25rem;
+  --sgds-icon-size-lg: 1.5rem;
+  --sgds-icon-size-xl: 2rem;
+  --sgds-icon-size-2-xl: 3rem;
+  --sgds-icon-size-3-xl: 4rem;
+
+  /* Primitive - Letter Spacing */
+  --sgds-letter-spacing-tighter: -1px;
+  --sgds-letter-spacing-tight: -0.4px;
+  --sgds-letter-spacing-normal: 0px;
+  --sgds-letter-spacing-wide: 1px;
+  --sgds-letter-spacing-wider: 2px;
+
+  /* Primitive - Line Height */
+  --sgds-line-height-body: 1.5;
+  --sgds-line-height-heading: 1.2;
+  --sgds-line-height-min: 20px;
+
+  /* Primitive - Opacity */
+  --sgds-opacity-0: 0;
+  --sgds-opacity-5: 0.05;
+  --sgds-opacity-10: 0.1;
+  --sgds-opacity-20: 0.2;
+  --sgds-opacity-30: 0.3;
+  --sgds-opacity-40: 0.4;
+  --sgds-opacity-50: 0.5;
+  --sgds-opacity-60: 0.6;
+  --sgds-opacity-70: 0.7;
+  --sgds-opacity-80: 0.8;
+  --sgds-opacity-90: 0.9;
+  --sgds-opacity-100: 1;
+
+  /* Primitive - Paragraph Spacing */
+  --sgds-paragraph-spacing-none: 0;
+  --sgds-paragraph-spacing-sm: 0.5rem;
+  --sgds-paragraph-spacing-md: 1rem;
+  --sgds-paragraph-spacing-lg: 1.5rem;
+  --sgds-paragraph-spacing-xl: 2rem;
+
+  /* Primitive - Spacer */
+  --sgds-spacer-0: 0rem;
+  --sgds-spacer-1: 0.125rem;
+  --sgds-spacer-2: 0.25rem;
+  --sgds-spacer-3: 0.5rem;
+  --sgds-spacer-4: 0.75rem;
+  --sgds-spacer-5: 1rem;
+  --sgds-spacer-6: 1.25rem;
+  --sgds-spacer-7: 1.5rem;
+  --sgds-spacer-8: 2rem;
+  --sgds-spacer-9: 3rem;
+  --sgds-spacer-10: 4rem;
+  --sgds-spacer-11: 6rem;
+  --sgds-spacer-12: 8rem;
+
+  /* Primitive - Dimension */
+  --sgds-dimension-0: 0px;
+  --sgds-dimension-1: 1px;
+  --sgds-dimension-2: 2px;
+  --sgds-dimension-4: 4px;
+  --sgds-dimension-8: 8px;
+  --sgds-dimension-12: 12px;
+  --sgds-dimension-16: 16px;
+  --sgds-dimension-20: 20px;
+  --sgds-dimension-24: 24px;
+  --sgds-dimension-32: 32px;
+  --sgds-dimension-40: 40px;
+  --sgds-dimension-48: 48px;
+  --sgds-dimension-52: 52px;
+  --sgds-dimension-56: 56px;
+  --sgds-dimension-60: 60px;
+  --sgds-dimension-64: 64px;
+  --sgds-dimension-72: 72px;
+  --sgds-dimension-76: 76px;
+  --sgds-dimension-80: 80px;
+  --sgds-dimension-88: 88px;
+  --sgds-dimension-96: 96px;
+  --sgds-dimension-112: 112px;
+  --sgds-dimension-120: 120px;
+  --sgds-dimension-128: 128px;
+  --sgds-dimension-132: 132px;
+  --sgds-dimension-136: 136px;
+  --sgds-dimension-144: 144px;
+  --sgds-dimension-168: 168px;
+  --sgds-dimension-192: 192px;
+  --sgds-dimension-224: 224px;
+  --sgds-dimension-256: 256px;
+  --sgds-dimension-280: 280px;
+  --sgds-dimension-288: 288px;
+  --sgds-dimension-320: 320px;
+  --sgds-dimension-328: 328px;
+  --sgds-dimension-340: 340px;
+  --sgds-dimension-384: 384px;
+  --sgds-dimension-480: 480px;
+  --sgds-dimension-512: 512px;
+  --sgds-dimension-688: 688px;
+  --sgds-dimension-768: 768px;
+  --sgds-dimension-1024: 1024px;
+  --sgds-dimension-1280: 1280px;
+  --sgds-dimension-1440: 1440px;
+
+  /* Semantic - Padding */
+  --sgds-padding-none: var(--sgds-spacer-0);
+  --sgds-padding-3-xs: var(--sgds-spacer-1);
+  --sgds-padding-2-xs: var(--sgds-spacer-2);
+  --sgds-padding-xs: var(--sgds-spacer-3);
+  --sgds-padding-sm: var(--sgds-spacer-4);
+  --sgds-padding-md: var(--sgds-spacer-5);
+  --sgds-padding-lg: var(--sgds-spacer-6);
+  --sgds-padding-xl: var(--sgds-spacer-7);
+  --sgds-padding-2-xl: var(--sgds-spacer-8);
+  --sgds-padding-3-xl: var(--sgds-spacer-9);
+  --sgds-padding-4-xl: var(--sgds-spacer-10);
+  --sgds-padding-5-xl: var(--sgds-spacer-11);
+  --sgds-form-padding-x: var(--sgds-padding-md);
+  --sgds-form-padding-y: var(--sgds-padding-sm);
+  --sgds-form-padding-inline-xs: var(--sgds-padding-3-xs);
+  --sgds-form-padding-inline-sm: var(--sgds-padding-2-xs);
+  --sgds-form-padding-inline-md: var(--sgds-padding-xs);
+  --sgds-form-padding-inline-lg: var(--sgds-padding-sm);
+  --sgds-form-padding-inline-xl: var(--sgds-padding-md);
+
+  --sgds-margin-none: var(--sgds-spacer-0);
+  --sgds-margin-3-xs: var(--sgds-spacer-3);
+  --sgds-margin-2-xs: var(--sgds-spacer-5);
+  --sgds-margin-xs: var(--sgds-spacer-6);
+  --sgds-margin-sm: var(--sgds-spacer-7);
+  --sgds-margin-md: var(--sgds-spacer-8);
+  --sgds-margin-lg: var(--sgds-spacer-9);
+  --sgds-margin-xl: var(--sgds-spacer-10);
+  --sgds-margin-2-xl: var(--sgds-spacer-11);
+  --sgds-margin-3-xl: var(--sgds-spacer-12);
+
+  --sgds-gap-none: var(--sgds-spacer-0);
+  --sgds-gap-2-xs: var(--sgds-spacer-2);
+  --sgds-gap-xs: var(--sgds-spacer-3);
+  --sgds-gap-sm: var(--sgds-spacer-4);
+  --sgds-gap-md: var(--sgds-spacer-5);
+  --sgds-gap-lg: var(--sgds-spacer-6);
+  --sgds-gap-xl: var(--sgds-spacer-7);
+  --sgds-gap-2-xl: var(--sgds-spacer-8);
+  --sgds-form-gap-sm: var(--sgds-gap-2-xs);
+  --sgds-form-gap-md: var(--sgds-gap-xs);
+  --sgds-form-gap-lg: var(--sgds-gap-sm);
+  --sgds-form-gap-xl: var(--sgds-gap-md);
+  --sgds-form-gap-2-xl: var(--sgds-gap-xl);
+
+  --sgds-form-height-3-xs: var(--sgds-dimension-12);
+  --sgds-form-height-2-xs: var(--sgds-dimension-16);
+  --sgds-form-height-xs: var(--sgds-dimension-20);
+  --sgds-form-height-sm: var(--sgds-dimension-24);
+  --sgds-form-height-md: var(--sgds-dimension-32);
+  --sgds-form-height-lg: var(--sgds-dimension-40);
+  --sgds-form-height-xl: var(--sgds-dimension-48);
+  --sgds-form-height-2-xl: var(--sgds-dimension-56);
+
+  --sgds-form-width-3-xs: var(--sgds-dimension-12);
+  --sgds-form-width-2-xs: var(--sgds-dimension-16);
+  --sgds-form-width-xs: var(--sgds-dimension-24);
+  --sgds-form-width-sm: var(--sgds-dimension-32);
+  --sgds-form-width-md: var(--sgds-dimension-40);
+  --sgds-form-width-lg: var(--sgds-dimension-48);
+  --sgds-form-width-xl: var(--sgds-dimension-56);
+  --sgds-form-width-2-xl: var(--sgds-dimension-64);
+  --sgds-form-width-3-xl: var(--sgds-dimension-72);
+  --sgds-form-width-4-xl: var(--sgds-dimension-80);
+
+  /* Semantic - Form Icon Size */
+  --sgds-form-icon-size-sm: var(--sgds-icon-size-sm);
+  --sgds-form-icon-size-md: var(--sgds-icon-size-md);
+  --sgds-form-icon-size-lg: var(--sgds-icon-size-lg);
+
+  --sgds-box-shadow-focus: 0px 0px 0px 4px var(--sgds-blue-400);
+  --sgds-form-box-shadow-focus: var(--sgds-box-shadow-focus);
+
+  /* Masthead and Mainnav Max Width and Padding */
+  --sgds-mainnav-max-width: 1440px;
+  --sgds-mainnav-padding-x: 2rem;
+  --sgds-mainnav-mobile-padding-x: 1.25rem;
+}
+:root.sgds-night-theme {
+  color-scheme: only dark;
+
+  /* Semantic - Default Colors */
+  --sgds-bg-default: var(--sgds-gray-1100);
+  --sgds-bg-alternate: var(--sgds-gray-1000);
+  --sgds-bg-fixed-light: var(--sgds-gray-000);
+  --sgds-bg-fixed-dark: var(--sgds-gray-1100);
+  --sgds-bg-overlay: oklch(from var(--sgds-gray-1100) l c h / 0.4);
+  --sgds-bg-translucent: oklch(from var(--sgds-gray-000) l c h / 0.1);
+  --sgds-bg-translucent-subtle: oklch(from var(--sgds-gray-000) l c h / 0.1);
+  --sgds-bg-transparent: transparent;
+  --sgds-surface-default: var(--sgds-gray-900);
+  --sgds-surface-raised: var(--sgds-gray-800);
+  --sgds-surface-inverse: var(--sgds-gray-000);
+  --sgds-surface-fixed-light: var(--sgds-gray-000);
+  --sgds-surface-fixed-dark: var(--sgds-gray-900);
+  --sgds-color-default: var(--sgds-gray-100);
+  --sgds-color-subtle: var(--sgds-gray-400);
+  --sgds-color-muted: var(--sgds-gray-800);
+  --sgds-color-inverse: var(--sgds-gray-1000);
+  --sgds-color-fixed-light: var(--sgds-gray-100);
+  --sgds-color-fixed-dark: var(--sgds-gray-1000);
+  --sgds-color-transparent: transparent;
+  --sgds-border-color-default: var(--sgds-gray-500);
+  --sgds-border-color-emphasis: var(--sgds-gray-200);
+  --sgds-border-color-muted: var(--sgds-gray-800);
+  --sgds-border-color-fixed-light: var(--sgds-gray-000);
+  --sgds-border-color-fixed-dark: var(--sgds-gray-1000);
+  --sgds-border-color-translucent: oklch(from var(--sgds-gray-000) l c h / 0.1);
+  --sgds-border-color-transparent: transparent;
+
+  /* Semantic - Primary Colors */
+  --sgds-primary-bg-default: var(--sgds-product-primary-600);
+  --sgds-primary-bg-muted: var(--sgds-product-primary-200);
+  --sgds-primary-bg-translucent: oklch(from var(--sgds-product-primary-100) l c h / 0.05);
+  --sgds-primary-surface-default: var(--sgds-product-primary-600);
+  --sgds-primary-surface-emphasis: var(--sgds-product-primary-700);
+  --sgds-primary-surface-muted: var(--sgds-product-primary-200);
+  --sgds-primary-surface-translucent: oklch(from var(--sgds-product-primary-100) l c h / 0.1);
+  --sgds-primary-color-default: var(--sgds-product-primary-400);
+  --sgds-primary-color-emphasis: var(--sgds-product-primary-300);
+  --sgds-primary-color-fixed-light: var(--sgds-product-primary-400);
+  --sgds-primary-color-fixed-dark: var(--sgds-product-primary-700);
+  --sgds-primary-border-color-default: var(--sgds-product-primary-500);
+  --sgds-primary-border-color-emphasis: var(--sgds-product-primary-300);
+  --sgds-primary-border-color-muted: var(--sgds-product-primary-700);
+
+  /* Semantic - Success Colors */
+  --sgds-success-bg-default: var(--sgds-green-600);
+  --sgds-success-bg-muted: var(--sgds-green-200);
+  --sgds-success-surface-default: var(--sgds-green-600);
+  --sgds-success-surface-emphasis: var(--sgds-green-700);
+  --sgds-success-surface-muted: var(--sgds-green-200);
+  --sgds-success-color-default: var(--sgds-green-400);
+  --sgds-success-color-emphasis: var(--sgds-green-300);
+  --sgds-success-color-fixed-light: var(--sgds-green-400);
+  --sgds-success-color-fixed-dark: var(--sgds-green-700);
+  --sgds-success-border-color-default: var(--sgds-green-500);
+  --sgds-success-border-color-emphasis: var(--sgds-green-300);
+  --sgds-success-border-color-muted: var(--sgds-green-700);
+
+  /* Semantic - Danger Colors */
+  --sgds-danger-bg-default: var(--sgds-red-600);
+  --sgds-danger-bg-muted: var(--sgds-red-200);
+  --sgds-danger-surface-default: var(--sgds-red-600);
+  --sgds-danger-surface-emphasis: var(--sgds-red-700);
+  --sgds-danger-surface-muted: var(--sgds-red-200);
+  --sgds-danger-color-default: var(--sgds-red-400);
+  --sgds-danger-color-emphasis: var(--sgds-red-300);
+  --sgds-danger-color-fixed-light: var(--sgds-red-400);
+  --sgds-danger-color-fixed-dark: var(--sgds-red-700);
+  --sgds-danger-border-color-default: var(--sgds-red-500);
+  --sgds-danger-border-color-emphasis: var(--sgds-red-300);
+  --sgds-danger-border-color-subtle: var(--sgds-red-700);
+
+  /* Semantic - Warning Colors */
+  --sgds-warning-bg-default: var(--sgds-yellow-300);
+  --sgds-warning-bg-muted: var(--sgds-yellow-200);
+  --sgds-warning-surface-default: var(--sgds-yellow-300);
+  --sgds-warning-surface-emphasis: var(--sgds-yellow-600);
+  --sgds-warning-surface-muted: var(--sgds-yellow-100);
+  --sgds-warning-color-default: var(--sgds-yellow-300);
+  --sgds-warning-color-emphasis: var(--sgds-yellow-200);
+  --sgds-warning-color-fixed-light: var(--sgds-yellow-300);
+  --sgds-warning-color-fixed-dark: var(--sgds-yellow-700);
+  --sgds-warning-border-color-default: var(--sgds-yellow-500);
+  --sgds-warning-border-color-emphasis: var(--sgds-yellow-300);
+  --sgds-warning-border-color-subtle: var(--sgds-yellow-700);
+
+  /* Semantic - Neutral Colors */
+  --sgds-neutral-bg-default: var(--sgds-gray-600);
+  --sgds-neutral-bg-muted: var(--sgds-gray-200);
+  --sgds-neutral-surface-default: var(--sgds-gray-700);
+  --sgds-neutral-surface-emphasis: var(--sgds-gray-700);
+  --sgds-neutral-surface-muted: var(--sgds-gray-200);
+  --sgds-neutral-color-default: var(--sgds-gray-400);
+  --sgds-neutral-color-emphasis: var(--sgds-gray-300);
+  --sgds-neutral-color-fixed-light: var(--sgds-gray-400);
+  --sgds-neutral-color-fixed-dark: var(--sgds-gray-700);
+  --sgds-neutral-border-color-default: var(--sgds-gray-500);
+  --sgds-neutral-border-color-emphasis: var(--sgds-gray-300);
+  --sgds-neutral-border-color-subtle: var(--sgds-gray-700);
+
+  /* Semantic - Display Colors */
+  --sgds-display-color-default: var(--sgds-gray-000);
+  --sgds-display-color-subtle: var(--sgds-gray-200);
+
+  /* Semantic - Header Colors */
+  --sgds-header-color-default: var(--sgds-gray-100);
+  --sgds-header-color-subtle: var(--sgds-gray-200);
+
+  /* Semantic - Body Colors */
+  --sgds-body-color-default: var(--sgds-gray-000);
+  --sgds-body-color-subtle: var(--sgds-gray-300);
+
+  /* Semantic - Label Colors */
+  --sgds-label-color-default: var(--sgds-gray-100);
+  --sgds-label-color-subtle: var(--sgds-gray-300);
+
+  /* Semantic - Caption Color */
+  --sgds-caption-color: var(--sgds-gray-300);
+
+  /* Semantic - Link Color */
+  --sgds-link-color-default: var(--sgds-blue-400);
+  --sgds-link-color-emphasis: var(--sgds-blue-300);
+
+  /* Semantic - Form Color */
+  --sgds-form-surface-default: var(--sgds-gray-900);
+  --sgds-form-surface-emphasis: var(--sgds-gray-200);
+  --sgds-form-surface-subtle: var(--sgds-gray-500);
+  --sgds-form-surface-muted: var(--sgds-gray-700);
+  --sgds-form-surface-inverse: var(--sgds-gray-000);
+  --sgds-form-surface-fixed-light: var(--sgds-gray-000);
+  --sgds-form-surface-fixed-dark: var(--sgds-gray-900);
+  --sgds-form-color-default: var(--sgds-gray-100);
+  --sgds-form-color-subtle: var(--sgds-gray-300);
+  --sgds-form-color-muted: var(--sgds-gray-700);
+  --sgds-form-color-inverse: var(--sgds-gray-900);
+  --sgds-form-color-fixed-light: var(--sgds-gray-000);
+  --sgds-form-color-fixed-dark: var(--sgds-gray-1100);
+  --sgds-form-primary-surface-default: var(--sgds-product-primary-600);
+  --sgds-form-primary-surface-emphasis: var(--sgds-product-primary-700);
+  --sgds-form-primary-color-default: var(--sgds-product-primary-400);
+  --sgds-form-success-surface-default: var(--sgds-green-600);
+  --sgds-form-success-color-default: var(--sgds-green-500);
+  --sgds-form-success-border-color-default: var(--sgds-green-500);
+  --sgds-form-danger-surface-default: var(--sgds-red-600);
+  --sgds-form-danger-color-default: var(--sgds-red-500);
+  --sgds-form-danger-border-color-default: var(--sgds-red-500);
+}
+</style><style data-styled="active" data-styled-version="5.3.11"></style><meta name="wogaa_rsid" content="wogaasupportgowhereprod"><link rel="modulepreload" as="script" crossorigin="" href="/static/DirectoryMain-fd638ed5.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/smoothscroll-9cfea706.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/TabList-b45de876.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/TextOrReactNode-d2a808da.js"><link rel="stylesheet" href="/static/TabList-1595d434.css"><link rel="modulepreload" as="script" crossorigin="" href="/static/Services-1116e4d0.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/QueryClientProvider-d467cbba.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/Masthead-49051c77.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/NoResultsListing-fcb2aa6f.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/index.esm-cf5da7a2.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/RichText-0d4f2a5d.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/FieldLabel-6c361838.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/debounce-d74e3e20.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/index-37839a24.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/useBookmark-e6def124.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/GenericBannerButton-0bbb33e4.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/cloneDeep-2f90ca3b.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/resolvers-1d6d88c2.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/Dropdown-6e45071e.js"><link rel="stylesheet" href="/static/DirectoryMain-f82fab9e.css"><link rel="modulepreload" as="script" crossorigin="" href="/static/index-c3b01f2b.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/index-72375ba3.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/FeaturedResources-0f577e12.js"><meta property="og:title" content="SupportGoWhere" data-react-helmet="true"><meta name="description" property="og:description" content="Find social and public support for individuals and families in Singapore with ease." data-react-helmet="true"><meta property="og:image:width" content="512" data-react-helmet="true"><meta property="og:image:height" content="512" data-react-helmet="true"><meta property="og:url" content="https://supportgowhere.life.gov.sg/" data-react-helmet="true"><style id="react-tooltip-core-styles" type="text/css">:root{--rt-color-white:#fff;--rt-color-dark:#222;--rt-color-success:#8dc572;--rt-color-error:#be6464;--rt-color-warning:#f0ad4e;--rt-color-info:#337ab7;--rt-opacity:0.9}.core-styles-module_tooltip__3vRRp{visibility:hidden;position:absolute;top:0;left:0;pointer-events:none;opacity:0;transition:opacity 0.3s ease-out;will-change:opacity,visibility}.core-styles-module_fixed__pcSol{position:fixed}.core-styles-module_arrow__cvMwQ{position:absolute;background:inherit}.core-styles-module_noArrow__xock6{display:none}.core-styles-module_clickable__ZuTTB{pointer-events:auto}.core-styles-module_show__Nt9eE{visibility:visible;opacity:var(--rt-opacity)}</style><style id="react-tooltip-base-styles" type="text/css">
+.styles-module_tooltip__mnnfp{padding:8px 16px;border-radius:3px;font-size:90%;width:max-content}.styles-module_arrow__K0L3T{width:8px;height:8px}[class*='react-tooltip__place-top']>.styles-module_arrow__K0L3T{transform:rotate(45deg)}[class*='react-tooltip__place-right']>.styles-module_arrow__K0L3T{transform:rotate(135deg)}[class*='react-tooltip__place-bottom']>.styles-module_arrow__K0L3T{transform:rotate(225deg)}[class*='react-tooltip__place-left']>.styles-module_arrow__K0L3T{transform:rotate(315deg)}.styles-module_dark__xNqje{background:var(--rt-color-dark);color:var(--rt-color-white)}.styles-module_light__Z6W-X{background-color:var(--rt-color-white);color:var(--rt-color-dark)}.styles-module_success__A2AKt{background-color:var(--rt-color-success);color:var(--rt-color-white)}.styles-module_warning__SCK0X{background-color:var(--rt-color-warning);color:var(--rt-color-white)}.styles-module_error__JvumD{background-color:var(--rt-color-error);color:var(--rt-color-white)}.styles-module_info__BWdHW{background-color:var(--rt-color-info);color:var(--rt-color-white)}</style><script async="" src="https://assets.wogaa.sg/scripts/wogaa.js?url=https%3A%2F%2Fsupportgowhere.life.gov.sg%2F%3Finw%3D1%26lso%3Dtrue"></script><script type="module" src="https://assets.wogaa.sg/sentiments/v2/sentiments.esm.js" async=""></script><script nomodule="" src="https://assets.wogaa.sg/sentiments/v2/sentiments.js" async=""></script></head>
+  <body>
+    <noscript><iframe
+        src="https://www.googletagmanager.com/ns.html?id=MOCKID"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"><div class="Toastify"></div><div class="PageWrapper-sc-lcsajk-1 cvdzrS"><div class="ContentArea-sc-lcsajk-0 lkkHRG"><header><div class="Wrapper-sc-1lw1rs7-0 ghUwIM print-hide"><div class="visually-hidden" aria-hidden="true"><div class="BannerWrapper-sc-gcgkle-0 jMxgU"><div class="ContentWrapper-sc-gcgkle-1 dKTflb"><div class="InfoWrapper-sc-gcgkle-2 khUQMX"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 32px; width: 32px; min-width: 32px; min-height: 32px;"><path d="M1.84449 11.5617C1.53824 11.8679 1.53824 12.3054 1.80074 12.5679L3.28824 14.0554C3.59449 14.3179 4.03199 14.3617 4.29449 14.0992C4.60074 13.7929 4.90699 13.5304 5.25699 13.3117L2.41324 11.0804C2.19449 11.2554 2.01949 11.3867 1.84449 11.5617ZM22.4507 19.5242L24.4632 17.5554C24.7257 17.2929 24.7257 16.8117 24.4195 16.5492C21.5757 14.0117 17.9007 12.9179 14.357 13.2679L10.7257 10.4679C16.2382 8.7617 22.407 9.9867 26.9132 14.0992C27.2195 14.3617 27.6132 14.3179 27.9195 14.0554L29.407 12.5679C29.6695 12.3054 29.6695 11.8679 29.3632 11.5617C23.3257 5.9617 14.6632 4.78045 7.44449 7.93045L3.59449 4.95545C3.28824 4.69295 2.85074 4.78045 2.63199 5.0867L1.75699 6.18045C1.49449 6.4867 1.58199 6.9242 1.88824 7.14295L27.6132 27.0492C27.9195 27.3117 28.357 27.2242 28.6195 26.9179L29.4507 25.8242C29.7132 25.518 29.6257 25.0805 29.3195 24.8617L22.4507 19.5242ZM6.78824 16.5492C6.48199 16.8117 6.48199 17.2929 6.74449 17.5554L8.27574 19.0429C8.49449 19.3054 8.93199 19.3054 9.19449 19.0867C9.80699 18.5617 10.4195 18.1679 11.1195 17.8179L8.10074 15.4992C7.66324 15.8492 7.22574 16.1554 6.78824 16.5492ZM12.8257 22.9804C12.8257 24.5554 14.0507 25.7804 15.6257 25.7804C16.982 25.7804 18.1632 24.7742 18.3382 23.4617L14.4882 20.4429C13.482 20.8804 12.8257 21.8429 12.8257 22.9804Z" fill="#D43328"></path></svg><div><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU" style="display: block;">No internet connection</span><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Connect to the internet and try again.</span></div></div></div></div></div><div class="BannerWrapper-sc-gcgkle-0 jOfdQG"><div class="ContentWrapper-sc-gcgkle-1 dKTflb"><div class="InfoWrapper-sc-gcgkle-2 khUQMX"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 32px; width: 32px; min-width: 32px; min-height: 32px;"><path d="M16 2C8.26613 2 2 8.32258 2 16C2 23.7339 8.26613 30 16 30C23.6774 30 30 23.7339 30 16C30 8.32258 23.6774 2 16 2ZM16 8.20968C17.2984 8.20968 18.371 9.28226 18.371 10.5806C18.371 11.9355 17.2984 12.9516 16 12.9516C14.6452 12.9516 13.629 11.9355 13.629 10.5806C13.629 9.28226 14.6452 8.20968 16 8.20968ZM19.1613 22.5484C19.1613 22.9435 18.8226 23.2258 18.4839 23.2258H13.5161C13.121 23.2258 12.8387 22.9435 12.8387 22.5484V21.1935C12.8387 20.8548 13.121 20.5161 13.5161 20.5161H14.1935V16.9032H13.5161C13.121 16.9032 12.8387 16.621 12.8387 16.2258V14.871C12.8387 14.5323 13.121 14.1935 13.5161 14.1935H17.129C17.4677 14.1935 17.8065 14.5323 17.8065 14.871V20.5161H18.4839C18.8226 20.5161 19.1613 20.8548 19.1613 21.1935V22.5484Z" fill="#DF2573"></path></svg><div><div><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Beware of impersonation scams</span></div><div><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Government officials will NEVER ask you to transfer money or disclose bank log-in details over a phone call. Call the 24/7 ScamShield Helpline at 1799 if you are unsure if something is a scam. For more information on how to protect yourself against scams, please visit the <a target="_blank" rel="noopener noreferrer" href="https://www.scamshield.gov.sg/i-want-protection-from-scams/learn-to-recognise-scams/government-officials-impersonation-scams/" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">ScamShield website</span><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="StyledExtLinkIcon-sc-q9n0ng-0 kXGesl"><path d="M17.5312 2L12.4375 2.03125C12.1875 2.03125 12 2.21875 12 2.46875V3.5C12 3.75 12.1875 3.96875 12.4375 3.96875L14.75 3.875L14.8125 3.9375L6.09375 12.6562C6.03125 12.7188 5.96875 12.8438 5.96875 12.9062C5.96875 13 6.03125 13.125 6.09375 13.1875L6.8125 13.9062C6.875 13.9688 7 14.0312 7.09375 14.0312C7.15625 14.0312 7.28125 13.9688 7.34375 13.9062L16.0625 5.1875L16.125 5.25L16.0312 7.5625C16.0312 7.8125 16.25 8 16.5 8H17.5312C17.7812 8 17.9688 7.8125 17.9688 7.5625L18 2.46875C18 2.21875 17.7812 2 17.5312 2ZM15.5 11H15C14.7188 11 14.5 11.25 14.5 11.5V16.3125C14.5 16.4375 14.4062 16.5 14.3125 16.5H3.6875C3.5625 16.5 3.5 16.4375 3.5 16.3125V5.6875C3.5 5.59375 3.5625 5.5 3.6875 5.5H8.5C8.75 5.5 9 5.28125 9 5V4.5C9 4.25 8.75 4 8.5 4H3.5C2.65625 4 2 4.6875 2 5.5V16.5C2 17.3438 2.65625 18 3.5 18H14.5C15.3125 18 16 17.3438 16 16.5V11.5C16 11.25 15.75 11 15.5 11Z" fill="currentColor"></path></svg></a>.</span></div></div></div><button type="button" aria-label="Close sitewide banner" class="StyledButton-sc-8h27dh-0 ckNRZP"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M26.668 5.33362L5.33385 26.6677" stroke="#4E4E4E" stroke-width="4" stroke-linecap="round"></path><path d="M26.668 26.6675L5.33385 5.33336" stroke="#4E4E4E" stroke-width="4" stroke-linecap="round"></path></svg></button></div></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV print-hide" style="background-color: rgb(240, 240, 240);"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><sgds-masthead></sgds-masthead></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV" style="background: rgb(255, 255, 255);"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj" style="padding: 0px;"><nav class="StyledNavBar-sc-qj96th-3 cBSnVA navbar navbar-expand-md navbar-light sgds"><span class="StyledNavBarBrand-sc-qj96th-1 dtmCri sgw"><div role="button" tabindex="0" class="StyledDiv-sc-58sp6l-2 hqkZkj"><img src="/static/logo-sgw-fbb000b6.png" alt="SupportGoWhere Logo" aria-label="SupportGoWhere Logo" class="StyledSGWLogoWithName-sc-qj96th-0 curbMg"></div></span><div class="SearchContainer-sc-qj96th-8 bktrCe"></div><div class="NavbarBackground-sc-qj96th-16 gkzEhh"></div><div class="DropdownContainer-sc-qj96th-10 kQkseS"><div class="StyledCollapse-sc-qj96th-14 eNdRVE navbar-collapse collapse" id="navbar-nav"><ul class="StyledNav-sc-qj96th-15 gSBlwQ navbar-nav navbar-nav-scroll"><li class="StyledNavDropdown-sc-qj96th-2 iEcGaj nav-item dropdown sgds"><a variant="outline-secondary" id="nav-dropdown1" aria-expanded="false" role="button" class="dropdown-toggle sgw" tabindex="0" href="#"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Support</span><i class="bi bi-chevron-down"></i></a></li><li class="StyledNavDropdown-sc-qj96th-2 iEcGaj nav-item dropdown sgds"><a variant="outline-secondary" id="nav-dropdown" aria-expanded="false" role="button" class="dropdown-toggle sgw" tabindex="0" href="#"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Resources &amp; Tools</span><i class="bi bi-chevron-down"></i></a></li></ul></div><div style="display: flex; gap: 32px;"><ul class="StyledNav-sc-qj96th-15 gSBlwQ navbar-nav navbar-nav-scroll"><li class="nav-item" style="display: flex;"><div class="SearchButtonWrapper-sc-qj96th-21 cZYYvb"><a aria-controls="navbar-search" href="/chat" class="StyledSearchLink-sc-qj96th-22 iGTDuV"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M2.03835 10.3443C2.45772 6.2093 6.19894 3.22791 10.3669 3.6505C11.0449 3.71925 11.6946 3.8748 12.3051 4.10402C12.7702 4.27881 13.0058 4.79667 12.8313 5.26183C12.6567 5.72686 12.1386 5.96325 11.6735 5.78917C11.2069 5.61397 10.7078 5.49412 10.1852 5.44113C6.97798 5.11598 4.14517 7.40809 3.82898 10.5259C3.51286 13.6438 5.82831 16.4585 9.03562 16.7837C11.3881 17.0221 13.5457 15.8493 14.6489 13.9735C14.9009 13.5451 15.4533 13.4017 15.8817 13.6536C16.3097 13.9057 16.4522 14.457 16.2005 14.8853C16.0367 15.1637 15.8538 15.4289 15.6567 15.6821L20.2692 20.2946C20.4557 20.4812 20.5492 20.6973 20.5493 20.9415C20.5493 21.1857 20.4583 21.3977 20.2751 21.5755C20.0973 21.7587 19.8853 21.8496 19.6411 21.8497C19.3968 21.8496 19.1807 21.7561 18.9942 21.5696L14.3876 16.963C12.8843 18.154 10.9236 18.7841 8.85398 18.5743C4.68598 18.1517 1.6191 14.4793 2.03835 10.3443Z" fill="#135CEA"></path><path d="M16.4712 3C16.634 3 16.7935 3.04984 16.927 3.14297C17.0602 3.23597 17.1614 3.36791 17.2176 3.52031L18.1739 6.10078L20.7544 7.05C20.9078 7.10587 21.0399 7.20868 21.1329 7.34297C21.2257 7.47721 21.2753 7.63678 21.2735 7.8C21.2745 7.96289 21.2248 8.12221 21.1317 8.25586C21.0384 8.38957 20.9054 8.49111 20.752 8.54648L18.1739 9.49922L17.2235 12.0797C17.1672 12.2321 17.0661 12.364 16.9329 12.457C16.7993 12.5502 16.6398 12.6 16.477 12.6C16.3144 12.6 16.1558 12.55 16.0223 12.457C15.8889 12.364 15.7868 12.2322 15.7305 12.0797L14.7743 9.49922L12.1938 8.55C12.0411 8.49377 11.9096 8.39163 11.8165 8.2582C11.7234 8.12482 11.6736 7.96613 11.6735 7.80352C11.6735 7.64072 11.7233 7.48118 11.8165 7.34766C11.9096 7.21426 12.0411 7.11207 12.1938 7.05586L14.7743 6.10078L15.7247 3.52031C15.781 3.36778 15.8831 3.23599 16.0165 3.14297C16.1499 3.05004 16.3085 3 16.4712 3Z" fill="#135CEA"></path></svg></a></div></li><li class="LoginWrapper-sc-qj96th-19 hMpsRY display-none-print nav-item"><button class="StyledTextButton-sc-alyw8n-0 cPPNHm LogInButton-sc-qj96th-20 krtbQR" type="button"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Log in</span></button></li></ul></div><div id="navbar-profile" class="ProfileDropdownWrapper-sc-792al6-3 iLRZMj"><div class="ProfileContent-sc-792al6-4 hzxlRL"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt">Welcome to SupportGoWhere!</span></div><hr class="Divider-sc-qj96th-9 iVicss"><div class="ProfileMenu-sc-792al6-5 gWSEwU"><a data-testid="my-applications-link" class="StyledReactLink-sc-q9n0ng-1 dNOWGC StyledMenuItem-sc-792al6-6 bflAiY" href="/my-applications"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">My Applications</span></a><div class="logout-button-container"><button class="StyledTextButton-sc-alyw8n-0 cPPNHm StyledTextButton-sc-792al6-7 leiIpc" type="button"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Log out</span></button></div></div></div></div></nav></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV" style="background-color: rgb(242, 242, 242); padding: 8px 0px;"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div class="Content-sc-69r0qo-0 elyHzP"><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Read this in:</span><div class="LanguageList-sc-69r0qo-1 cgLIWW"><button class="StyledTextButton-sc-alyw8n-0 cPPNHm selected" type="button" aria-current="true" disabled=""><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">English</span></button><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">|</span><button class="StyledTextButton-sc-alyw8n-0 cPPNHm" type="button" aria-current="false" style="color: rgb(18, 94, 236);"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">中文</span></button><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">|</span><button class="StyledTextButton-sc-alyw8n-0 cPPNHm" type="button" aria-current="false" style="color: rgb(18, 94, 236);"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Melayu</span></button><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">|</span><button class="StyledTextButton-sc-alyw8n-0 cPPNHm" type="button" aria-current="false" style="color: rgb(18, 94, 236);"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">தமிழ்</span></button></div></div></div></div></header><main><h1 class="visually-hidden">SupportGoWhere</h1><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV Container-sc-1ikirpw-0 jFkPou"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div class="ContentBounds-sc-1ikirpw-1 jcxsZs"><span class="StyledSpan-sc-1yqr1pc-0 dwkzwF Title-sc-1ikirpw-4 jA-Duqi">Find the support you need</span><div class="LifeSGInitiative-sc-1ikirpw-5 jnUoAz"><span class="StyledSpan-sc-1yqr1pc-0 jMDxMC">An initiative by</span><a target="_blank" rel="noopener noreferrer" href="https://www.life.gov.sg" data-testid="lifeSGLink" class="LifeSGLink-sc-1ikirpw-6 gEnech"><img src="/static/logo_lifesg-e883bdde.svg" alt="LifeSG logo" height="32" width="128" style="width: 48px;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 20px; width: 20px; min-width: 20px; min-height: 20px;"><path d="M17.5312 2L12.4375 2.03125C12.1875 2.03125 12 2.21875 12 2.46875V3.5C12 3.75 12.1875 3.96875 12.4375 3.96875L14.75 3.875L14.8125 3.9375L6.09375 12.6562C6.03125 12.7188 5.96875 12.8438 5.96875 12.9062C5.96875 13 6.03125 13.125 6.09375 13.1875L6.8125 13.9062C6.875 13.9688 7 14.0312 7.09375 14.0312C7.15625 14.0312 7.28125 13.9688 7.34375 13.9062L16.0625 5.1875L16.125 5.25L16.0312 7.5625C16.0312 7.8125 16.25 8 16.5 8H17.5312C17.7812 8 17.9688 7.8125 17.9688 7.5625L18 2.46875C18 2.21875 17.7812 2 17.5312 2ZM15.5 11H15C14.7188 11 14.5 11.25 14.5 11.5V16.3125C14.5 16.4375 14.4062 16.5 14.3125 16.5H3.6875C3.5625 16.5 3.5 16.4375 3.5 16.3125V5.6875C3.5 5.59375 3.5625 5.5 3.6875 5.5H8.5C8.75 5.5 9 5.28125 9 5V4.5C9 4.25 8.75 4 8.5 4H3.5C2.65625 4 2 4.6875 2 5.5V16.5C2 17.3438 2.65625 18 3.5 18H14.5C15.3125 18 16 17.3438 16 16.5V11.5C16 11.25 15.75 11 15.5 11Z" fill="#838383"></path></svg></a></div><div class="ChatWrapper-sc-dqpad7-0 kFXbUr"><form class="ChatForm-sc-dqpad7-1 dPoEkr"><textarea placeholder="Ask Chat.Gov.SG about any government service" maxlength="1024" class="Textarea-sc-dqpad7-2 gWOneH"></textarea><button disabled="" type="submit" aria-label="Submit message" class="SubmitIconButton-sc-dqpad7-3 jLUwok" style="cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M11.9999 20.0006C11.7167 20.0006 11.4707 19.8962 11.2619 19.6874C11.0539 19.4794 10.9499 19.2338 10.9499 18.9506V7.97538L6.20029 12.725C5.98349 12.9418 5.74149 13.0502 5.47429 13.0502C5.20789 13.0502 4.96629 12.9418 4.74949 12.725C4.53349 12.5082 4.42109 12.2666 4.41229 12.0002C4.40429 11.7338 4.50869 11.4922 4.72549 11.2754L11.2499 4.74978C11.3667 4.63298 11.4875 4.54978 11.6123 4.50018C11.7371 4.45058 11.8663 4.42578 11.9999 4.42578C12.1335 4.42578 12.2667 4.45058 12.3995 4.50018C12.5331 4.54978 12.6499 4.63298 12.7499 4.74978L19.2743 11.2754C19.4911 11.4922 19.5995 11.7338 19.5995 12.0002C19.5995 12.2666 19.4911 12.5082 19.2743 12.725C19.0583 12.9418 18.8127 13.0502 18.5375 13.0502C18.2623 13.0502 18.0163 12.9418 17.7995 12.725L13.0499 8.00058V18.9506C13.0499 19.2338 12.9459 19.4794 12.7379 19.6874C12.5291 19.8962 12.2831 20.0006 11.9999 20.0006Z" fill="white"></path></svg></button></form><div class="BetaWrapper-sc-dqpad7-4 gimsBa"><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr" style="color: rgb(131, 131, 131);">This chatbot is a Beta version that is still undergoing improvements. <a target="_blank" rel="noopener noreferrer" href="/learn-more-about-sgw-chatbot.pdf" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe" style="text-decoration: none;"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Learn more</span></a></span></div><div class="QuickReplyWrapper-sc-dqpad7-5 kpiMmg"><button class="Pill-sc-dqpad7-6 iKWsGW"><span class="StyledSpan-sc-1yqr1pc-0 jMDxMC">Any assistance for job loss?</span></button><button class="Pill-sc-dqpad7-6 iKWsGW"><span class="StyledSpan-sc-1yqr1pc-0 jMDxMC">When can I withdraw my CPF?</span></button><button class="Pill-sc-dqpad7-6 iKWsGW"><span class="StyledSpan-sc-1yqr1pc-0 jMDxMC">How do I apply for Child LifeSG credits?</span></button></div></div><img src="/static/masthead-left-f571ca86.svg" alt="Masthead Left Image" class="LeftImage-sc-1ikirpw-2 jGooMC"><img src="/static/masthead-right-1931562a.svg" alt="Masthead Right Image" class="RightImage-sc-1ikirpw-3 bZyDQ"></div></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV SectionContainer-sc-ipfcxq-0 StyledSectionContainer-sc-r1xi1s-0 jUZSOQ epbHCU"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><span class="StyledSpan-sc-1yqr1pc-0 jyUOry Title-sc-ipfcxq-1 deLJjH">Explore support by topic</span><div style="width: 100%; margin-bottom: 32px; margin-top: 8px;"><div class="GenericBannerButtonWrapper-sc-1uruy84-0 fHDUYf" style="background-color: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial;"><div class="LogoContentWrapper-sc-1uruy84-2 OHHJR" style="flex-direction: row; align-items: center;"><img src="/static/Budget2026HorizontalLogo-67e263cc.svg" alt="Budget 2025 Logo" width="142" height="48" style="object-fit: contain;"><div class="TextContentWrapper-sc-1uruy84-1 iHuWyw"><span class="StyledSpan-sc-1yqr1pc-0 dELZyp" style="color: rgb(22, 105, 56);">BUDGET 2026 CALCULATOR</span><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt" style="color: rgb(78, 78, 78); margin-top: 8px;">Find out more about the measures announced at Budget 2026</span></div></div><a aria-label="View budget listing page" class="StyledLink-sc-k7duxd-0 gksLQO StyledTouchableLink-sc-9v9gce-0 fIGSXA" href="/budget/support-calculator" style="width: 157px; padding: 14px 44px; border-radius: 0.5rem; color: rgb(78, 78, 78); border-color: rgb(78, 78, 78); background-color: rgb(255, 255, 255);"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU" style="white-space: nowrap;">Use calculator</span></a></div></div><div><div style="margin-left: -16px; margin-right: -16px; display: flex; flex-grow: 0; flex-shrink: 0; align-items: normal; justify-content: center; flex-flow: wrap; row-gap: 32px; margin-bottom: 16px;"><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/caregiving-support" aria-label="Caregiving support" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/CaregivingSupport-15313b86.svg" alt="Caregiving support-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Caregiving support</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/citizenship-residency" aria-label="Citizenship and residency" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/CitizenshipResidency-77f41c27.svg" alt="Citizenship and residency-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Citizenship and residency</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/counselling-crisis" aria-label="Counselling and crisis support" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/CounsellingCrisis-caf5e704.svg" alt="Counselling and crisis support-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Counselling and crisis support</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/disability-support" aria-label="Disability support" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/DisabilitySupport-6344ada7.svg" alt="Disability support-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Disability support</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/education-learning" aria-label="Education and learning" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/EducationLearning-d94f32c2.svg" alt="Education and learning-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Education and learning</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/family-parenting" aria-label="Family, parenting and relationships" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/FamilyParenting-e7bc794d.svg" alt="Family, parenting and relationships-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Family, parenting and relationships</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/financial-support" aria-label="Financial support and benefits" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/FinancialSupport-0db2fff3.svg" alt="Financial support and benefits-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Financial support and benefits</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/healthcare" aria-label="Healthcare and well-being" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/HealthcareWellness-fbce49b4.svg" alt="Healthcare and well-being-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Healthcare and well-being</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/housing-shelters" aria-label="Housing and shelters" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/HousingShelter-7e946f8f.svg" alt="Housing and shelters-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Housing and shelters</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/mental-health" aria-label="Mental health" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/MentalHealthV2-765db99c.svg" alt="Mental health-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Mental health</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/retirement-legacy" aria-label="Retirement and legacy planning" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/RetirementLegacy-cccc5322.svg" alt="Retirement and legacy planning-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Retirement and legacy planning</span></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 25%; flex: 0 0 25%; max-width: 25%; margin-left: 0%; right: auto; left: auto;"><a href="/topics/work-employment" aria-label="Work and employment" class="StyledHTMLAnchor-sc-trvy55-0 TfToZ Touchable-sc-oyojgn-0 ehyTwT"><img src="/static/WorkEmployment-ce51eb93.svg" alt="Work and employment-logo" class="Image-sc-oyojgn-1 embdOR"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt Title-sc-oyojgn-2 iUvXnF">Work and employment</span></a></div></div></div></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV StyledContainer-sc-ac839o-0 fJqLxv"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div class="StyledRow-sc-ac839o-1 kxCARx" style="margin-left: 0px; margin-right: 0px; display: flex; flex-grow: 0; flex-shrink: 0; align-items: normal; justify-content: flex-start; flex-flow: wrap;"><div class="StyledCol-sc-ac839o-2 jWIamv" style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 0px; padding-right: 0px; width: 33.3333%; flex: 0 0 33.3333%; max-width: 33.3333%; margin-left: 0%; right: auto; left: auto;"><div class="StyledOnlineApplicationsHeader-sc-ac839o-4 kNkkWR"><img src="/static/online-application-5b1f0a8f.svg" alt="Online Applications Image" class="StyledImage-sc-ac839o-3 fdbfPA"><div class="StyledOnlineApplicationsText-sc-ac839o-5 kdyILY"><span class="StyledSpan-sc-1yqr1pc-0 jyUOry" style="display: block;">Apply for support schemes</span></div></div></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 0px; padding-right: 0px; width: 66.6667%; flex: 0 0 66.6667%; max-width: 66.6667%; margin-left: 0%; right: auto; left: auto;"><div style="margin-left: -16px; margin-right: -16px; display: flex; flex-grow: 0; flex-shrink: 0; align-items: normal; justify-content: flex-start; flex-flow: wrap; row-gap: 16px;"><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 50%; flex: 0 0 50%; max-width: 50%; margin-left: 0%; right: auto; left: auto;"><a id="COMCARE-SMTA" aria-label="ComCare Short-to-Medium-Term Assistance (SMTA)" tabindex="0" href="/schemes/COMCARE-SMTA/comcare-short-to-medium-term-assistance-smta?locale=en" class="Container-sc-k5m04n-1 CiCyt"><div class="MainSection-sc-k5m04n-2 fNhIju"><span class="StyledSpan-sc-1yqr1pc-0 uzpxD Title-sc-k5m04n-6 ddnsOo">ComCare Short-to-Medium-Term Assistance (SMTA)</span><span class="StyledSpan-sc-1yqr1pc-0 jMDxMC Description-sc-k5m04n-7 kFsoqQ">Provides temporary financial assistance for lower-income individuals or families who are temporarily unable to work, looking for a job or earning a low income and require assistance.  </span><div class="TagsContainer-sc-k5m04n-9 glKcVb"><span class="Tag-sc-k5m04n-10 bSFbVV">Cash assistance</span><span class="Tag-sc-k5m04n-10 bSFbVV">Lower-income</span><span class="Tag-sc-k5m04n-10 bSFbVV">Short-to-medium term</span></div></div><div class="Footer-sc-k5m04n-3 lohbEZ"><div class="NavigationContainer-sc-k5m04n-4 jlVccJ"><div class="MoreDetailsContainer-sc-k5m04n-5 fjpQtC"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">More details</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 16px; width: 16px; min-width: 16px; min-height: 16px;"><path d="M12.0501 22.8351L11.7218 22.5037C11.5043 22.284 11.5043 21.9279 11.7218 21.7082L20.009 13.3413H2.55714C2.24946 13.3413 2 13.0894 2 12.7788V12.31C2 11.9994 2.24946 11.7475 2.55714 11.7475H20.009L11.7218 3.38062C11.5043 3.16096 11.5043 2.8048 11.7218 2.5851L12.0501 2.25369C12.2677 2.03403 12.6204 2.03403 12.838 2.25369L22.6368 12.1467C22.8544 12.3663 22.8544 12.7225 22.6368 12.9422L12.838 22.8351C12.6204 23.0548 12.2677 23.0548 12.0501 22.8351Z" fill="#056FFA"></path></svg></div></div></div></a></div><div style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 50%; flex: 0 0 50%; max-width: 50%; margin-left: 0%; right: auto; left: auto;"><a id="SCFA" aria-label="Student Care Fee Assistance (SCFA)" tabindex="0" href="/schemes/SCFA/student-care-fee-assistance-scfa?locale=en" class="Container-sc-k5m04n-1 CiCyt"><div class="MainSection-sc-k5m04n-2 fNhIju"><span class="StyledSpan-sc-1yqr1pc-0 uzpxD Title-sc-k5m04n-6 ddnsOo">Student Care Fee Assistance (SCFA)</span><span class="StyledSpan-sc-1yqr1pc-0 jMDxMC Description-sc-k5m04n-7 kFsoqQ">Provides fee assistance for children from lower-income working families enrolled in Student Care Centres (SCCs) registered with MSF.</span><div class="TagsContainer-sc-k5m04n-9 glKcVb"><span class="Tag-sc-k5m04n-10 bSFbVV">Budget 2026</span><span class="Tag-sc-k5m04n-10 bSFbVV">Students</span><span class="Tag-sc-k5m04n-10 bSFbVV">Subsidies</span></div></div><div class="Footer-sc-k5m04n-3 lohbEZ"><div class="NavigationContainer-sc-k5m04n-4 jlVccJ"><div class="MoreDetailsContainer-sc-k5m04n-5 fjpQtC"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">More details</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 16px; width: 16px; min-width: 16px; min-height: 16px;"><path d="M12.0501 22.8351L11.7218 22.5037C11.5043 22.284 11.5043 21.9279 11.7218 21.7082L20.009 13.3413H2.55714C2.24946 13.3413 2 13.0894 2 12.7788V12.31C2 11.9994 2.24946 11.7475 2.55714 11.7475H20.009L11.7218 3.38062C11.5043 3.16096 11.5043 2.8048 11.7218 2.5851L12.0501 2.25369C12.2677 2.03403 12.6204 2.03403 12.838 2.25369L22.6368 12.1467C22.8544 12.3663 22.8544 12.7225 22.6368 12.9422L12.838 22.8351C12.6204 23.0548 12.2677 23.0548 12.0501 22.8351Z" fill="#056FFA"></path></svg></div></div></div></a></div></div></div></div></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV SectionContainer-sc-ipfcxq-0 jUZSOQ"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><span class="StyledSpan-sc-1yqr1pc-0 jyUOry Title-sc-ipfcxq-1 deLJjH">Other resources</span><div class="ResourcesContainer-sc-el1xvj-0 fyXEQq"><div class="ResourceCard-sc-el1xvj-1 cixwtk"><img src="/static/FoodConnect-1eb971e9.svg" alt="FoodConnect logo" class="ResourceLogo-sc-el1xvj-2 djpLWH"><div class="ResourceContent-sc-el1xvj-3 cnhuHA"><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Find out which food support organisations are best equipped to support your food needs.</span><a class="StyledLink-sc-kzglpd-0 dqZZlq ResourceLink-sc-el1xvj-4 faTIpy" target="_blank" href="https://foodconnect.gov.sg/directory/" rel="noopener noreferrer">Visit FoodConnect Directory<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.5312 2L12.4375 2.03125C12.1875 2.03125 12 2.21875 12 2.46875V3.5C12 3.75 12.1875 3.96875 12.4375 3.96875L14.75 3.875L14.8125 3.9375L6.09375 12.6562C6.03125 12.7188 5.96875 12.8438 5.96875 12.9062C5.96875 13 6.03125 13.125 6.09375 13.1875L6.8125 13.9062C6.875 13.9688 7 14.0312 7.09375 14.0312C7.15625 14.0312 7.28125 13.9688 7.34375 13.9062L16.0625 5.1875L16.125 5.25L16.0312 7.5625C16.0312 7.8125 16.25 8 16.5 8H17.5312C17.7812 8 17.9688 7.8125 17.9688 7.5625L18 2.46875C18 2.21875 17.7812 2 17.5312 2ZM15.5 11H15C14.7188 11 14.5 11.25 14.5 11.5V16.3125C14.5 16.4375 14.4062 16.5 14.3125 16.5H3.6875C3.5625 16.5 3.5 16.4375 3.5 16.3125V5.6875C3.5 5.59375 3.5625 5.5 3.6875 5.5H8.5C8.75 5.5 9 5.28125 9 5V4.5C9 4.25 8.75 4 8.5 4H3.5C2.65625 4 2 4.6875 2 5.5V16.5C2 17.3438 2.65625 18 3.5 18H14.5C15.3125 18 16 17.3438 16 16.5V11.5C16 11.25 15.75 11 15.5 11Z" fill="currentColor"></path></svg></a></div></div><div class="ResourceCard-sc-el1xvj-1 cixwtk"><img src="/static/GoBusiness-2d1a208f.svg" alt="GoBusiness logo" class="ResourceLogo-sc-el1xvj-2 djpLWH"><div class="ResourceContent-sc-el1xvj-3 cnhuHA"><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">For businesses in Singapore to access Government e-services and resources.</span><a class="StyledLink-sc-kzglpd-0 dqZZlq ResourceLink-sc-el1xvj-4 faTIpy" target="_blank" href="https://www.gobusiness.gov.sg/" rel="noopener noreferrer">Visit GoBusiness<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.5312 2L12.4375 2.03125C12.1875 2.03125 12 2.21875 12 2.46875V3.5C12 3.75 12.1875 3.96875 12.4375 3.96875L14.75 3.875L14.8125 3.9375L6.09375 12.6562C6.03125 12.7188 5.96875 12.8438 5.96875 12.9062C5.96875 13 6.03125 13.125 6.09375 13.1875L6.8125 13.9062C6.875 13.9688 7 14.0312 7.09375 14.0312C7.15625 14.0312 7.28125 13.9688 7.34375 13.9062L16.0625 5.1875L16.125 5.25L16.0312 7.5625C16.0312 7.8125 16.25 8 16.5 8H17.5312C17.7812 8 17.9688 7.8125 17.9688 7.5625L18 2.46875C18 2.21875 17.7812 2 17.5312 2ZM15.5 11H15C14.7188 11 14.5 11.25 14.5 11.5V16.3125C14.5 16.4375 14.4062 16.5 14.3125 16.5H3.6875C3.5625 16.5 3.5 16.4375 3.5 16.3125V5.6875C3.5 5.59375 3.5625 5.5 3.6875 5.5H8.5C8.75 5.5 9 5.28125 9 5V4.5C9 4.25 8.75 4 8.5 4H3.5C2.65625 4 2 4.6875 2 5.5V16.5C2 17.3438 2.65625 18 3.5 18H14.5C15.3125 18 16 17.3438 16 16.5V11.5C16 11.25 15.75 11 15.5 11Z" fill="currentColor"></path></svg></a></div></div></div></div></div><div class="LogoBarWrapper-sc-3wsgyy-0 chlknI"><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div class="LogoBarContent-sc-3wsgyy-1 dxRHmg"><div class="InitiativeContainer-sc-3wsgyy-2 ititri"><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">An initiative by:</span><div class="LogoContainer-sc-3wsgyy-3 EbcTZ"><div class="ImageWrapper-sc-3wsgyy-4 qzjMS"><img src="/static/logo_LifeSG-948f1185.svg" alt="LifeSG"></div><div class="ImageWrapper-sc-3wsgyy-4 qzjMS"><img src="/static/logo_GovTech-288ceaec.svg" alt="Government Technology Agency"></div></div></div><div class="CollaborationContainer-sc-3wsgyy-5 efhhnE"><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">A collaboration with:</span><div class="LogoContainer-sc-3wsgyy-3 EbcTZ"><div class="ImageWrapper-sc-3wsgyy-4 qzjMS"><img src="/static/logo_MOF-90598576.svg" alt="Ministry of Finance"></div><div class="ImageWrapper-sc-3wsgyy-4 qzjMS"><img src="/static/logo_MSF-b8340127.svg" alt="Ministry of Social and Family Development"></div><div class="ImageWrapper-sc-3wsgyy-4 qzjMS"><img src="/static/logo_NCSS-33c72ffe.svg" alt="National Council of Social Service"></div><div class="ImageWrapper-sc-3wsgyy-4 qzjMS"><img src="/static/logo_MOH-78f098b0.svg" alt="Ministry of Health"></div><div class="ImageWrapper-sc-3wsgyy-4 qzjMS"><img src="/static/logo_AIC-6d7be41c.svg" alt="Agency for Integrated Care"></div></div></div></div></div></div></div></main><footer class="FooterWrapper-sc-c0x6iv-0 bmBzsD"><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div class="FooterContent-sc-c0x6iv-1 gUpWCo"><div class="Header-sc-c0x6iv-2 kvIltG"><span class="StyledSpan-sc-1yqr1pc-0 uzpxD" style="color: rgb(44, 44, 44);">SupportGoWhere</span><div class="InfoLinkContainer-sc-c0x6iv-3 dTXAoW info-link"><a class="StyledReactLink-sc-q9n0ng-1 dNOWGC" href="/about-us"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">About Us</span></a><a class="StyledReactLink-sc-q9n0ng-1 dNOWGC" href="/contact-us"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Contact Us/Feedback</span></a></div></div><hr class="HorizontalLine-sc-c0x6iv-4 goHVg"><div class="MandatoryLinkContainer-sc-c0x6iv-5 idQpBG"><a target="_blank" rel="noopener noreferrer" href="https://www.tech.gov.sg/report_vulnerability" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Report Vulnerability</span><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="StyledExtLinkIcon-sc-q9n0ng-0 kXGesl"><path d="M17.5312 2L12.4375 2.03125C12.1875 2.03125 12 2.21875 12 2.46875V3.5C12 3.75 12.1875 3.96875 12.4375 3.96875L14.75 3.875L14.8125 3.9375L6.09375 12.6562C6.03125 12.7188 5.96875 12.8438 5.96875 12.9062C5.96875 13 6.03125 13.125 6.09375 13.1875L6.8125 13.9062C6.875 13.9688 7 14.0312 7.09375 14.0312C7.15625 14.0312 7.28125 13.9688 7.34375 13.9062L16.0625 5.1875L16.125 5.25L16.0312 7.5625C16.0312 7.8125 16.25 8 16.5 8H17.5312C17.7812 8 17.9688 7.8125 17.9688 7.5625L18 2.46875C18 2.21875 17.7812 2 17.5312 2ZM15.5 11H15C14.7188 11 14.5 11.25 14.5 11.5V16.3125C14.5 16.4375 14.4062 16.5 14.3125 16.5H3.6875C3.5625 16.5 3.5 16.4375 3.5 16.3125V5.6875C3.5 5.59375 3.5625 5.5 3.6875 5.5H8.5C8.75 5.5 9 5.28125 9 5V4.5C9 4.25 8.75 4 8.5 4H3.5C2.65625 4 2 4.6875 2 5.5V16.5C2 17.3438 2.65625 18 3.5 18H14.5C15.3125 18 16 17.3438 16 16.5V11.5C16 11.25 15.75 11 15.5 11Z" fill="currentColor"></path></svg></a><a target="_blank" rel="noopener noreferrer" href="/privacy-statement.pdf" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Privacy Statement</span></a><a target="_blank" rel="noopener noreferrer" href="/terms-of-use.pdf" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Terms of Use</span></a></div><span class="StyledSpan-sc-1yqr1pc-0 jMDxMC copyright">©2026, Government of Singapore. Last updated 21 May 2026, 12:03:14 pm.</span></div></div></div></footer></div></div><span class="visually-hidden" role="status"></span></div>
+    
+    <script type="module" src="/sgds-masthead.js"></script>
+  
+
+<div class="StyledModal-sc-15p3ng2-0 ldhepA"></div><wog-sentiments class="needsclick hydrated"></wog-sentiments></body></html>

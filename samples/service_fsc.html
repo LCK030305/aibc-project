@@ -1,0 +1,1112 @@
+<!DOCTYPE html><html lang="en" data-react-helmet="lang"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#FFFFFF">
+    <meta name="google-site-verification" content="olxuneupJM7523bi5laouepmUw7gbP1b6JRmj19Qm48">
+
+    <meta property="og:title" content="SupportGoWhere">
+    <meta property="og:image" content="https://supportgowhere.life.gov.sg/logo512.png">
+    <meta property="og:description" content="Find support schemes and services for individuals and families in Singapore with ease.">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="120x120" href="/touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/touch-icon-167x167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/touch-icon-180x180.png">
+    <link rel="stylesheet" type="text/css" href="https://assets.life.gov.sg/react-design-system/v3/css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://assets.life.gov.sg/react-design-system/v3/css/libre-franklin.css">
+    <link rel="manifest" href="/manifest.json">
+    <title>Family Service Centre (FSC) - SupportGoWhere</title>
+
+    <script async="" src="https://assets.wogaa.sg/snowplow/3.13.1/sp.js"></script><script src="https://assets.wogaa.sg/scripts/wogaa.js"></script><script async="" src="https://assets.wogaa.sg/scripts/wogaa.js?url=https%3A%2F%2Fsupportgowhere.life.gov.sg%2Fservices%2FSVC-FSCF%2Ffamily-service-centre-fsc%3Finw%3D1"></script>
+    <script src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js"></script>
+
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=MOCKID"></script>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "MOCKID");
+    </script>
+    <script type="module" crossorigin="" src="/static/index-72375ba3.js"></script>
+    <link rel="stylesheet" href="/static/index-990aab3b.css">
+  <meta name="wogaa_rsid" content="wogaasupportgowhereprod"><script type="module" src="https://assets.wogaa.sg/sentiments/v2/sentiments.esm.js" async=""></script><script nomodule="" src="https://assets.wogaa.sg/sentiments/v2/sentiments.js" async=""></script><style type="text/css">.transform-component-module_wrapper__SPB86 {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  overflow: hidden;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  margin: 0;
+  padding: 0;
+}
+.transform-component-module_content__FBWxo {
+  display: flex;
+  flex-wrap: wrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+  transform-origin: 0% 0%;
+}
+.transform-component-module_content__FBWxo img {
+  pointer-events: none;
+}
+</style><style type="text/css" id="lifesg-ds-masthead-stylesheet-day">:root {
+  /* Primitive - Product Primary Color */
+  --sgds-product-primary-100: #f4f2fe;
+  --sgds-product-primary-200: #e1dbfb;
+  --sgds-product-primary-300: #c8bdf7;
+  --sgds-product-primary-400: #a999f3;
+  --sgds-product-primary-500: #8a72ef;
+  --sgds-product-primary-600: #6b4feb;
+  --sgds-product-primary-700: #523abc;
+  --sgds-product-primary-800: #3c2b8a;
+  --sgds-product-primary-900: #2a1e61;
+
+  /* Primitive - Purple Color */
+  --sgds-purple-100: #fbf0fe;
+  --sgds-purple-200: #f2d6fc;
+  --sgds-purple-300: #e6adf9;
+  --sgds-purple-400: #d983f6;
+  --sgds-purple-500: #c94cf2;
+  --sgds-purple-600: #ac1cdb;
+  --sgds-purple-700: #8516a9;
+  --sgds-purple-800: #641180;
+  --sgds-purple-900: #460c5a;
+
+  /* Primitive - Cyan Color */
+  --sgds-cyan-100: #DBf9fd;
+  --sgds-cyan-200: #94edfa;
+  --sgds-cyan-300: #24d5ee;
+  --sgds-cyan-400: #1fb5ca;
+  --sgds-cyan-500: #1993a4;
+  --sgds-cyan-600: #147583;
+  --sgds-cyan-700: #0f5a65;
+  --sgds-cyan-800: #0b434b;
+  --sgds-cyan-900: #082e34;
+
+  /* Primitive - Green Color */
+  --sgds-green-100: #e3f9ed;
+  --sgds-green-200: #b1edcb;
+  --sgds-green-300: #62db96;
+  --sgds-green-400: #16bd5e;
+  --sgds-green-500: #129a4d;
+  --sgds-green-600: #0e7c3d;
+  --sgds-green-700: #0b5e2f;
+  --sgds-green-800: #084523;
+  --sgds-green-900: #063119;
+
+  /* Primitive - Blue Color */
+  --sgds-blue-100: #ecf5fe;
+  --sgds-blue-200: #c8e2fb;
+  --sgds-blue-300: #96c7f7;
+  --sgds-blue-400: #60aaf4;
+  --sgds-blue-500: #1e87ef;
+  --sgds-blue-600: #0269d0;
+  --sgds-blue-700: #0151a0;
+  --sgds-blue-800: #013c77;
+  --sgds-blue-900: #012a54;
+
+  /* Primitive - Yellow Color */
+  --sgds-yellow-100: #fef4cb;
+  --sgds-yellow-200: #fcde63;
+  --sgds-yellow-300: #e5bf29;
+  --sgds-yellow-400: #c2a223;
+  --sgds-yellow-500: #9d841c;
+  --sgds-yellow-600: #7e6917;
+  --sgds-yellow-700: #605111;
+  --sgds-yellow-800: #483c0d;
+  --sgds-yellow-900: #322909;
+
+  /* Primitive - Red Color */
+  --sgds-red-100: #fcf1f1;
+  --sgds-red-200: #f8d7d7;
+  --sgds-red-300: #f1b2b2;
+  --sgds-red-400: #e98b8b;
+  --sgds-red-500: #e05959;
+  --sgds-red-600: #cf2323;
+  --sgds-red-700: #a11b1b;
+  --sgds-red-800: #791414;
+  --sgds-red-900: #550e0e;
+
+  /* Primitive - Gray Color */
+  --sgds-gray-000: #ffffff;
+  --sgds-gray-100: #f3f3f3;
+  --sgds-gray-200: #dfdfdf;
+  --sgds-gray-300: #c6c6c6;
+  --sgds-gray-400: #a5a5a5;
+  --sgds-gray-500: #868686;
+  --sgds-gray-600: #6b6b6b;
+  --sgds-gray-700: #525252;
+  --sgds-gray-800: #3b3b3b;
+  --sgds-gray-900: #2a2a2a;
+  --sgds-gray-1000: #1a1a1a;
+  --sgds-gray-1100: #0e0e0e;
+
+  /* Primitive - Border Width */
+  --sgds-border-width-0: 0px;
+  --sgds-border-width-1: 1px;
+  --sgds-border-width-2: 2px;
+  --sgds-border-width-3: 3px;
+  --sgds-border-width-4: 4px;
+  --sgds-form-border-width-default: var(--sgds-border-width-1);
+  --sgds-form-border-width-thick: var(--sgds-border-width-2);
+
+  /* Primitive - Border Radius */
+  --sgds-border-radius-none: 0px;
+  --sgds-border-radius-xs: 2px;
+  --sgds-border-radius-sm: 4px;
+  --sgds-border-radius-md: 8px;
+  --sgds-border-radius-lg: 12px;
+  --sgds-border-radius-xl: 16px;
+  --sgds-border-radius-2-xl: 24px;
+  --sgds-border-radius-full: 999px;
+  --sgds-form-border-radius-none: var(--sgds-border-radius-none);
+  --sgds-form-border-radius-xs: var(--sgds-border-radius-xs);
+  --sgds-form-border-radius-sm: var(--sgds-border-radius-sm);
+  --sgds-form-border-radius-md: var(--sgds-border-radius-md);
+  --sgds-form-border-radius-full: var(--sgds-border-radius-full);
+
+  /* Primitive - Breakpoint */
+  --sgds-breakpoint-xs: var(--sgds-dimension-320);
+  --sgds-breakpoint-sm: var(--sgds-dimension-512);
+  --sgds-breakpoint-md: var(--sgds-dimension-768);
+  --sgds-breakpoint-lg: var(--sgds-dimension-1024);
+  --sgds-breakpoint-xl: var(--sgds-dimension-1280);
+  --sgds-breakpoint-2-xl: var(--sgds-dimension-1440);
+
+  /* Primitive - Font Family */
+  --sgds-font-family-brand: "Inter", system-ui, sans-serif;
+
+  /* Primitive - Font Weight */
+  --sgds-font-weight-light: 300;
+  --sgds-font-weight-regular: 400;
+  --sgds-font-weight-semibold: 600;
+  --sgds-font-weight-bold: 700;
+
+  /* Primitive - Font Size */
+  --sgds-font-size-1: 0.875rem;
+  --sgds-font-size-2: 1rem;
+  --sgds-font-size-3: 1.25rem;
+  --sgds-font-size-4: 1.5rem;
+  --sgds-font-size-5: 1.75rem;
+  --sgds-font-size-6: 2rem;
+  --sgds-font-size-7: 2.5rem;
+  --sgds-font-size-8: 3rem;
+  --sgds-font-size-9: 3.5rem;
+
+  /* Primitive - Icon Size */
+  --sgds-icon-size-sm: 1rem;
+  --sgds-icon-size-md: 1.25rem;
+  --sgds-icon-size-lg: 1.5rem;
+  --sgds-icon-size-xl: 2rem;
+  --sgds-icon-size-2-xl: 3rem;
+  --sgds-icon-size-3-xl: 4rem;
+
+  /* Primitive - Letter Spacing */
+  --sgds-letter-spacing-tighter: -1px;
+  --sgds-letter-spacing-tight: -0.4px;
+  --sgds-letter-spacing-normal: 0px;
+  --sgds-letter-spacing-wide: 1px;
+  --sgds-letter-spacing-wider: 2px;
+
+  /* Primitive - Line Height */
+  --sgds-line-height-body: 1.5;
+  --sgds-line-height-heading: 1.2;
+  --sgds-line-height-min: 20px;
+
+  /* Primitive - Opacity */
+  --sgds-opacity-0: 0;
+  --sgds-opacity-5: 0.05;
+  --sgds-opacity-10: 0.1;
+  --sgds-opacity-20: 0.2;
+  --sgds-opacity-30: 0.3;
+  --sgds-opacity-40: 0.4;
+  --sgds-opacity-50: 0.5;
+  --sgds-opacity-60: 0.6;
+  --sgds-opacity-70: 0.7;
+  --sgds-opacity-80: 0.8;
+  --sgds-opacity-90: 0.9;
+  --sgds-opacity-100: 1;
+
+  /* Primitive - Paragraph Spacing */
+  --sgds-paragraph-spacing-none: 0;
+  --sgds-paragraph-spacing-sm: 0.5rem;
+  --sgds-paragraph-spacing-md: 1rem;
+  --sgds-paragraph-spacing-lg: 1.5rem;
+  --sgds-paragraph-spacing-xl: 2rem;
+
+  /* Primitive - Spacer */
+  --sgds-spacer-0: 0rem;
+  --sgds-spacer-1: 0.125rem;
+  --sgds-spacer-2: 0.25rem;
+  --sgds-spacer-3: 0.5rem;
+  --sgds-spacer-4: 0.75rem;
+  --sgds-spacer-5: 1rem;
+  --sgds-spacer-6: 1.25rem;
+  --sgds-spacer-7: 1.5rem;
+  --sgds-spacer-8: 2rem;
+  --sgds-spacer-9: 3rem;
+  --sgds-spacer-10: 4rem;
+  --sgds-spacer-11: 6rem;
+  --sgds-spacer-12: 8rem;
+
+  /* Primitive - Dimension */
+  --sgds-dimension-0: 0px;
+  --sgds-dimension-1: 1px;
+  --sgds-dimension-2: 2px;
+  --sgds-dimension-4: 4px;
+  --sgds-dimension-8: 8px;
+  --sgds-dimension-12: 12px;
+  --sgds-dimension-16: 16px;
+  --sgds-dimension-20: 20px;
+  --sgds-dimension-24: 24px;
+  --sgds-dimension-32: 32px;
+  --sgds-dimension-40: 40px;
+  --sgds-dimension-48: 48px;
+  --sgds-dimension-52: 52px;
+  --sgds-dimension-56: 56px;
+  --sgds-dimension-60: 60px;
+  --sgds-dimension-64: 64px;
+  --sgds-dimension-72: 72px;
+  --sgds-dimension-76: 76px;
+  --sgds-dimension-80: 80px;
+  --sgds-dimension-88: 88px;
+  --sgds-dimension-96: 96px;
+  --sgds-dimension-112: 112px;
+  --sgds-dimension-120: 120px;
+  --sgds-dimension-128: 128px;
+  --sgds-dimension-132: 132px;
+  --sgds-dimension-136: 136px;
+  --sgds-dimension-144: 144px;
+  --sgds-dimension-168: 168px;
+  --sgds-dimension-192: 192px;
+  --sgds-dimension-224: 224px;
+  --sgds-dimension-256: 256px;
+  --sgds-dimension-280: 280px;
+  --sgds-dimension-288: 288px;
+  --sgds-dimension-320: 320px;
+  --sgds-dimension-328: 328px;
+  --sgds-dimension-340: 340px;
+  --sgds-dimension-384: 384px;
+  --sgds-dimension-480: 480px;
+  --sgds-dimension-512: 512px;
+  --sgds-dimension-688: 688px;
+  --sgds-dimension-768: 768px;
+  --sgds-dimension-1024: 1024px;
+  --sgds-dimension-1280: 1280px;
+  --sgds-dimension-1440: 1440px;
+
+  /* Semantic - Padding */
+  --sgds-padding-none: var(--sgds-spacer-0);
+  --sgds-padding-3-xs: var(--sgds-spacer-1);
+  --sgds-padding-2-xs: var(--sgds-spacer-2);
+  --sgds-padding-xs: var(--sgds-spacer-3);
+  --sgds-padding-sm: var(--sgds-spacer-4);
+  --sgds-padding-md: var(--sgds-spacer-5);
+  --sgds-padding-lg: var(--sgds-spacer-6);
+  --sgds-padding-xl: var(--sgds-spacer-7);
+  --sgds-padding-2-xl: var(--sgds-spacer-8);
+  --sgds-padding-3-xl: var(--sgds-spacer-9);
+  --sgds-padding-4-xl: var(--sgds-spacer-10);
+  --sgds-padding-5-xl: var(--sgds-spacer-11);
+  --sgds-form-padding-x: var(--sgds-padding-md);
+  --sgds-form-padding-y: var(--sgds-padding-sm);
+  --sgds-form-padding-inline-xs: var(--sgds-padding-3-xs);
+  --sgds-form-padding-inline-sm: var(--sgds-padding-2-xs);
+  --sgds-form-padding-inline-md: var(--sgds-padding-xs);
+  --sgds-form-padding-inline-lg: var(--sgds-padding-sm);
+  --sgds-form-padding-inline-xl: var(--sgds-padding-md);
+
+  --sgds-margin-none: var(--sgds-spacer-0);
+  --sgds-margin-3-xs: var(--sgds-spacer-3);
+  --sgds-margin-2-xs: var(--sgds-spacer-5);
+  --sgds-margin-xs: var(--sgds-spacer-6);
+  --sgds-margin-sm: var(--sgds-spacer-7);
+  --sgds-margin-md: var(--sgds-spacer-8);
+  --sgds-margin-lg: var(--sgds-spacer-9);
+  --sgds-margin-xl: var(--sgds-spacer-10);
+  --sgds-margin-2-xl: var(--sgds-spacer-11);
+  --sgds-margin-3-xl: var(--sgds-spacer-12);
+
+  --sgds-gap-none: var(--sgds-spacer-0);
+  --sgds-gap-2-xs: var(--sgds-spacer-2);
+  --sgds-gap-xs: var(--sgds-spacer-3);
+  --sgds-gap-sm: var(--sgds-spacer-4);
+  --sgds-gap-md: var(--sgds-spacer-5);
+  --sgds-gap-lg: var(--sgds-spacer-6);
+  --sgds-gap-xl: var(--sgds-spacer-7);
+  --sgds-gap-2-xl: var(--sgds-spacer-8);
+  --sgds-form-gap-sm: var(--sgds-gap-2-xs);
+  --sgds-form-gap-md: var(--sgds-gap-xs);
+  --sgds-form-gap-lg: var(--sgds-gap-sm);
+  --sgds-form-gap-xl: var(--sgds-gap-md);
+  --sgds-form-gap-2-xl: var(--sgds-gap-xl);
+
+  --sgds-form-height-3-xs: var(--sgds-dimension-12);
+  --sgds-form-height-2-xs: var(--sgds-dimension-16);
+  --sgds-form-height-xs: var(--sgds-dimension-20);
+  --sgds-form-height-sm: var(--sgds-dimension-24);
+  --sgds-form-height-md: var(--sgds-dimension-32);
+  --sgds-form-height-lg: var(--sgds-dimension-40);
+  --sgds-form-height-xl: var(--sgds-dimension-48);
+  --sgds-form-height-2-xl: var(--sgds-dimension-56);
+
+  --sgds-form-width-3-xs: var(--sgds-dimension-12);
+  --sgds-form-width-2-xs: var(--sgds-dimension-16);
+  --sgds-form-width-xs: var(--sgds-dimension-24);
+  --sgds-form-width-sm: var(--sgds-dimension-32);
+  --sgds-form-width-md: var(--sgds-dimension-40);
+  --sgds-form-width-lg: var(--sgds-dimension-48);
+  --sgds-form-width-xl: var(--sgds-dimension-56);
+  --sgds-form-width-2-xl: var(--sgds-dimension-64);
+  --sgds-form-width-3-xl: var(--sgds-dimension-72);
+  --sgds-form-width-4-xl: var(--sgds-dimension-80);
+
+  /* Semantic - Form Icon Size */
+  --sgds-form-icon-size-sm: var(--sgds-icon-size-sm);
+  --sgds-form-icon-size-md: var(--sgds-icon-size-md);
+  --sgds-form-icon-size-lg: var(--sgds-icon-size-lg);
+
+  --sgds-box-shadow-focus: 0px 0px 0px 4px var(--sgds-blue-400);
+  --sgds-form-box-shadow-focus: var(--sgds-box-shadow-focus);
+
+  /* Masthead and Mainnav Max Width and Padding */
+  --sgds-mainnav-max-width: 1440px;
+  --sgds-mainnav-padding-x: 2rem;
+  --sgds-mainnav-mobile-padding-x: 1.25rem;
+}
+:root {
+  color-scheme: only light;
+
+  /* Semantic - Default Colors */
+  --sgds-bg-default: var(--sgds-gray-000);
+  --sgds-bg-alternate: var(--sgds-gray-100);
+  --sgds-bg-fixed-light: var(--sgds-gray-000);
+  --sgds-bg-fixed-dark: var(--sgds-gray-1100);
+  --sgds-bg-overlay: oklch(from var(--sgds-gray-1100) l c h / 0.4);
+  --sgds-bg-translucent: oklch(from var(--sgds-gray-1100) l c h / 0.1);
+  --sgds-bg-translucent-subtle: oklch(from var(--sgds-gray-1100) l c h / 0.05);
+  --sgds-bg-transparent: transparent;
+  --sgds-surface-default: var(--sgds-gray-000);
+  --sgds-surface-raised: var(--sgds-gray-100);
+  --sgds-surface-inverse: var(--sgds-gray-900);
+  --sgds-surface-fixed-light: var(--sgds-gray-000);
+  --sgds-surface-fixed-dark: var(--sgds-gray-900);
+  --sgds-color-default: var(--sgds-gray-1000);
+  --sgds-color-subtle: var(--sgds-gray-700);
+  --sgds-color-muted: var(--sgds-gray-300);
+  --sgds-color-inverse: var(--sgds-gray-100);
+  --sgds-color-fixed-light: var(--sgds-gray-100);
+  --sgds-color-fixed-dark: var(--sgds-gray-1000);
+  --sgds-color-transparent: transparent;
+  --sgds-border-color-default: var(--sgds-gray-500);
+  --sgds-border-color-emphasis: var(--sgds-gray-800);
+  --sgds-border-color-muted: var(--sgds-gray-200);
+  --sgds-border-color-fixed-light: var(--sgds-gray-000);
+  --sgds-border-color-fixed-dark: var(--sgds-gray-1000);
+  --sgds-border-color-translucent: oklch(from var(--sgds-gray-1100) l c h / 0.05);
+  --sgds-border-color-transparent: transparent;
+
+  /* Semantic - Primary Colors */
+  --sgds-primary-bg-default: var(--sgds-product-primary-700);
+  --sgds-primary-bg-muted: var(--sgds-product-primary-100);
+  --sgds-primary-bg-translucent: oklch(from var(--sgds-product-primary-700) l c h / 0.1);
+  --sgds-primary-surface-default: var(--sgds-product-primary-700);
+  --sgds-primary-surface-emphasis: var(--sgds-product-primary-800);
+  --sgds-primary-surface-muted: var(--sgds-product-primary-100);
+  --sgds-primary-surface-translucent: oklch(from var(--sgds-product-primary-700) l c h / 0.1);
+  --sgds-primary-color-default: var(--sgds-product-primary-600);
+  --sgds-primary-color-emphasis: var(--sgds-product-primary-700);
+  --sgds-primary-color-fixed-light: var(--sgds-product-primary-400);
+  --sgds-primary-color-fixed-dark: var(--sgds-product-primary-700);
+  --sgds-primary-border-color-default: var(--sgds-product-primary-500);
+  --sgds-primary-border-color-emphasis: var(--sgds-product-primary-700);
+  --sgds-primary-border-color-muted: var(--sgds-product-primary-300);
+
+  /* Semantic - Success Colors */
+  --sgds-success-bg-default: var(--sgds-green-700);
+  --sgds-success-bg-muted: var(--sgds-green-100);
+  --sgds-success-surface-default: var(--sgds-green-700);
+  --sgds-success-surface-emphasis: var(--sgds-green-800);
+  --sgds-success-surface-muted: var(--sgds-green-100);
+  --sgds-success-color-default: var(--sgds-green-600);
+  --sgds-success-color-emphasis: var(--sgds-green-700);
+  --sgds-success-color-fixed-light: var(--sgds-green-400);
+  --sgds-success-color-fixed-dark: var(--sgds-green-700);
+  --sgds-success-border-color-default: var(--sgds-green-500);
+  --sgds-success-border-color-emphasis: var(--sgds-green-700);
+  --sgds-success-border-color-muted: var(--sgds-green-300);
+
+  /* Semantic - Danger Colors */
+  --sgds-danger-bg-default: var(--sgds-red-700);
+  --sgds-danger-bg-muted: var(--sgds-red-100);
+  --sgds-danger-surface-default: var(--sgds-red-700);
+  --sgds-danger-surface-emphasis: var(--sgds-red-800);
+  --sgds-danger-surface-muted: var(--sgds-red-100);
+  --sgds-danger-color-default: var(--sgds-red-600);
+  --sgds-danger-color-emphasis: var(--sgds-red-700);
+  --sgds-danger-color-fixed-light: var(--sgds-red-400);
+  --sgds-danger-color-fixed-dark: var(--sgds-red-700);
+  --sgds-danger-border-color-default: var(--sgds-red-500);
+  --sgds-danger-border-color-emphasis: var(--sgds-red-700);
+  --sgds-danger-border-color-muted: var(--sgds-red-300);
+
+  /* Semantic - Warning Colors */
+  --sgds-warning-bg-default: var(--sgds-yellow-200);
+  --sgds-warning-bg-muted: var(--sgds-yellow-100);
+  --sgds-warning-surface-default: var(--sgds-yellow-200);
+  --sgds-warning-surface-emphasis: var(--sgds-yellow-700);
+  --sgds-warning-surface-muted: var(--sgds-yellow-100);
+  --sgds-warning-color-default: var(--sgds-yellow-600);
+  --sgds-warning-color-emphasis: var(--sgds-yellow-700);
+  --sgds-warning-color-fixed-light: var(--sgds-yellow-300);
+  --sgds-warning-color-fixed-dark: var(--sgds-yellow-700);
+  --sgds-warning-border-color-default: var(--sgds-yellow-500);
+  --sgds-warning-border-color-emphasis: var(--sgds-yellow-700);
+  --sgds-warning-border-color-muted: var(--sgds-yellow-300);
+
+  /* Semantic - Neutral Colors */
+  --sgds-neutral-bg-default: var(--sgds-gray-700);
+  --sgds-neutral-bg-muted: var(--sgds-gray-100);
+  --sgds-neutral-surface-default: var(--sgds-gray-800);
+  --sgds-neutral-surface-emphasis: var(--sgds-gray-800);
+  --sgds-neutral-surface-muted: var(--sgds-gray-100);
+  --sgds-neutral-color-default: var(--sgds-gray-600);
+  --sgds-neutral-color-emphasis: var(--sgds-gray-700);
+  --sgds-neutral-color-fixed-light: var(--sgds-gray-400);
+  --sgds-neutral-color-fixed-dark: var(--sgds-gray-700);
+  --sgds-neutral-border-color-default: var(--sgds-gray-500);
+  --sgds-neutral-border-color-emphasis: var(--sgds-gray-700);
+  --sgds-neutral-border-color-subtle: var(--sgds-gray-300);
+
+  /* Semantic - Display Colors */
+  --sgds-display-color-default: var(--sgds-gray-1000);
+  --sgds-display-color-subtle: var(--sgds-gray-800);
+
+  /* Semantic - Header Colors */
+  --sgds-header-color-default: var(--sgds-gray-900);
+  --sgds-header-color-subtle: var(--sgds-gray-800);
+
+  /* Semantic - Body Colors */
+  --sgds-body-color-default: var(--sgds-gray-1000);
+  --sgds-body-color-subtle: var(--sgds-gray-700);
+
+  /* Semantic - Label Colors */
+  --sgds-label-color-default: var(--sgds-gray-900);
+  --sgds-label-color-subtle: var(--sgds-gray-700);
+
+  /* Semantic - Caption Color */
+  --sgds-caption-color: var(--sgds-gray-600);
+
+  /* Semantic - Link Color */
+  --sgds-link-color-default: var(--sgds-blue-600);
+  --sgds-link-color-emphasis: var(--sgds-blue-700);
+
+  /* Semantic - Form Color */
+  --sgds-form-surface-default: var(--sgds-gray-000);
+  --sgds-form-surface-emphasis: var(--sgds-gray-700);
+  --sgds-form-surface-subtle: var(--sgds-gray-400);
+  --sgds-form-surface-muted: var(--sgds-gray-200);
+  --sgds-form-surface-inverse: var(--sgds-gray-900);
+  --sgds-form-surface-fixed-light: var(--sgds-gray-000);
+  --sgds-form-surface-fixed-dark: var(--sgds-gray-900);
+  --sgds-form-color-default: var(--sgds-gray-900);
+  --sgds-form-color-subtle: var(--sgds-gray-700);
+  --sgds-form-color-muted: var(--sgds-gray-300);
+  --sgds-form-color-inverse: var(--sgds-gray-100);
+  --sgds-form-color-fixed-light: var(--sgds-gray-000);
+  --sgds-form-color-fixed-dark: var(--sgds-gray-1100);
+  --sgds-form-primary-surface-default: var(--sgds-product-primary-700);
+  --sgds-form-primary-surface-emphasis: var(--sgds-product-primary-800);
+  --sgds-form-primary-color-default: var(--sgds-product-primary-700);
+  --sgds-form-success-surface-default: var(--sgds-green-700);
+  --sgds-form-success-color-default: var(--sgds-green-600);
+  --sgds-form-success-border-color-default: var(--sgds-green-500);
+  --sgds-form-danger-surface-default: var(--sgds-red-700);
+  --sgds-form-danger-color-default: var(--sgds-red-600);
+  --sgds-form-danger-border-color-default: var(--sgds-red-500);
+}
+</style><style type="text/css" id="lifesg-ds-masthead-stylesheet-night">:root {
+  /* Primitive - Product Primary Color */
+  --sgds-product-primary-100: #f4f2fe;
+  --sgds-product-primary-200: #e1dbfb;
+  --sgds-product-primary-300: #c8bdf7;
+  --sgds-product-primary-400: #a999f3;
+  --sgds-product-primary-500: #8a72ef;
+  --sgds-product-primary-600: #6b4feb;
+  --sgds-product-primary-700: #523abc;
+  --sgds-product-primary-800: #3c2b8a;
+  --sgds-product-primary-900: #2a1e61;
+
+  /* Primitive - Purple Color */
+  --sgds-purple-100: #fbf0fe;
+  --sgds-purple-200: #f2d6fc;
+  --sgds-purple-300: #e6adf9;
+  --sgds-purple-400: #d983f6;
+  --sgds-purple-500: #c94cf2;
+  --sgds-purple-600: #ac1cdb;
+  --sgds-purple-700: #8516a9;
+  --sgds-purple-800: #641180;
+  --sgds-purple-900: #460c5a;
+
+  /* Primitive - Cyan Color */
+  --sgds-cyan-100: #DBf9fd;
+  --sgds-cyan-200: #94edfa;
+  --sgds-cyan-300: #24d5ee;
+  --sgds-cyan-400: #1fb5ca;
+  --sgds-cyan-500: #1993a4;
+  --sgds-cyan-600: #147583;
+  --sgds-cyan-700: #0f5a65;
+  --sgds-cyan-800: #0b434b;
+  --sgds-cyan-900: #082e34;
+
+  /* Primitive - Green Color */
+  --sgds-green-100: #e3f9ed;
+  --sgds-green-200: #b1edcb;
+  --sgds-green-300: #62db96;
+  --sgds-green-400: #16bd5e;
+  --sgds-green-500: #129a4d;
+  --sgds-green-600: #0e7c3d;
+  --sgds-green-700: #0b5e2f;
+  --sgds-green-800: #084523;
+  --sgds-green-900: #063119;
+
+  /* Primitive - Blue Color */
+  --sgds-blue-100: #ecf5fe;
+  --sgds-blue-200: #c8e2fb;
+  --sgds-blue-300: #96c7f7;
+  --sgds-blue-400: #60aaf4;
+  --sgds-blue-500: #1e87ef;
+  --sgds-blue-600: #0269d0;
+  --sgds-blue-700: #0151a0;
+  --sgds-blue-800: #013c77;
+  --sgds-blue-900: #012a54;
+
+  /* Primitive - Yellow Color */
+  --sgds-yellow-100: #fef4cb;
+  --sgds-yellow-200: #fcde63;
+  --sgds-yellow-300: #e5bf29;
+  --sgds-yellow-400: #c2a223;
+  --sgds-yellow-500: #9d841c;
+  --sgds-yellow-600: #7e6917;
+  --sgds-yellow-700: #605111;
+  --sgds-yellow-800: #483c0d;
+  --sgds-yellow-900: #322909;
+
+  /* Primitive - Red Color */
+  --sgds-red-100: #fcf1f1;
+  --sgds-red-200: #f8d7d7;
+  --sgds-red-300: #f1b2b2;
+  --sgds-red-400: #e98b8b;
+  --sgds-red-500: #e05959;
+  --sgds-red-600: #cf2323;
+  --sgds-red-700: #a11b1b;
+  --sgds-red-800: #791414;
+  --sgds-red-900: #550e0e;
+
+  /* Primitive - Gray Color */
+  --sgds-gray-000: #ffffff;
+  --sgds-gray-100: #f3f3f3;
+  --sgds-gray-200: #dfdfdf;
+  --sgds-gray-300: #c6c6c6;
+  --sgds-gray-400: #a5a5a5;
+  --sgds-gray-500: #868686;
+  --sgds-gray-600: #6b6b6b;
+  --sgds-gray-700: #525252;
+  --sgds-gray-800: #3b3b3b;
+  --sgds-gray-900: #2a2a2a;
+  --sgds-gray-1000: #1a1a1a;
+  --sgds-gray-1100: #0e0e0e;
+
+  /* Primitive - Border Width */
+  --sgds-border-width-0: 0px;
+  --sgds-border-width-1: 1px;
+  --sgds-border-width-2: 2px;
+  --sgds-border-width-3: 3px;
+  --sgds-border-width-4: 4px;
+  --sgds-form-border-width-default: var(--sgds-border-width-1);
+  --sgds-form-border-width-thick: var(--sgds-border-width-2);
+
+  /* Primitive - Border Radius */
+  --sgds-border-radius-none: 0px;
+  --sgds-border-radius-xs: 2px;
+  --sgds-border-radius-sm: 4px;
+  --sgds-border-radius-md: 8px;
+  --sgds-border-radius-lg: 12px;
+  --sgds-border-radius-xl: 16px;
+  --sgds-border-radius-2-xl: 24px;
+  --sgds-border-radius-full: 999px;
+  --sgds-form-border-radius-none: var(--sgds-border-radius-none);
+  --sgds-form-border-radius-xs: var(--sgds-border-radius-xs);
+  --sgds-form-border-radius-sm: var(--sgds-border-radius-sm);
+  --sgds-form-border-radius-md: var(--sgds-border-radius-md);
+  --sgds-form-border-radius-full: var(--sgds-border-radius-full);
+
+  /* Primitive - Breakpoint */
+  --sgds-breakpoint-xs: var(--sgds-dimension-320);
+  --sgds-breakpoint-sm: var(--sgds-dimension-512);
+  --sgds-breakpoint-md: var(--sgds-dimension-768);
+  --sgds-breakpoint-lg: var(--sgds-dimension-1024);
+  --sgds-breakpoint-xl: var(--sgds-dimension-1280);
+  --sgds-breakpoint-2-xl: var(--sgds-dimension-1440);
+
+  /* Primitive - Font Family */
+  --sgds-font-family-brand: "Inter", system-ui, sans-serif;
+
+  /* Primitive - Font Weight */
+  --sgds-font-weight-light: 300;
+  --sgds-font-weight-regular: 400;
+  --sgds-font-weight-semibold: 600;
+  --sgds-font-weight-bold: 700;
+
+  /* Primitive - Font Size */
+  --sgds-font-size-1: 0.875rem;
+  --sgds-font-size-2: 1rem;
+  --sgds-font-size-3: 1.25rem;
+  --sgds-font-size-4: 1.5rem;
+  --sgds-font-size-5: 1.75rem;
+  --sgds-font-size-6: 2rem;
+  --sgds-font-size-7: 2.5rem;
+  --sgds-font-size-8: 3rem;
+  --sgds-font-size-9: 3.5rem;
+
+  /* Primitive - Icon Size */
+  --sgds-icon-size-sm: 1rem;
+  --sgds-icon-size-md: 1.25rem;
+  --sgds-icon-size-lg: 1.5rem;
+  --sgds-icon-size-xl: 2rem;
+  --sgds-icon-size-2-xl: 3rem;
+  --sgds-icon-size-3-xl: 4rem;
+
+  /* Primitive - Letter Spacing */
+  --sgds-letter-spacing-tighter: -1px;
+  --sgds-letter-spacing-tight: -0.4px;
+  --sgds-letter-spacing-normal: 0px;
+  --sgds-letter-spacing-wide: 1px;
+  --sgds-letter-spacing-wider: 2px;
+
+  /* Primitive - Line Height */
+  --sgds-line-height-body: 1.5;
+  --sgds-line-height-heading: 1.2;
+  --sgds-line-height-min: 20px;
+
+  /* Primitive - Opacity */
+  --sgds-opacity-0: 0;
+  --sgds-opacity-5: 0.05;
+  --sgds-opacity-10: 0.1;
+  --sgds-opacity-20: 0.2;
+  --sgds-opacity-30: 0.3;
+  --sgds-opacity-40: 0.4;
+  --sgds-opacity-50: 0.5;
+  --sgds-opacity-60: 0.6;
+  --sgds-opacity-70: 0.7;
+  --sgds-opacity-80: 0.8;
+  --sgds-opacity-90: 0.9;
+  --sgds-opacity-100: 1;
+
+  /* Primitive - Paragraph Spacing */
+  --sgds-paragraph-spacing-none: 0;
+  --sgds-paragraph-spacing-sm: 0.5rem;
+  --sgds-paragraph-spacing-md: 1rem;
+  --sgds-paragraph-spacing-lg: 1.5rem;
+  --sgds-paragraph-spacing-xl: 2rem;
+
+  /* Primitive - Spacer */
+  --sgds-spacer-0: 0rem;
+  --sgds-spacer-1: 0.125rem;
+  --sgds-spacer-2: 0.25rem;
+  --sgds-spacer-3: 0.5rem;
+  --sgds-spacer-4: 0.75rem;
+  --sgds-spacer-5: 1rem;
+  --sgds-spacer-6: 1.25rem;
+  --sgds-spacer-7: 1.5rem;
+  --sgds-spacer-8: 2rem;
+  --sgds-spacer-9: 3rem;
+  --sgds-spacer-10: 4rem;
+  --sgds-spacer-11: 6rem;
+  --sgds-spacer-12: 8rem;
+
+  /* Primitive - Dimension */
+  --sgds-dimension-0: 0px;
+  --sgds-dimension-1: 1px;
+  --sgds-dimension-2: 2px;
+  --sgds-dimension-4: 4px;
+  --sgds-dimension-8: 8px;
+  --sgds-dimension-12: 12px;
+  --sgds-dimension-16: 16px;
+  --sgds-dimension-20: 20px;
+  --sgds-dimension-24: 24px;
+  --sgds-dimension-32: 32px;
+  --sgds-dimension-40: 40px;
+  --sgds-dimension-48: 48px;
+  --sgds-dimension-52: 52px;
+  --sgds-dimension-56: 56px;
+  --sgds-dimension-60: 60px;
+  --sgds-dimension-64: 64px;
+  --sgds-dimension-72: 72px;
+  --sgds-dimension-76: 76px;
+  --sgds-dimension-80: 80px;
+  --sgds-dimension-88: 88px;
+  --sgds-dimension-96: 96px;
+  --sgds-dimension-112: 112px;
+  --sgds-dimension-120: 120px;
+  --sgds-dimension-128: 128px;
+  --sgds-dimension-132: 132px;
+  --sgds-dimension-136: 136px;
+  --sgds-dimension-144: 144px;
+  --sgds-dimension-168: 168px;
+  --sgds-dimension-192: 192px;
+  --sgds-dimension-224: 224px;
+  --sgds-dimension-256: 256px;
+  --sgds-dimension-280: 280px;
+  --sgds-dimension-288: 288px;
+  --sgds-dimension-320: 320px;
+  --sgds-dimension-328: 328px;
+  --sgds-dimension-340: 340px;
+  --sgds-dimension-384: 384px;
+  --sgds-dimension-480: 480px;
+  --sgds-dimension-512: 512px;
+  --sgds-dimension-688: 688px;
+  --sgds-dimension-768: 768px;
+  --sgds-dimension-1024: 1024px;
+  --sgds-dimension-1280: 1280px;
+  --sgds-dimension-1440: 1440px;
+
+  /* Semantic - Padding */
+  --sgds-padding-none: var(--sgds-spacer-0);
+  --sgds-padding-3-xs: var(--sgds-spacer-1);
+  --sgds-padding-2-xs: var(--sgds-spacer-2);
+  --sgds-padding-xs: var(--sgds-spacer-3);
+  --sgds-padding-sm: var(--sgds-spacer-4);
+  --sgds-padding-md: var(--sgds-spacer-5);
+  --sgds-padding-lg: var(--sgds-spacer-6);
+  --sgds-padding-xl: var(--sgds-spacer-7);
+  --sgds-padding-2-xl: var(--sgds-spacer-8);
+  --sgds-padding-3-xl: var(--sgds-spacer-9);
+  --sgds-padding-4-xl: var(--sgds-spacer-10);
+  --sgds-padding-5-xl: var(--sgds-spacer-11);
+  --sgds-form-padding-x: var(--sgds-padding-md);
+  --sgds-form-padding-y: var(--sgds-padding-sm);
+  --sgds-form-padding-inline-xs: var(--sgds-padding-3-xs);
+  --sgds-form-padding-inline-sm: var(--sgds-padding-2-xs);
+  --sgds-form-padding-inline-md: var(--sgds-padding-xs);
+  --sgds-form-padding-inline-lg: var(--sgds-padding-sm);
+  --sgds-form-padding-inline-xl: var(--sgds-padding-md);
+
+  --sgds-margin-none: var(--sgds-spacer-0);
+  --sgds-margin-3-xs: var(--sgds-spacer-3);
+  --sgds-margin-2-xs: var(--sgds-spacer-5);
+  --sgds-margin-xs: var(--sgds-spacer-6);
+  --sgds-margin-sm: var(--sgds-spacer-7);
+  --sgds-margin-md: var(--sgds-spacer-8);
+  --sgds-margin-lg: var(--sgds-spacer-9);
+  --sgds-margin-xl: var(--sgds-spacer-10);
+  --sgds-margin-2-xl: var(--sgds-spacer-11);
+  --sgds-margin-3-xl: var(--sgds-spacer-12);
+
+  --sgds-gap-none: var(--sgds-spacer-0);
+  --sgds-gap-2-xs: var(--sgds-spacer-2);
+  --sgds-gap-xs: var(--sgds-spacer-3);
+  --sgds-gap-sm: var(--sgds-spacer-4);
+  --sgds-gap-md: var(--sgds-spacer-5);
+  --sgds-gap-lg: var(--sgds-spacer-6);
+  --sgds-gap-xl: var(--sgds-spacer-7);
+  --sgds-gap-2-xl: var(--sgds-spacer-8);
+  --sgds-form-gap-sm: var(--sgds-gap-2-xs);
+  --sgds-form-gap-md: var(--sgds-gap-xs);
+  --sgds-form-gap-lg: var(--sgds-gap-sm);
+  --sgds-form-gap-xl: var(--sgds-gap-md);
+  --sgds-form-gap-2-xl: var(--sgds-gap-xl);
+
+  --sgds-form-height-3-xs: var(--sgds-dimension-12);
+  --sgds-form-height-2-xs: var(--sgds-dimension-16);
+  --sgds-form-height-xs: var(--sgds-dimension-20);
+  --sgds-form-height-sm: var(--sgds-dimension-24);
+  --sgds-form-height-md: var(--sgds-dimension-32);
+  --sgds-form-height-lg: var(--sgds-dimension-40);
+  --sgds-form-height-xl: var(--sgds-dimension-48);
+  --sgds-form-height-2-xl: var(--sgds-dimension-56);
+
+  --sgds-form-width-3-xs: var(--sgds-dimension-12);
+  --sgds-form-width-2-xs: var(--sgds-dimension-16);
+  --sgds-form-width-xs: var(--sgds-dimension-24);
+  --sgds-form-width-sm: var(--sgds-dimension-32);
+  --sgds-form-width-md: var(--sgds-dimension-40);
+  --sgds-form-width-lg: var(--sgds-dimension-48);
+  --sgds-form-width-xl: var(--sgds-dimension-56);
+  --sgds-form-width-2-xl: var(--sgds-dimension-64);
+  --sgds-form-width-3-xl: var(--sgds-dimension-72);
+  --sgds-form-width-4-xl: var(--sgds-dimension-80);
+
+  /* Semantic - Form Icon Size */
+  --sgds-form-icon-size-sm: var(--sgds-icon-size-sm);
+  --sgds-form-icon-size-md: var(--sgds-icon-size-md);
+  --sgds-form-icon-size-lg: var(--sgds-icon-size-lg);
+
+  --sgds-box-shadow-focus: 0px 0px 0px 4px var(--sgds-blue-400);
+  --sgds-form-box-shadow-focus: var(--sgds-box-shadow-focus);
+
+  /* Masthead and Mainnav Max Width and Padding */
+  --sgds-mainnav-max-width: 1440px;
+  --sgds-mainnav-padding-x: 2rem;
+  --sgds-mainnav-mobile-padding-x: 1.25rem;
+}
+:root.sgds-night-theme {
+  color-scheme: only dark;
+
+  /* Semantic - Default Colors */
+  --sgds-bg-default: var(--sgds-gray-1100);
+  --sgds-bg-alternate: var(--sgds-gray-1000);
+  --sgds-bg-fixed-light: var(--sgds-gray-000);
+  --sgds-bg-fixed-dark: var(--sgds-gray-1100);
+  --sgds-bg-overlay: oklch(from var(--sgds-gray-1100) l c h / 0.4);
+  --sgds-bg-translucent: oklch(from var(--sgds-gray-000) l c h / 0.1);
+  --sgds-bg-translucent-subtle: oklch(from var(--sgds-gray-000) l c h / 0.1);
+  --sgds-bg-transparent: transparent;
+  --sgds-surface-default: var(--sgds-gray-900);
+  --sgds-surface-raised: var(--sgds-gray-800);
+  --sgds-surface-inverse: var(--sgds-gray-000);
+  --sgds-surface-fixed-light: var(--sgds-gray-000);
+  --sgds-surface-fixed-dark: var(--sgds-gray-900);
+  --sgds-color-default: var(--sgds-gray-100);
+  --sgds-color-subtle: var(--sgds-gray-400);
+  --sgds-color-muted: var(--sgds-gray-800);
+  --sgds-color-inverse: var(--sgds-gray-1000);
+  --sgds-color-fixed-light: var(--sgds-gray-100);
+  --sgds-color-fixed-dark: var(--sgds-gray-1000);
+  --sgds-color-transparent: transparent;
+  --sgds-border-color-default: var(--sgds-gray-500);
+  --sgds-border-color-emphasis: var(--sgds-gray-200);
+  --sgds-border-color-muted: var(--sgds-gray-800);
+  --sgds-border-color-fixed-light: var(--sgds-gray-000);
+  --sgds-border-color-fixed-dark: var(--sgds-gray-1000);
+  --sgds-border-color-translucent: oklch(from var(--sgds-gray-000) l c h / 0.1);
+  --sgds-border-color-transparent: transparent;
+
+  /* Semantic - Primary Colors */
+  --sgds-primary-bg-default: var(--sgds-product-primary-600);
+  --sgds-primary-bg-muted: var(--sgds-product-primary-200);
+  --sgds-primary-bg-translucent: oklch(from var(--sgds-product-primary-100) l c h / 0.05);
+  --sgds-primary-surface-default: var(--sgds-product-primary-600);
+  --sgds-primary-surface-emphasis: var(--sgds-product-primary-700);
+  --sgds-primary-surface-muted: var(--sgds-product-primary-200);
+  --sgds-primary-surface-translucent: oklch(from var(--sgds-product-primary-100) l c h / 0.1);
+  --sgds-primary-color-default: var(--sgds-product-primary-400);
+  --sgds-primary-color-emphasis: var(--sgds-product-primary-300);
+  --sgds-primary-color-fixed-light: var(--sgds-product-primary-400);
+  --sgds-primary-color-fixed-dark: var(--sgds-product-primary-700);
+  --sgds-primary-border-color-default: var(--sgds-product-primary-500);
+  --sgds-primary-border-color-emphasis: var(--sgds-product-primary-300);
+  --sgds-primary-border-color-muted: var(--sgds-product-primary-700);
+
+  /* Semantic - Success Colors */
+  --sgds-success-bg-default: var(--sgds-green-600);
+  --sgds-success-bg-muted: var(--sgds-green-200);
+  --sgds-success-surface-default: var(--sgds-green-600);
+  --sgds-success-surface-emphasis: var(--sgds-green-700);
+  --sgds-success-surface-muted: var(--sgds-green-200);
+  --sgds-success-color-default: var(--sgds-green-400);
+  --sgds-success-color-emphasis: var(--sgds-green-300);
+  --sgds-success-color-fixed-light: var(--sgds-green-400);
+  --sgds-success-color-fixed-dark: var(--sgds-green-700);
+  --sgds-success-border-color-default: var(--sgds-green-500);
+  --sgds-success-border-color-emphasis: var(--sgds-green-300);
+  --sgds-success-border-color-muted: var(--sgds-green-700);
+
+  /* Semantic - Danger Colors */
+  --sgds-danger-bg-default: var(--sgds-red-600);
+  --sgds-danger-bg-muted: var(--sgds-red-200);
+  --sgds-danger-surface-default: var(--sgds-red-600);
+  --sgds-danger-surface-emphasis: var(--sgds-red-700);
+  --sgds-danger-surface-muted: var(--sgds-red-200);
+  --sgds-danger-color-default: var(--sgds-red-400);
+  --sgds-danger-color-emphasis: var(--sgds-red-300);
+  --sgds-danger-color-fixed-light: var(--sgds-red-400);
+  --sgds-danger-color-fixed-dark: var(--sgds-red-700);
+  --sgds-danger-border-color-default: var(--sgds-red-500);
+  --sgds-danger-border-color-emphasis: var(--sgds-red-300);
+  --sgds-danger-border-color-subtle: var(--sgds-red-700);
+
+  /* Semantic - Warning Colors */
+  --sgds-warning-bg-default: var(--sgds-yellow-300);
+  --sgds-warning-bg-muted: var(--sgds-yellow-200);
+  --sgds-warning-surface-default: var(--sgds-yellow-300);
+  --sgds-warning-surface-emphasis: var(--sgds-yellow-600);
+  --sgds-warning-surface-muted: var(--sgds-yellow-100);
+  --sgds-warning-color-default: var(--sgds-yellow-300);
+  --sgds-warning-color-emphasis: var(--sgds-yellow-200);
+  --sgds-warning-color-fixed-light: var(--sgds-yellow-300);
+  --sgds-warning-color-fixed-dark: var(--sgds-yellow-700);
+  --sgds-warning-border-color-default: var(--sgds-yellow-500);
+  --sgds-warning-border-color-emphasis: var(--sgds-yellow-300);
+  --sgds-warning-border-color-subtle: var(--sgds-yellow-700);
+
+  /* Semantic - Neutral Colors */
+  --sgds-neutral-bg-default: var(--sgds-gray-600);
+  --sgds-neutral-bg-muted: var(--sgds-gray-200);
+  --sgds-neutral-surface-default: var(--sgds-gray-700);
+  --sgds-neutral-surface-emphasis: var(--sgds-gray-700);
+  --sgds-neutral-surface-muted: var(--sgds-gray-200);
+  --sgds-neutral-color-default: var(--sgds-gray-400);
+  --sgds-neutral-color-emphasis: var(--sgds-gray-300);
+  --sgds-neutral-color-fixed-light: var(--sgds-gray-400);
+  --sgds-neutral-color-fixed-dark: var(--sgds-gray-700);
+  --sgds-neutral-border-color-default: var(--sgds-gray-500);
+  --sgds-neutral-border-color-emphasis: var(--sgds-gray-300);
+  --sgds-neutral-border-color-subtle: var(--sgds-gray-700);
+
+  /* Semantic - Display Colors */
+  --sgds-display-color-default: var(--sgds-gray-000);
+  --sgds-display-color-subtle: var(--sgds-gray-200);
+
+  /* Semantic - Header Colors */
+  --sgds-header-color-default: var(--sgds-gray-100);
+  --sgds-header-color-subtle: var(--sgds-gray-200);
+
+  /* Semantic - Body Colors */
+  --sgds-body-color-default: var(--sgds-gray-000);
+  --sgds-body-color-subtle: var(--sgds-gray-300);
+
+  /* Semantic - Label Colors */
+  --sgds-label-color-default: var(--sgds-gray-100);
+  --sgds-label-color-subtle: var(--sgds-gray-300);
+
+  /* Semantic - Caption Color */
+  --sgds-caption-color: var(--sgds-gray-300);
+
+  /* Semantic - Link Color */
+  --sgds-link-color-default: var(--sgds-blue-400);
+  --sgds-link-color-emphasis: var(--sgds-blue-300);
+
+  /* Semantic - Form Color */
+  --sgds-form-surface-default: var(--sgds-gray-900);
+  --sgds-form-surface-emphasis: var(--sgds-gray-200);
+  --sgds-form-surface-subtle: var(--sgds-gray-500);
+  --sgds-form-surface-muted: var(--sgds-gray-700);
+  --sgds-form-surface-inverse: var(--sgds-gray-000);
+  --sgds-form-surface-fixed-light: var(--sgds-gray-000);
+  --sgds-form-surface-fixed-dark: var(--sgds-gray-900);
+  --sgds-form-color-default: var(--sgds-gray-100);
+  --sgds-form-color-subtle: var(--sgds-gray-300);
+  --sgds-form-color-muted: var(--sgds-gray-700);
+  --sgds-form-color-inverse: var(--sgds-gray-900);
+  --sgds-form-color-fixed-light: var(--sgds-gray-000);
+  --sgds-form-color-fixed-dark: var(--sgds-gray-1100);
+  --sgds-form-primary-surface-default: var(--sgds-product-primary-600);
+  --sgds-form-primary-surface-emphasis: var(--sgds-product-primary-700);
+  --sgds-form-primary-color-default: var(--sgds-product-primary-400);
+  --sgds-form-success-surface-default: var(--sgds-green-600);
+  --sgds-form-success-color-default: var(--sgds-green-500);
+  --sgds-form-success-border-color-default: var(--sgds-green-500);
+  --sgds-form-danger-surface-default: var(--sgds-red-600);
+  --sgds-form-danger-color-default: var(--sgds-red-500);
+  --sgds-form-danger-border-color-default: var(--sgds-red-500);
+}
+</style><style data-styled="active" data-styled-version="5.3.11"></style><link rel="modulepreload" as="script" crossorigin="" href="/static/DirectoryMain-fd638ed5.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/smoothscroll-9cfea706.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/TabList-b45de876.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/TextOrReactNode-d2a808da.js"><link rel="stylesheet" href="/static/TabList-1595d434.css"><link rel="modulepreload" as="script" crossorigin="" href="/static/Services-1116e4d0.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/QueryClientProvider-d467cbba.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/Masthead-49051c77.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/NoResultsListing-fcb2aa6f.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/index.esm-cf5da7a2.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/RichText-0d4f2a5d.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/FieldLabel-6c361838.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/debounce-d74e3e20.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/index-37839a24.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/useBookmark-e6def124.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/GenericBannerButton-0bbb33e4.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/cloneDeep-2f90ca3b.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/resolvers-1d6d88c2.js"><link rel="modulepreload" as="script" crossorigin="" href="/static/Dropdown-6e45071e.js"><link rel="stylesheet" href="/static/DirectoryMain-f82fab9e.css"><style id="react-tooltip-core-styles" type="text/css">:root{--rt-color-white:#fff;--rt-color-dark:#222;--rt-color-success:#8dc572;--rt-color-error:#be6464;--rt-color-warning:#f0ad4e;--rt-color-info:#337ab7;--rt-opacity:0.9}.core-styles-module_tooltip__3vRRp{visibility:hidden;position:absolute;top:0;left:0;pointer-events:none;opacity:0;transition:opacity 0.3s ease-out;will-change:opacity,visibility}.core-styles-module_fixed__pcSol{position:fixed}.core-styles-module_arrow__cvMwQ{position:absolute;background:inherit}.core-styles-module_noArrow__xock6{display:none}.core-styles-module_clickable__ZuTTB{pointer-events:auto}.core-styles-module_show__Nt9eE{visibility:visible;opacity:var(--rt-opacity)}</style><style id="react-tooltip-base-styles" type="text/css">
+.styles-module_tooltip__mnnfp{padding:8px 16px;border-radius:3px;font-size:90%;width:max-content}.styles-module_arrow__K0L3T{width:8px;height:8px}[class*='react-tooltip__place-top']>.styles-module_arrow__K0L3T{transform:rotate(45deg)}[class*='react-tooltip__place-right']>.styles-module_arrow__K0L3T{transform:rotate(135deg)}[class*='react-tooltip__place-bottom']>.styles-module_arrow__K0L3T{transform:rotate(225deg)}[class*='react-tooltip__place-left']>.styles-module_arrow__K0L3T{transform:rotate(315deg)}.styles-module_dark__xNqje{background:var(--rt-color-dark);color:var(--rt-color-white)}.styles-module_light__Z6W-X{background-color:var(--rt-color-white);color:var(--rt-color-dark)}.styles-module_success__A2AKt{background-color:var(--rt-color-success);color:var(--rt-color-white)}.styles-module_warning__SCK0X{background-color:var(--rt-color-warning);color:var(--rt-color-white)}.styles-module_error__JvumD{background-color:var(--rt-color-error);color:var(--rt-color-white)}.styles-module_info__BWdHW{background-color:var(--rt-color-info);color:var(--rt-color-white)}</style><style data-tiptap-style="">.ProseMirror {
+  position: relative;
+}
+
+.ProseMirror {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  white-space: break-spaces;
+  -webkit-font-variant-ligatures: none;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0; /* the above doesn't seem to work in Edge */
+}
+
+.ProseMirror [contenteditable="false"] {
+  white-space: normal;
+}
+
+.ProseMirror [contenteditable="false"] [contenteditable="true"] {
+  white-space: pre-wrap;
+}
+
+.ProseMirror pre {
+  white-space: pre-wrap;
+}
+
+img.ProseMirror-separator {
+  display: inline !important;
+  border: none !important;
+  margin: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.ProseMirror-gapcursor {
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  margin: 0;
+}
+
+.ProseMirror-gapcursor:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -2px;
+  width: 20px;
+  border-top: 1px solid black;
+  animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
+}
+
+@keyframes ProseMirror-cursor-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.ProseMirror-hideselection *::selection {
+  background: transparent;
+}
+
+.ProseMirror-hideselection *::-moz-selection {
+  background: transparent;
+}
+
+.ProseMirror-hideselection * {
+  caret-color: transparent;
+}
+
+.ProseMirror-focused .ProseMirror-gapcursor {
+  display: block;
+}
+
+.tippy-box[data-animation=fade][data-state=hidden] {
+  opacity: 0
+}</style><style data-emotion="css" data-s=""></style><meta property="og:title" content="Family Service Centre (FSC) - SupportGoWhere" data-react-helmet="true"><meta name="description" property="og:description" content="FSCs provide support for vulnerable individuals and families with social and emotional issues, and work towards stability, self-reliance and social mobility." data-react-helmet="true"><meta property="og:image:width" content="512" data-react-helmet="true"><meta property="og:image:height" content="512" data-react-helmet="true"><meta property="og:url" content="https://supportgowhere.life.gov.sg/services/SVC-FSCF/family-service-centre-fsc" data-react-helmet="true"></head>
+  <body>
+    <noscript><iframe
+        src="https://www.googletagmanager.com/ns.html?id=MOCKID"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"><div class="Toastify"></div><div class="PageWrapper-sc-lcsajk-1 cvdzrS"><div class="ContentArea-sc-lcsajk-0 lkkHRG"><header><div class="Wrapper-sc-1lw1rs7-0 ghUwIM print-hide"><div class="visually-hidden" aria-hidden="true"><div class="BannerWrapper-sc-gcgkle-0 jMxgU"><div class="ContentWrapper-sc-gcgkle-1 dKTflb"><div class="InfoWrapper-sc-gcgkle-2 khUQMX"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 32px; width: 32px; min-width: 32px; min-height: 32px;"><path d="M1.84449 11.5617C1.53824 11.8679 1.53824 12.3054 1.80074 12.5679L3.28824 14.0554C3.59449 14.3179 4.03199 14.3617 4.29449 14.0992C4.60074 13.7929 4.90699 13.5304 5.25699 13.3117L2.41324 11.0804C2.19449 11.2554 2.01949 11.3867 1.84449 11.5617ZM22.4507 19.5242L24.4632 17.5554C24.7257 17.2929 24.7257 16.8117 24.4195 16.5492C21.5757 14.0117 17.9007 12.9179 14.357 13.2679L10.7257 10.4679C16.2382 8.7617 22.407 9.9867 26.9132 14.0992C27.2195 14.3617 27.6132 14.3179 27.9195 14.0554L29.407 12.5679C29.6695 12.3054 29.6695 11.8679 29.3632 11.5617C23.3257 5.9617 14.6632 4.78045 7.44449 7.93045L3.59449 4.95545C3.28824 4.69295 2.85074 4.78045 2.63199 5.0867L1.75699 6.18045C1.49449 6.4867 1.58199 6.9242 1.88824 7.14295L27.6132 27.0492C27.9195 27.3117 28.357 27.2242 28.6195 26.9179L29.4507 25.8242C29.7132 25.518 29.6257 25.0805 29.3195 24.8617L22.4507 19.5242ZM6.78824 16.5492C6.48199 16.8117 6.48199 17.2929 6.74449 17.5554L8.27574 19.0429C8.49449 19.3054 8.93199 19.3054 9.19449 19.0867C9.80699 18.5617 10.4195 18.1679 11.1195 17.8179L8.10074 15.4992C7.66324 15.8492 7.22574 16.1554 6.78824 16.5492ZM12.8257 22.9804C12.8257 24.5554 14.0507 25.7804 15.6257 25.7804C16.982 25.7804 18.1632 24.7742 18.3382 23.4617L14.4882 20.4429C13.482 20.8804 12.8257 21.8429 12.8257 22.9804Z" fill="#D43328"></path></svg><div><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU" style="display: block;">No internet connection</span><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Connect to the internet and try again.</span></div></div></div></div></div><div class="BannerWrapper-sc-gcgkle-0 jOfdQG"><div class="ContentWrapper-sc-gcgkle-1 dKTflb"><div class="InfoWrapper-sc-gcgkle-2 khUQMX"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 32px; width: 32px; min-width: 32px; min-height: 32px;"><path d="M16 2C8.26613 2 2 8.32258 2 16C2 23.7339 8.26613 30 16 30C23.6774 30 30 23.7339 30 16C30 8.32258 23.6774 2 16 2ZM16 8.20968C17.2984 8.20968 18.371 9.28226 18.371 10.5806C18.371 11.9355 17.2984 12.9516 16 12.9516C14.6452 12.9516 13.629 11.9355 13.629 10.5806C13.629 9.28226 14.6452 8.20968 16 8.20968ZM19.1613 22.5484C19.1613 22.9435 18.8226 23.2258 18.4839 23.2258H13.5161C13.121 23.2258 12.8387 22.9435 12.8387 22.5484V21.1935C12.8387 20.8548 13.121 20.5161 13.5161 20.5161H14.1935V16.9032H13.5161C13.121 16.9032 12.8387 16.621 12.8387 16.2258V14.871C12.8387 14.5323 13.121 14.1935 13.5161 14.1935H17.129C17.4677 14.1935 17.8065 14.5323 17.8065 14.871V20.5161H18.4839C18.8226 20.5161 19.1613 20.8548 19.1613 21.1935V22.5484Z" fill="#DF2573"></path></svg><div><div><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Beware of impersonation scams</span></div><div><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Government officials will NEVER ask you to transfer money or disclose bank log-in details over a phone call. Call the 24/7 ScamShield Helpline at 1799 if you are unsure if something is a scam. For more information on how to protect yourself against scams, please visit the <a target="_blank" rel="noopener noreferrer" href="https://www.scamshield.gov.sg/i-want-protection-from-scams/learn-to-recognise-scams/government-officials-impersonation-scams/" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">ScamShield website</span><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="StyledExtLinkIcon-sc-q9n0ng-0 kXGesl"><path d="M17.5312 2L12.4375 2.03125C12.1875 2.03125 12 2.21875 12 2.46875V3.5C12 3.75 12.1875 3.96875 12.4375 3.96875L14.75 3.875L14.8125 3.9375L6.09375 12.6562C6.03125 12.7188 5.96875 12.8438 5.96875 12.9062C5.96875 13 6.03125 13.125 6.09375 13.1875L6.8125 13.9062C6.875 13.9688 7 14.0312 7.09375 14.0312C7.15625 14.0312 7.28125 13.9688 7.34375 13.9062L16.0625 5.1875L16.125 5.25L16.0312 7.5625C16.0312 7.8125 16.25 8 16.5 8H17.5312C17.7812 8 17.9688 7.8125 17.9688 7.5625L18 2.46875C18 2.21875 17.7812 2 17.5312 2ZM15.5 11H15C14.7188 11 14.5 11.25 14.5 11.5V16.3125C14.5 16.4375 14.4062 16.5 14.3125 16.5H3.6875C3.5625 16.5 3.5 16.4375 3.5 16.3125V5.6875C3.5 5.59375 3.5625 5.5 3.6875 5.5H8.5C8.75 5.5 9 5.28125 9 5V4.5C9 4.25 8.75 4 8.5 4H3.5C2.65625 4 2 4.6875 2 5.5V16.5C2 17.3438 2.65625 18 3.5 18H14.5C15.3125 18 16 17.3438 16 16.5V11.5C16 11.25 15.75 11 15.5 11Z" fill="currentColor"></path></svg></a>.</span></div></div></div><button type="button" aria-label="Close sitewide banner" class="StyledButton-sc-8h27dh-0 ckNRZP"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M26.668 5.33362L5.33385 26.6677" stroke="#4E4E4E" stroke-width="4" stroke-linecap="round"></path><path d="M26.668 26.6675L5.33385 5.33336" stroke="#4E4E4E" stroke-width="4" stroke-linecap="round"></path></svg></button></div></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV print-hide" style="background-color: rgb(240, 240, 240);"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><sgds-masthead></sgds-masthead></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV" style="background: rgb(255, 255, 255);"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj" style="padding: 0px;"><nav class="StyledNavBar-sc-qj96th-3 cBSnVA navbar navbar-expand-md navbar-light sgds"><span class="StyledNavBarBrand-sc-qj96th-1 dtmCri sgw"><div role="button" tabindex="0" class="StyledDiv-sc-58sp6l-2 hqkZkj"><img src="/static/logo-sgw-fbb000b6.png" alt="SupportGoWhere Logo" aria-label="SupportGoWhere Logo" class="StyledSGWLogoWithName-sc-qj96th-0 curbMg"></div></span><div class="SearchContainer-sc-qj96th-8 bktrCe"></div><div class="NavbarBackground-sc-qj96th-16 gkzEhh"></div><div class="DropdownContainer-sc-qj96th-10 kQkseS"><div class="StyledCollapse-sc-qj96th-14 eNdRVE navbar-collapse collapse" id="navbar-nav"><ul class="StyledNav-sc-qj96th-15 gSBlwQ navbar-nav navbar-nav-scroll"><li class="StyledNavDropdown-sc-qj96th-2 iEcGaj nav-item dropdown sgds"><a variant="outline-secondary" id="nav-dropdown1" aria-expanded="false" role="button" class="dropdown-toggle sgw" tabindex="0" href="#"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Support</span><i class="bi bi-chevron-down"></i></a></li><li class="StyledNavDropdown-sc-qj96th-2 iEcGaj nav-item dropdown sgds"><a variant="outline-secondary" id="nav-dropdown" aria-expanded="false" role="button" class="dropdown-toggle sgw" tabindex="0" href="#"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Resources &amp; Tools</span><i class="bi bi-chevron-down"></i></a></li></ul></div><div style="display: flex; gap: 32px;"><ul class="StyledNav-sc-qj96th-15 gSBlwQ navbar-nav navbar-nav-scroll"><li class="nav-item" style="display: flex;"><div class="SearchButtonWrapper-sc-qj96th-21 cZYYvb"><a aria-controls="navbar-search" href="/chat" class="StyledSearchLink-sc-qj96th-22 iGTDuV"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M2.03835 10.3443C2.45772 6.2093 6.19894 3.22791 10.3669 3.6505C11.0449 3.71925 11.6946 3.8748 12.3051 4.10402C12.7702 4.27881 13.0058 4.79667 12.8313 5.26183C12.6567 5.72686 12.1386 5.96325 11.6735 5.78917C11.2069 5.61397 10.7078 5.49412 10.1852 5.44113C6.97798 5.11598 4.14517 7.40809 3.82898 10.5259C3.51286 13.6438 5.82831 16.4585 9.03562 16.7837C11.3881 17.0221 13.5457 15.8493 14.6489 13.9735C14.9009 13.5451 15.4533 13.4017 15.8817 13.6536C16.3097 13.9057 16.4522 14.457 16.2005 14.8853C16.0367 15.1637 15.8538 15.4289 15.6567 15.6821L20.2692 20.2946C20.4557 20.4812 20.5492 20.6973 20.5493 20.9415C20.5493 21.1857 20.4583 21.3977 20.2751 21.5755C20.0973 21.7587 19.8853 21.8496 19.6411 21.8497C19.3968 21.8496 19.1807 21.7561 18.9942 21.5696L14.3876 16.963C12.8843 18.154 10.9236 18.7841 8.85398 18.5743C4.68598 18.1517 1.6191 14.4793 2.03835 10.3443Z" fill="#135CEA"></path><path d="M16.4712 3C16.634 3 16.7935 3.04984 16.927 3.14297C17.0602 3.23597 17.1614 3.36791 17.2176 3.52031L18.1739 6.10078L20.7544 7.05C20.9078 7.10587 21.0399 7.20868 21.1329 7.34297C21.2257 7.47721 21.2753 7.63678 21.2735 7.8C21.2745 7.96289 21.2248 8.12221 21.1317 8.25586C21.0384 8.38957 20.9054 8.49111 20.752 8.54648L18.1739 9.49922L17.2235 12.0797C17.1672 12.2321 17.0661 12.364 16.9329 12.457C16.7993 12.5502 16.6398 12.6 16.477 12.6C16.3144 12.6 16.1558 12.55 16.0223 12.457C15.8889 12.364 15.7868 12.2322 15.7305 12.0797L14.7743 9.49922L12.1938 8.55C12.0411 8.49377 11.9096 8.39163 11.8165 8.2582C11.7234 8.12482 11.6736 7.96613 11.6735 7.80352C11.6735 7.64072 11.7233 7.48118 11.8165 7.34766C11.9096 7.21426 12.0411 7.11207 12.1938 7.05586L14.7743 6.10078L15.7247 3.52031C15.781 3.36778 15.8831 3.23599 16.0165 3.14297C16.1499 3.05004 16.3085 3 16.4712 3Z" fill="#135CEA"></path></svg></a></div></li><li class="LoginWrapper-sc-qj96th-19 hMpsRY display-none-print nav-item"><button class="StyledTextButton-sc-alyw8n-0 cPPNHm LogInButton-sc-qj96th-20 krtbQR" type="button"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Log in</span></button></li></ul></div><div id="navbar-profile" class="ProfileDropdownWrapper-sc-792al6-3 iLRZMj"><div class="ProfileContent-sc-792al6-4 hzxlRL"><span class="StyledSpan-sc-1yqr1pc-0 gzNuqt">Welcome to SupportGoWhere!</span></div><hr class="Divider-sc-qj96th-9 iVicss"><div class="ProfileMenu-sc-792al6-5 gWSEwU"><a data-testid="my-applications-link" class="StyledReactLink-sc-q9n0ng-1 dNOWGC StyledMenuItem-sc-792al6-6 bflAiY" href="/my-applications"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">My Applications</span></a><div class="logout-button-container"><button class="StyledTextButton-sc-alyw8n-0 cPPNHm StyledTextButton-sc-792al6-7 leiIpc" type="button"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Log out</span></button></div></div></div></div></nav></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV" style="background-color: rgb(242, 242, 242); padding: 8px 0px;"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div class="Content-sc-69r0qo-0 elyHzP"><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Read this in:</span><div class="LanguageList-sc-69r0qo-1 cgLIWW"><button class="StyledTextButton-sc-alyw8n-0 cPPNHm selected" type="button" aria-current="true" disabled=""><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">English</span></button><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">|</span><button class="StyledTextButton-sc-alyw8n-0 cPPNHm" type="button" aria-current="false" style="color: rgb(18, 94, 236);"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">中文</span></button><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">|</span><button class="StyledTextButton-sc-alyw8n-0 cPPNHm" type="button" aria-current="false" style="color: rgb(18, 94, 236);"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">Melayu</span></button><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">|</span><button class="StyledTextButton-sc-alyw8n-0 cPPNHm" type="button" aria-current="false" style="color: rgb(18, 94, 236);"><span class="StyledSpan-sc-1yqr1pc-0 kkCTqU">தமிழ்</span></button></div></div></div></div></header><main><h1 class="visually-hidden">Family Service Centre (FSC) - SupportGoWhere</h1><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV StyledContainer-sc-nqpmyf-0 pgyep"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div class="ContentWrapper-sc-nqpmyf-1 kdGELz"><div class="HeaderWrapper-sc-nqpmyf-3 eleNfD"><div class="TitleContentWrapper-sc-nqpmyf-5 cuuVOo"><div class="TitleContainer-sc-nqpmyf-4 iPHLjh"><div class="MyCol-sc-1a4ap6x-0 cXBcmU" style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 0px; padding-right: 0px; width: 75%; flex: 0 0 75%; max-width: 75%; margin-left: 0%; right: auto; left: auto;"><span class="StyledSpan-sc-1yqr1pc-0 jyUOry">Family Service Centre (FSC)</span></div><div class="ShareButtonContainer-sc-nqpmyf-8 jObZKv"><button type="button" aria-disabled="false" data-tooltip-content="Link Copied" data-tooltip-id="tooltip-feedback" data-tooltip-place="bottom" aria-describedby="tooltip-feedback" class="StyledHTMLButton-sc-17pj0p6-0 dzKCOz StyledTouchableHTMLButton-sc-1gfz1kr-0 ekiZcp StyledButton-sc-nqpmyf-9 kfVcsU"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M11.8203 8.16406C11.4766 7.82031 11.1016 7.57031 10.6953 7.35156C10.5391 7.28906 10.3828 7.32031 10.2578 7.44531L10.1328 7.57031C9.85156 7.82031 9.69531 8.16406 9.66406 8.50781C9.63281 8.66406 9.72656 8.82031 9.85156 8.91406C10.0703 9.00781 10.4141 9.22656 10.5703 9.41406C11.6016 10.4453 11.6016 12.1016 10.5703 13.1328L8.22656 15.4766C7.19531 16.5078 5.53906 16.5078 4.50781 15.4766C3.47656 14.4453 3.47656 12.7891 4.50781 11.7578L5.94531 10.3203C6.03906 10.2266 6.07031 10.1016 6.03906 9.97656C5.97656 9.66406 5.91406 9.13281 5.88281 8.78906C5.88281 8.47656 5.47656 8.32031 5.25781 8.53906C4.88281 8.91406 4.28906 9.50781 3.28906 10.5078C1.57031 12.2266 1.57031 15.0078 3.28906 16.6953C4.97656 18.4141 7.75781 18.4141 9.47656 16.6953C12.0391 14.1328 11.9141 14.2578 12.1016 14.0078C13.5078 12.3203 13.4141 9.75781 11.8203 8.16406ZM16.6953 3.28906C15.0078 1.57031 12.2266 1.57031 10.5078 3.28906C7.94531 5.85156 8.07031 5.72656 7.88281 5.97656C6.47656 7.66406 6.57031 10.2266 8.16406 11.8203C8.50781 12.1641 8.88281 12.4141 9.28906 12.6328C9.44531 12.6953 9.60156 12.6641 9.72656 12.5391L9.85156 12.4141C10.1328 12.1641 10.2891 11.8203 10.3203 11.4766C10.3516 11.3203 10.2578 11.1641 10.1328 11.0703C9.91406 10.9766 9.57031 10.7578 9.41406 10.5703C8.38281 9.53906 8.38281 7.88281 9.41406 6.85156L11.7578 4.50781C12.7891 3.47656 14.4453 3.47656 15.4766 4.50781C16.5078 5.53906 16.5078 7.19531 15.4766 8.22656L14.0391 9.66406C13.9453 9.75781 13.9141 9.88281 13.9453 10.0078C14.0078 10.3203 14.0703 10.8516 14.1016 11.1953C14.1016 11.5078 14.5078 11.6641 14.7266 11.4453C15.1016 11.0703 15.6953 10.4766 16.6953 9.47656C18.4141 7.75781 18.4141 4.97656 16.6953 3.28906Z" fill="#056FFA"></path></svg><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Share link</span></button></div></div><div data-testid="mastheadSubtitle" class="StyledSubtitle-sc-nqpmyf-6 eNcKtw"><div class="MyCol-sc-1a4ap6x-0 cXBcmU" style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 0px; padding-right: 0px; width: 75%; flex: 0 0 75%; max-width: 75%; margin-left: 0%; right: auto; left: auto;"><span class="StyledSpan-sc-1yqr1pc-0 lmsyLd">FSCs provide support for vulnerable individuals and families with social and emotional issues, and work towards stability, self-reliance and social mobility.</span></div></div></div></div></div></div></div><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV ServiceDetailsContainer-sc-t1jiql-1 kYNloa" style="padding: 0px;"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div style="margin-left: -16px; margin-right: -16px; display: flex; flex-grow: 0; flex-shrink: 0; align-items: normal; justify-content: flex-start; flex-flow: wrap;"><div class="MyCol-sc-1a4ap6x-0 cXBcmU" style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 33.3333%; flex: 0 0 33.3333%; max-width: 33.3333%; margin-left: 0%; right: auto; left: auto; margin-bottom: 0px;"><div class="AdditionalDetailsWrapper-sc-t1jiql-0 dznkPu"><div class="SchemeHighlightsWrapper-sc-1el0czi-2 gdbSfB"><div class="Wrapper-sc-ks5t8a-0 goONio"><span class="StyledSpan-sc-1yqr1pc-0 dELZyp" style="color: rgb(188, 0, 91);">SERVICE HIGHLIGHTS</span><ul class="List-sc-ks5t8a-2 bGpqhv"><li aria-label="highlight 1" class="ListItemWrapper-sc-ks5t8a-1 krJpXl"><div class="IconWrapper-sc-ks5t8a-3 cFojlp"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M12 3C7.02942 3 3 7.02942 3 12C3 16.9706 7.02942 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02942 16.9706 3 12 3ZM12 19.8387C7.69365 19.8387 4.16129 16.3528 4.16129 12C4.16129 7.69368 7.64716 4.16129 12 4.16129C16.3064 4.16129 19.8387 7.64716 19.8387 12C19.8387 16.3063 16.3528 19.8387 12 19.8387ZM17.1398 9.86029L10.5901 16.3574C10.4194 16.5268 10.1436 16.5257 9.97427 16.3549L6.85773 13.2132C6.68837 13.0425 6.68946 12.7667 6.8602 12.5974L7.16939 12.2907C7.34014 12.1213 7.61587 12.1224 7.78524 12.2932L10.2884 14.8165L16.2197 8.93278C16.3905 8.76341 16.6662 8.7645 16.8356 8.93525L17.1423 9.24444C17.3117 9.41519 17.3105 9.69092 17.1398 9.86029Z" fill="#6E6E6E"></path></svg></div><span class="StyledSpan-sc-1yqr1pc-0 fxzfMC" style="color: rgb(78, 78, 78); margin-left: 8px; font-weight: 600; word-break: break-word; overflow-wrap: anywhere;">Centre-based</span></li><li aria-label="highlight 2" class="ListItemWrapper-sc-ks5t8a-1 krJpXl"><div class="IconWrapper-sc-ks5t8a-3 cFojlp"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M12 3C7.02942 3 3 7.02942 3 12C3 16.9706 7.02942 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02942 16.9706 3 12 3ZM12 19.8387C7.69365 19.8387 4.16129 16.3528 4.16129 12C4.16129 7.69368 7.64716 4.16129 12 4.16129C16.3064 4.16129 19.8387 7.64716 19.8387 12C19.8387 16.3063 16.3528 19.8387 12 19.8387ZM17.1398 9.86029L10.5901 16.3574C10.4194 16.5268 10.1436 16.5257 9.97427 16.3549L6.85773 13.2132C6.68837 13.0425 6.68946 12.7667 6.8602 12.5974L7.16939 12.2907C7.34014 12.1213 7.61587 12.1224 7.78524 12.2932L10.2884 14.8165L16.2197 8.93278C16.3905 8.76341 16.6662 8.7645 16.8356 8.93525L17.1423 9.24444C17.3117 9.41519 17.3105 9.69092 17.1398 9.86029Z" fill="#6E6E6E"></path></svg></div><span class="StyledSpan-sc-1yqr1pc-0 fxzfMC" style="color: rgb(78, 78, 78); margin-left: 8px; font-weight: 600; word-break: break-word; overflow-wrap: anywhere;">Nominal charges may apply</span></li><li aria-label="highlight 3" class="ListItemWrapper-sc-ks5t8a-1 krJpXl"><div class="IconWrapper-sc-ks5t8a-3 cFojlp"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M12 3C7.02942 3 3 7.02942 3 12C3 16.9706 7.02942 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02942 16.9706 3 12 3ZM12 19.8387C7.69365 19.8387 4.16129 16.3528 4.16129 12C4.16129 7.69368 7.64716 4.16129 12 4.16129C16.3064 4.16129 19.8387 7.64716 19.8387 12C19.8387 16.3063 16.3528 19.8387 12 19.8387ZM17.1398 9.86029L10.5901 16.3574C10.4194 16.5268 10.1436 16.5257 9.97427 16.3549L6.85773 13.2132C6.68837 13.0425 6.68946 12.7667 6.8602 12.5974L7.16939 12.2907C7.34014 12.1213 7.61587 12.1224 7.78524 12.2932L10.2884 14.8165L16.2197 8.93278C16.3905 8.76341 16.6662 8.7645 16.8356 8.93525L17.1423 9.24444C17.3117 9.41519 17.3105 9.69092 17.1398 9.86029Z" fill="#6E6E6E"></path></svg></div><span class="StyledSpan-sc-1yqr1pc-0 fxzfMC" style="color: rgb(78, 78, 78); margin-left: 8px; font-weight: 600; word-break: break-word; overflow-wrap: anywhere;">Referral not required</span></li></ul></div></div><div class="SchemeHighlightsWrapper-sc-1el0czi-2 gdbSfB" style="margin-top: 24px;"><div class="Wrapper-sc-ks5t8a-0 goONio"><span class="StyledSpan-sc-1yqr1pc-0 dELZyp" style="color: rgb(188, 0, 91);">Service Providers</span><div style="display: flex; padding-top: 12px;"><div style="display: flex;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M12.25 5.125C9.97545 5.125 8.125 6.97545 8.125 9.25C8.125 11.5246 9.97545 13.375 12.25 13.375C14.5246 13.375 16.375 11.5246 16.375 9.25C16.375 6.97545 14.5246 5.125 12.25 5.125ZM12.25 12C10.7336 12 9.5 10.7664 9.5 9.25C9.5 7.73364 10.7336 6.5 12.25 6.5C13.7664 6.5 15 7.73364 15 9.25C15 10.7664 13.7664 12 12.25 12ZM12.25 1C7.69364 1 4 4.69364 4 9.25C4 12.5763 5.15887 13.5052 11.4021 22.5561C11.8118 23.1479 12.6882 23.148 13.0979 22.5561C19.3411 13.5052 20.5 12.5763 20.5 9.25C20.5 4.69364 16.8064 1 12.25 1ZM12.25 21.3642C6.26467 12.7085 5.375 12.0212 5.375 9.25C5.375 7.4136 6.09013 5.68716 7.38865 4.38865C8.68716 3.09013 10.4136 2.375 12.25 2.375C14.0864 2.375 15.8128 3.09013 17.1114 4.38865C18.4099 5.68716 19.125 7.4136 19.125 9.25C19.125 12.0211 18.2359 12.7077 12.25 21.3642Z" fill="#6E6E6E"></path></svg><a class="StyledAnchor-sc-q9n0ng-2 hLdyhe link" target="_blank" rel="noopener noreferrer" href="https://www.msf.gov.sg/our-services/directories#familytab" aria-describedby="open-new-tab-description"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Find service providers near you</span><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="StyledExtLinkIcon-sc-q9n0ng-0 kXGesl"><path d="M17.5312 2L12.4375 2.03125C12.1875 2.03125 12 2.21875 12 2.46875V3.5C12 3.75 12.1875 3.96875 12.4375 3.96875L14.75 3.875L14.8125 3.9375L6.09375 12.6562C6.03125 12.7188 5.96875 12.8438 5.96875 12.9062C5.96875 13 6.03125 13.125 6.09375 13.1875L6.8125 13.9062C6.875 13.9688 7 14.0312 7.09375 14.0312C7.15625 14.0312 7.28125 13.9688 7.34375 13.9062L16.0625 5.1875L16.125 5.25L16.0312 7.5625C16.0312 7.8125 16.25 8 16.5 8H17.5312C17.7812 8 17.9688 7.8125 17.9688 7.5625L18 2.46875C18 2.21875 17.7812 2 17.5312 2ZM15.5 11H15C14.7188 11 14.5 11.25 14.5 11.5V16.3125C14.5 16.4375 14.4062 16.5 14.3125 16.5H3.6875C3.5625 16.5 3.5 16.4375 3.5 16.3125V5.6875C3.5 5.59375 3.5625 5.5 3.6875 5.5H8.5C8.75 5.5 9 5.28125 9 5V4.5C9 4.25 8.75 4 8.5 4H3.5C2.65625 4 2 4.6875 2 5.5V16.5C2 17.3438 2.65625 18 3.5 18H14.5C15.3125 18 16 17.3438 16 16.5V11.5C16 11.25 15.75 11 15.5 11Z" fill="currentColor"></path></svg></a></div></div></div></div></div></div><div class="MyCol-sc-1a4ap6x-0 cXBcmU" style="box-sizing: border-box; min-height: 1px; position: relative; padding-left: 16px; padding-right: 16px; width: 66.6667%; flex: 0 0 66.6667%; max-width: 66.6667%; margin-left: 0%; right: auto; left: auto;"><div class="ButtonWrapper-sc-1lmjdf6-5 gXda-Dy"><button class="StyledTextButton-sc-alyw8n-0 cPPNHm StyledTextButton-sc-1lmjdf6-6 gsnooQ" type="button"><span class="StyledSpan-sc-1yqr1pc-0 fxzfMC">Expand all sections</span></button></div><div data-accordion-component="Accordion" class="accordion"><div data-accordion-component="AccordionItem" class="StyledItem-sc-1lmjdf6-1 kqQHpZ"><div data-accordion-component="AccordionItemHeading" aria-level="2" role="heading" class="accordion__heading"><div class="StyledHeader-sc-1lmjdf6-2 iQSMSv" type="Default" id="accordion__heading-raa-0" aria-disabled="false" aria-expanded="true" aria-controls="accordion__panel-raa-0" role="button" tabindex="0" data-accordion-component="AccordionItemButton"><span class="StyledSpan-sc-1lmjdf6-3 htFUoK"><div class="IconWrapper-sc-1lmjdf6-4 doYPzm"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><rect x="2.75" y="1.75" width="18.5" height="20.5" rx="2.25" stroke="#056FFA" stroke-width="1.5"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M6.10156 11C6.10156 10.5029 6.50451 10.1 7.00156 10.1H17.0016C17.4986 10.1 17.9016 10.5029 17.9016 11C17.9016 11.4971 17.4986 11.9 17.0016 11.9H7.00156C6.50451 11.9 6.10156 11.4971 6.10156 11Z" fill="#056FFA"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.10156 7.00001C6.10156 6.50295 6.50451 6.10001 7.00156 6.10001H15.0016C15.4986 6.10001 15.9016 6.50295 15.9016 7.00001C15.9016 7.49706 15.4986 7.90001 15.0016 7.90001H7.00156C6.50451 7.90001 6.10156 7.49706 6.10156 7.00001Z" fill="#056FFA"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.10156 15C6.10156 14.5029 6.50451 14.1 7.00156 14.1H12.0016C12.4986 14.1 12.9016 14.5029 12.9016 15C12.9016 15.497 12.4986 15.9 12.0016 15.9H7.00156C6.50451 15.9 6.10156 15.497 6.10156 15Z" fill="#056FFA"></path></svg></div><span class="StyledSpan-sc-1yqr1pc-0 wYOnl">About this support</span></span><span class="StyledSpan-sc-1lmjdf6-3 htFUoK"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><g clip-path="url(#clip0_10175_43380)"><path d="M20.625 11H3.375C3.16781 11 3 11.1678 3 11.375V12.875C3 13.0822 3.16781 13.25 3.375 13.25H20.625C20.8322 13.25 21 13.0822 21 12.875V11.375C21 11.1678 20.8322 11 20.625 11Z" fill="#125EEC"></path></g><defs><clipPath id="clip0_10175_43380"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg></span></div></div><div data-accordion-component="AccordionItemPanel" class="StyledBody-sc-1lmjdf6-8 kxuyAn" aria-hidden="false" aria-labelledby="accordion__heading-raa-0" id="accordion__panel-raa-0"><div class="StyledAccordionItem-sc-1lmjdf6-0 hVrlLz"><div class="Wrapper-sc-yc3ypk-0 fLrIFs"><div class="MuiTiptap-RichTextContent-root MuiTiptap-RichTextContent-readonly MuiBox-root css-z2ppj6-RichTextContent-root-RichTextContent-readonly"><div contenteditable="false" translate="no" class="tiptap ProseMirror"><p class="tiptap-p">FSCs are community-based social services that provide support for vulnerable individuals and families with social and emotional issues. Social Work Practitioners at the FSCs provide case management support and also partner with other agencies to coordinate holistic support for clients to help them achieve stability, self-reliance, and social mobility.</p><p class="tiptap-p">FSC services include:</p><ul><li><p class="tiptap-p">Information and Referral: Providing information about social services, and linking individuals and families to appropriate social services and community resources based on the assessed needs</p></li><li><p class="tiptap-p">Casework: Providing holistic case management and individual/family counselling</p></li><li><p class="tiptap-p">Group Work: Bringing individuals and families with common needs together for purposeful group interactions to address their concerns and bring about positive change</p></li><li><p class="tiptap-p">Community Work: Tapping on community resources to help individuals and families support and empower one another.</p></li></ul></div></div></div></div></div></div></div><div data-accordion-component="Accordion" class="accordion"><div data-accordion-component="AccordionItem" class="StyledItem-sc-1lmjdf6-1 kqQHpZ"><div data-accordion-component="AccordionItemHeading" aria-level="2" role="heading" class="accordion__heading"><div class="StyledHeader-sc-1lmjdf6-2 jBaHNn" type="Default" id="accordion__heading-raa-1" aria-disabled="false" aria-expanded="false" aria-controls="accordion__panel-raa-1" role="button" tabindex="0" data-accordion-component="AccordionItemButton"><span class="StyledSpan-sc-1lmjdf6-3 htFUoK"><div class="IconWrapper-sc-1lmjdf6-4 doYPzm"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M15.3 13.2143C14.0828 13.2143 13.4975 13.8929 11.5 13.8929C9.50246 13.8929 8.92143 13.2143 7.7 13.2143C4.55312 13.2143 2 15.7674 2 18.9143V20.6786C2 21.8025 2.91183 22.7143 4.03571 22.7143H18.9643C20.0882 22.7143 21 21.8025 21 20.6786V18.9143C21 15.7674 18.4469 13.2143 15.3 13.2143ZM19.6429 20.6786C19.6429 21.0518 19.3375 21.3571 18.9643 21.3571H4.03571C3.6625 21.3571 3.35714 21.0518 3.35714 20.6786V18.9143C3.35714 16.5181 5.30379 14.5714 7.7 14.5714C8.53125 14.5714 9.35826 15.25 11.5 15.25C13.6375 15.25 14.4688 14.5714 15.3 14.5714C17.6962 14.5714 19.6429 16.5181 19.6429 18.9143V20.6786ZM11.5 11.8571C14.4984 11.8571 16.9286 9.42701 16.9286 6.42857C16.9286 3.43013 14.4984 1 11.5 1C8.50156 1 6.07143 3.43013 6.07143 6.42857C6.07143 9.42701 8.50156 11.8571 11.5 11.8571ZM11.5 2.35714C13.7435 2.35714 15.5714 4.18504 15.5714 6.42857C15.5714 8.6721 13.7435 10.5 11.5 10.5C9.25647 10.5 7.42857 8.6721 7.42857 6.42857C7.42857 4.18504 9.25647 2.35714 11.5 2.35714Z" fill="#125EEC"></path></svg></div><span class="StyledSpan-sc-1yqr1pc-0 wYOnl">Who is this for?</span></span><span class="StyledSpan-sc-1lmjdf6-3 htFUoK"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><g clip-path="url(#clip0_10175_43376)"><path d="M20.625 10.875H13.125V3.375C13.125 3.16781 12.9572 3 12.75 3H11.25C11.0428 3 10.875 3.16781 10.875 3.375V10.875H3.375C3.16781 10.875 3 11.0428 3 11.25V12.75C3 12.9572 3.16781 13.125 3.375 13.125H10.875V20.625C10.875 20.8322 11.0428 21 11.25 21H12.75C12.9572 21 13.125 20.8322 13.125 20.625V13.125H20.625C20.8322 13.125 21 12.9572 21 12.75V11.25C21 11.0428 20.8322 10.875 20.625 10.875Z" fill="#125EEC"></path></g><defs><clipPath id="clip0_10175_43376"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg></span></div></div><div data-accordion-component="AccordionItemPanel" class="StyledBody-sc-1lmjdf6-8 dMAaWw" aria-hidden="true" aria-labelledby="accordion__heading-raa-1" id="accordion__panel-raa-1" hidden=""><div class="StyledAccordionItem-sc-1lmjdf6-0 hVrlLz"><div class="Wrapper-sc-yc3ypk-0 fLrIFs"><div class="MuiTiptap-RichTextContent-root MuiTiptap-RichTextContent-readonly MuiBox-root css-z2ppj6-RichTextContent-root-RichTextContent-readonly"><div contenteditable="false" translate="no" class="tiptap ProseMirror"><p class="tiptap-p">FSCs are open to families and individuals:</p><ul><li><p class="tiptap-p">Regardless of age, race, language or religion;</p></li><li><p class="tiptap-p">At different life stages (such as couples, families with young children, adolescents, or elderly members); and</p></li><li><p class="tiptap-p">Of various family structures</p></li></ul></div></div></div></div></div></div></div><div data-accordion-component="Accordion" class="accordion"><div data-accordion-component="AccordionItem" class="StyledItem-sc-1lmjdf6-1 kqQHpZ"><div data-accordion-component="AccordionItemHeading" aria-level="2" role="heading" class="accordion__heading"><div class="StyledHeader-sc-1lmjdf6-2 jBaHNn" type="Default" id="accordion__heading-raa-2" aria-disabled="false" aria-expanded="false" aria-controls="accordion__panel-raa-2" role="button" tabindex="0" data-accordion-component="AccordionItemButton"><span class="StyledSpan-sc-1lmjdf6-3 htFUoK"><div class="IconWrapper-sc-1lmjdf6-4 doYPzm"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M12 15.7258C11.3141 15.7258 10.7581 16.2818 10.7581 16.9677C10.7581 17.6536 11.3141 18.2097 12 18.2097C12.6859 18.2097 13.2419 17.6536 13.2419 16.9677C13.2419 16.2818 12.6859 15.7258 12 15.7258ZM12.3402 14.6613H11.6305C11.3366 14.6613 11.0983 14.423 11.0983 14.129V14.1121C11.0983 10.9921 14.5331 11.2903 14.5331 9.34807C14.5331 8.46026 13.7453 7.56452 11.9854 7.56452C10.6927 7.56452 10.022 7.9925 9.35907 8.83714C9.18573 9.05803 8.86877 9.10305 8.63839 8.94253L8.05583 8.53668C7.80634 8.36286 7.75156 8.01458 7.93852 7.7748C8.87999 6.56715 9.99702 5.79032 11.9854 5.79032C14.306 5.79032 16.3073 7.10992 16.3073 9.34807C16.3073 12.3382 12.8725 12.1801 12.8725 14.1121V14.129C12.8725 14.423 12.6341 14.6613 12.3402 14.6613ZM12 2.41935C17.2614 2.41935 21.5806 6.68075 21.5806 12C21.5806 17.2911 17.2955 21.5806 12 21.5806C6.71095 21.5806 2.41935 17.2977 2.41935 12C2.41935 6.71277 6.70412 2.41935 12 2.41935ZM12 1C5.92529 1 1 5.92707 1 12C1 18.0765 5.92529 23 12 23C18.0747 23 23 18.0765 23 12C23 5.92707 18.0747 1 12 1Z" fill="#125EEC"></path></svg></div><span class="StyledSpan-sc-1yqr1pc-0 wYOnl">What to expect?</span></span><span class="StyledSpan-sc-1lmjdf6-3 htFUoK"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><g clip-path="url(#clip0_10175_43376)"><path d="M20.625 10.875H13.125V3.375C13.125 3.16781 12.9572 3 12.75 3H11.25C11.0428 3 10.875 3.16781 10.875 3.375V10.875H3.375C3.16781 10.875 3 11.0428 3 11.25V12.75C3 12.9572 3.16781 13.125 3.375 13.125H10.875V20.625C10.875 20.8322 11.0428 21 11.25 21H12.75C12.9572 21 13.125 20.8322 13.125 20.625V13.125H20.625C20.8322 13.125 21 12.9572 21 12.75V11.25C21 11.0428 20.8322 10.875 20.625 10.875Z" fill="#125EEC"></path></g><defs><clipPath id="clip0_10175_43376"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg></span></div></div><div data-accordion-component="AccordionItemPanel" class="StyledBody-sc-1lmjdf6-8 dMAaWw" aria-hidden="true" aria-labelledby="accordion__heading-raa-2" id="accordion__panel-raa-2" hidden=""><div class="StyledAccordionItem-sc-1lmjdf6-0 hVrlLz"><div class="Wrapper-sc-yc3ypk-0 fLrIFs"><div class="MuiTiptap-RichTextContent-root MuiTiptap-RichTextContent-readonly MuiBox-root css-z2ppj6-RichTextContent-root-RichTextContent-readonly"><div contenteditable="false" translate="no" class="tiptap ProseMirror"><ul><li><p class="tiptap-p">Upon contact with a FSC, a FSC worker will assess the needs of the individual/family and determine the type of support needed.</p></li><li><p class="tiptap-p">If FSC services are required, the FSC will then work with the individual/family on their issues with the appropriate social work interventions.</p></li><li><p class="tiptap-p">If the FSC’s services are not required and other supportive services by other partners can help to meet these needs, the FSC worker will refer the individual/family to appropriate social services or community resources.</p></li></ul></div></div></div></div></div></div></div><div data-accordion-component="Accordion" class="accordion"><div data-accordion-component="AccordionItem" class="StyledItem-sc-1lmjdf6-1 kqQHpZ"><div data-accordion-component="AccordionItemHeading" aria-level="2" role="heading" class="accordion__heading"><div class="StyledHeader-sc-1lmjdf6-2 jBaHNn" type="Default" id="accordion__heading-raa-3" aria-disabled="false" aria-expanded="false" aria-controls="accordion__panel-raa-3" role="button" tabindex="0" data-accordion-component="AccordionItemButton"><span class="StyledSpan-sc-1lmjdf6-3 htFUoK"><div class="IconWrapper-sc-1lmjdf6-4 doYPzm"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><path d="M19.3758 5.00492L15.6615 1.2906C15.263 0.892163 14.7229 0.666382 14.1607 0.666382H5.125C3.95182 0.670809 3 1.62263 3 2.79581V21.2125C3 22.3857 3.95182 23.3375 5.125 23.3375H17.875C19.0482 23.3375 20 22.3857 20 21.2125V6.51013C20 5.94789 19.7742 5.40336 19.3758 5.00492ZM18.3753 6.00987C18.4682 6.10284 18.5302 6.21352 18.5612 6.33748H14.3333V2.10961C14.4573 2.1406 14.568 2.20258 14.6609 2.29555L18.3753 6.00987ZM17.875 21.9208H5.125C4.73542 21.9208 4.41667 21.6021 4.41667 21.2125V2.79581C4.41667 2.40623 4.73542 2.08748 5.125 2.08748H12.9167V6.69164C12.9167 7.28044 13.3904 7.75414 13.9792 7.75414H18.5833V21.2125C18.5833 21.6021 18.2646 21.9208 17.875 21.9208Z" fill="#125EEC"></path></svg></div><span class="StyledSpan-sc-1yqr1pc-0 wYOnl">How to apply?</span></span><span class="StyledSpan-sc-1lmjdf6-3 htFUoK"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display: block; height: 24px; width: 24px; min-width: 24px; min-height: 24px;"><g clip-path="url(#clip0_10175_43376)"><path d="M20.625 10.875H13.125V3.375C13.125 3.16781 12.9572 3 12.75 3H11.25C11.0428 3 10.875 3.16781 10.875 3.375V10.875H3.375C3.16781 10.875 3 11.0428 3 11.25V12.75C3 12.9572 3.16781 13.125 3.375 13.125H10.875V20.625C10.875 20.8322 11.0428 21 11.25 21H12.75C12.9572 21 13.125 20.8322 13.125 20.625V13.125H20.625C20.8322 13.125 21 12.9572 21 12.75V11.25C21 11.0428 20.8322 10.875 20.625 10.875Z" fill="#125EEC"></path></g><defs><clipPath id="clip0_10175_43376"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg></span></div></div><div data-accordion-component="AccordionItemPanel" class="StyledBody-sc-1lmjdf6-8 dMAaWw" aria-hidden="true" aria-labelledby="accordion__heading-raa-3" id="accordion__panel-raa-3" hidden=""><div class="StyledAccordionItem-sc-1lmjdf6-0 hVrlLz"><div class="Wrapper-sc-yc3ypk-0 fLrIFs"><div class="MuiTiptap-RichTextContent-root MuiTiptap-RichTextContent-readonly MuiBox-root css-z2ppj6-RichTextContent-root-RichTextContent-readonly"><div contenteditable="false" translate="no" class="tiptap ProseMirror"><p class="tiptap-p">Call, walk in or email the FSCs for help on family, socio-emotional, interpersonal or other social issues. <br>To find the FSC in your neighbourhood, you can call ComCare hotline at <a target="_blank" rel="noopener noreferrer nofollow" class="tiptap-a" href="tel:18002220000">1800 222 0000</a> or visit <br><a target="_blank" rel="noopener noreferrer nofollow" class="tiptap-a" href="https://www.msf.gov.sg/our-services/directories">https://www.msf.gov.sg/our-services/directories</a>.</p></div></div></div></div></div></div></div><div class="StyledDiv-sc-1el0czi-4 fFCPcW"><span class="StyledSpan-sc-1yqr1pc-0 dVdKwr">Information last updated on 17 Sep 2025</span></div></div></div></div></div></main><footer class="FooterWrapper-sc-c0x6iv-0 bmBzsD"><div class="BackgroundDiv-sc-1c44ir3-0 hoUHFV"><div class="ContainerDiv-sc-1c44ir3-1 eukIuj"><div class="FooterContent-sc-c0x6iv-1 gUpWCo"><div class="Header-sc-c0x6iv-2 kvIltG"><span class="StyledSpan-sc-1yqr1pc-0 uzpxD" style="color: rgb(44, 44, 44);">SupportGoWhere</span><div class="InfoLinkContainer-sc-c0x6iv-3 dTXAoW info-link"><a class="StyledReactLink-sc-q9n0ng-1 dNOWGC" href="/about-us"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">About Us</span></a><a class="StyledReactLink-sc-q9n0ng-1 dNOWGC" href="/contact-us"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Contact Us/Feedback</span></a></div></div><hr class="HorizontalLine-sc-c0x6iv-4 goHVg"><div class="MandatoryLinkContainer-sc-c0x6iv-5 idQpBG"><a target="_blank" rel="noopener noreferrer" href="https://www.tech.gov.sg/report_vulnerability" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Report Vulnerability</span><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="StyledExtLinkIcon-sc-q9n0ng-0 kXGesl"><path d="M17.5312 2L12.4375 2.03125C12.1875 2.03125 12 2.21875 12 2.46875V3.5C12 3.75 12.1875 3.96875 12.4375 3.96875L14.75 3.875L14.8125 3.9375L6.09375 12.6562C6.03125 12.7188 5.96875 12.8438 5.96875 12.9062C5.96875 13 6.03125 13.125 6.09375 13.1875L6.8125 13.9062C6.875 13.9688 7 14.0312 7.09375 14.0312C7.15625 14.0312 7.28125 13.9688 7.34375 13.9062L16.0625 5.1875L16.125 5.25L16.0312 7.5625C16.0312 7.8125 16.25 8 16.5 8H17.5312C17.7812 8 17.9688 7.8125 17.9688 7.5625L18 2.46875C18 2.21875 17.7812 2 17.5312 2ZM15.5 11H15C14.7188 11 14.5 11.25 14.5 11.5V16.3125C14.5 16.4375 14.4062 16.5 14.3125 16.5H3.6875C3.5625 16.5 3.5 16.4375 3.5 16.3125V5.6875C3.5 5.59375 3.5625 5.5 3.6875 5.5H8.5C8.75 5.5 9 5.28125 9 5V4.5C9 4.25 8.75 4 8.5 4H3.5C2.65625 4 2 4.6875 2 5.5V16.5C2 17.3438 2.65625 18 3.5 18H14.5C15.3125 18 16 17.3438 16 16.5V11.5C16 11.25 15.75 11 15.5 11Z" fill="currentColor"></path></svg></a><a target="_blank" rel="noopener noreferrer" href="/privacy-statement.pdf" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Privacy Statement</span></a><a target="_blank" rel="noopener noreferrer" href="/terms-of-use.pdf" aria-describedby="open-new-tab-description" class="StyledAnchor-sc-q9n0ng-2 hLdyhe"><span id="open-new-tab-description" hidden="">Click to open this link in a new tab</span><span class="StyledSpan-sc-1yqr1pc-0 kgKquo">Terms of Use</span></a></div><span class="StyledSpan-sc-1yqr1pc-0 jMDxMC copyright">©2026, Government of Singapore. Last updated 21 May 2026, 12:03:14 pm.</span></div></div></div></footer></div></div><span class="visually-hidden" role="status"></span></div>
+    
+    <script type="module" src="/sgds-masthead.js"></script>
+  
+
+<wog-sentiments class="needsclick hydrated"></wog-sentiments><div class="StyledModal-sc-15p3ng2-0 ldhepA"></div></body></html>

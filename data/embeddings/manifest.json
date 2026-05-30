@@ -1,0 +1,14 @@
+{
+  "started_at": "2026-05-28T08:25:12.195167+00:00",
+  "ended_at": "2026-05-28T08:25:30.998387+00:00",
+  "duration_sec": 18.80322,
+  "model": "text-embedding-3-small",
+  "embedding_dim": 1536,
+  "batch_size": 256,
+  "chunks_input": 2147,
+  "chunks_skipped_empty": 0,
+  "chunks_embedded": 2147,
+  "vectors_path": "data\\embeddings\\vectors.npy",
+  "index_path": "data\\embeddings\\index.jsonl",
+  "vectors_bytes": 13191296
+}

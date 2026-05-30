@@ -1,0 +1,197 @@
+{
+  "per_topic": {
+    "caregiving-support": {
+      "total_found": 72,
+      "missing_count": 5,
+      "missing": [
+        [
+          "schemes",
+          "JqJOoLnT"
+        ],
+        [
+          "schemes",
+          "PrBDGZa7"
+        ],
+        [
+          "schemes",
+          "bncVrBSn"
+        ],
+        [
+          "schemes",
+          "izIXWd7S"
+        ],
+        [
+          "services",
+          "o0cdiebU"
+        ]
+      ]
+    },
+    "citizenship-residency": {
+      "total_found": 5,
+      "missing_count": 0,
+      "missing": []
+    },
+    "counselling-crisis": {
+      "total_found": 34,
+      "missing_count": 0,
+      "missing": []
+    },
+    "disability-support": {
+      "total_found": 100,
+      "missing_count": 8,
+      "missing": [
+        [
+          "schemes",
+          "7mQT5PCe"
+        ],
+        [
+          "schemes",
+          "JqJOoLnT"
+        ],
+        [
+          "schemes",
+          "PrBDGZa7"
+        ],
+        [
+          "schemes",
+          "bjQYWnuX"
+        ],
+        [
+          "schemes",
+          "bncVrBSn"
+        ],
+        [
+          "schemes",
+          "cllsZZkD"
+        ],
+        [
+          "schemes",
+          "s1Mns2Os"
+        ],
+        [
+          "services",
+          "o0cdiebU"
+        ]
+      ]
+    },
+    "education-learning": {
+      "total_found": 47,
+      "missing_count": 0,
+      "missing": []
+    },
+    "family-parenting": {
+      "total_found": 171,
+      "missing_count": 1,
+      "missing": [
+        [
+          "schemes",
+          "QlaRQpLF"
+        ]
+      ]
+    },
+    "financial-support": {
+      "total_found": 139,
+      "missing_count": 2,
+      "missing": [
+        [
+          "schemes",
+          "P3MkHRbU"
+        ],
+        [
+          "schemes",
+          "cllsZZkD"
+        ]
+      ]
+    },
+    "healthcare": {
+      "total_found": 46,
+      "missing_count": 0,
+      "missing": []
+    },
+    "housing-shelters": {
+      "total_found": 48,
+      "missing_count": 1,
+      "missing": [
+        [
+          "schemes",
+          "QlaRQpLF"
+        ]
+      ]
+    },
+    "mental-health": {
+      "total_found": 36,
+      "missing_count": 0,
+      "missing": []
+    },
+    "retirement-legacy": {
+      "total_found": 23,
+      "missing_count": 0,
+      "missing": []
+    },
+    "work-employment": {
+      "total_found": 46,
+      "missing_count": 0,
+      "missing": []
+    }
+  },
+  "all_missing_count": 11,
+  "all_missing": [
+    [
+      "schemes",
+      "7mQT5PCe"
+    ],
+    [
+      "schemes",
+      "JqJOoLnT"
+    ],
+    [
+      "schemes",
+      "P3MkHRbU"
+    ],
+    [
+      "schemes",
+      "PrBDGZa7"
+    ],
+    [
+      "schemes",
+      "QlaRQpLF"
+    ],
+    [
+      "schemes",
+      "bjQYWnuX"
+    ],
+    [
+      "schemes",
+      "bncVrBSn"
+    ],
+    [
+      "schemes",
+      "cllsZZkD"
+    ],
+    [
+      "schemes",
+      "izIXWd7S"
+    ],
+    [
+      "schemes",
+      "s1Mns2Os"
+    ],
+    [
+      "services",
+      "o0cdiebU"
+    ]
+  ],
+  "missing_urls": [
+    "https://supportgowhere.life.gov.sg/schemes/7mQT5PCe",
+    "https://supportgowhere.life.gov.sg/schemes/JqJOoLnT",
+    "https://supportgowhere.life.gov.sg/schemes/P3MkHRbU",
+    "https://supportgowhere.life.gov.sg/schemes/PrBDGZa7",
+    "https://supportgowhere.life.gov.sg/schemes/QlaRQpLF",
+    "https://supportgowhere.life.gov.sg/schemes/bjQYWnuX",
+    "https://supportgowhere.life.gov.sg/schemes/bncVrBSn",
+    "https://supportgowhere.life.gov.sg/schemes/cllsZZkD",
+    "https://supportgowhere.life.gov.sg/schemes/izIXWd7S",
+    "https://supportgowhere.life.gov.sg/schemes/s1Mns2Os",
+    "https://supportgowhere.life.gov.sg/services/o0cdiebU"
+  ]
+}
