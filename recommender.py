@@ -49,6 +49,7 @@ from openai import (
 from llm import get_completion
 from prompts import make_recommender_prompt, render_candidates_block
 from retriever import Result, get_retriever
+from router import step_2_classify_query
 from safety import step_1_safety_check
 
 # Force UTF-8 stdout (Windows PowerShell default cp1252 breaks on zwsp).
@@ -106,12 +107,17 @@ class RecommendationResponse:
     # Topic 2.6 Decision Chain — first-step refusal carries these fields.
     blocked: bool = False
     block_reason: str = ""
+    # Topic 2.6 Decision Chain — second-step router result; populated even
+    # when blocked=False so downstream code / UI can inspect the
+    # classification decision.
+    classification: dict | None = None
 
     def to_dict(self) -> dict:
         return {
             "client_situation": self.client_situation,
             "blocked": self.blocked,
             "block_reason": self.block_reason,
+            "classification": self.classification,
             "overall_summary": self.overall_summary,
             "categories_touched": self.categories_touched,
             "recommendations": [r.to_dict() for r in self.recommendations],
@@ -202,6 +208,41 @@ def recommend(
             overall_summary="Input refused by safety check.",
         )
 
+    # 0.5 ROUTING (Topic 2.6 Decision Chain — multi-class, fail-open)
+    #     Classify the input intent. general_question and out_of_scope
+    #     short-circuit the pipeline with a helpful redirect; client_case
+    #     and scheme_lookup both proceed to retrieval.
+    classification = step_2_classify_query(client_situation)
+    category_tag = classification["category"]
+
+    if category_tag == "general_question":
+        return RecommendationResponse(
+            client_situation=client_situation,
+            recommendations=[],
+            classification=classification,
+            overall_summary=(
+                "This looks like a general question rather than a client "
+                "case. Try rephrasing as a client's situation (e.g. \"single "
+                "mother with two children, lost her job, needs rent help\") "
+                "to get scheme recommendations."
+            ),
+        )
+
+    if category_tag == "out_of_scope":
+        return RecommendationResponse(
+            client_situation=client_situation,
+            recommendations=[],
+            classification=classification,
+            overall_summary=(
+                "This question doesn't appear to be about Singapore social "
+                "services. This tool helps SAOs match clients to MSF "
+                "schemes and community services — try describing a "
+                "client's situation."
+            ),
+        )
+
+    # client_case and scheme_lookup both continue through retrieval.
+
     # 1. RETRIEVE — embedding-based top-K with dedup + filters.
     retriever = get_retriever()
     candidates = retriever.search(
@@ -283,6 +324,7 @@ def recommend(
         categories_touched=parsed.get("categories_touched", []) or [],
         retrieved_candidates=candidates,
         raw_llm_output=raw,
+        classification=classification,
     )
 
 
