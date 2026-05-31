@@ -290,27 +290,106 @@ if submitted:
                 if rec.url:
                     st.link_button("View on SupportGoWhere ↗", rec.url)
 
-    # ---- Debug panels (optional) -----------------------------------------
+    # ---- 🔬 Behind the scenes — every pipeline stage's input/output -----
     if show_debug:
         st.divider()
-        st.subheader("🔍 Debug")
+        st.subheader("🔬 Behind the scenes")
+        st.caption(
+            "Walk-through of every stage of the prompt chain. Each block "
+            "is annotated with the bootcamp topic(s) it implements."
+        )
 
+        # Stage 1 — Safety check (Topic 2.6 Decision Chain · Topic 2.7)
         with st.expander(
-            f"All {len(response.retrieved_candidates)} retrieved candidates "
-            "(before LLM re-rank)",
+            "Stage 1 · Safety check  (Topic 2.6 Decision Chain · Topic 2.7 Exception Handling)",
+            expanded=False,
         ):
+            sr = response.safety_result or {}
+            verdict = "✅ safe" if sr.get("is_safe") else "🛡️ unsafe"
+            st.markdown(f"**Verdict:** {verdict}")
+            if sr.get("reason"):
+                st.markdown(f"**Reason:** {sr['reason']}")
+            st.caption(
+                "Binary Y/N classifier with few-shot exemplars and "
+                "`max_tokens=1`. Fail-CLOSED: errors treated as unsafe."
+            )
+
+        # Stage 2 — Router classification (Topic 2.6 Decision Chain)
+        with st.expander(
+            "Stage 2 · Query classifier  (Topic 2.6 Decision Chain — multi-class)",
+            expanded=False,
+        ):
+            cls = response.classification or {}
+            st.markdown(f"**Category:** `{cls.get('category', '(none)')}`")
+            if cls.get("reason"):
+                st.markdown(f"**Reason:** {cls['reason']}")
+            st.caption(
+                "Multi-class router with JSON-mode output. Fail-OPEN: "
+                "errors default to `client_case` so the user still gets results."
+            )
+
+        # Stage 3 — Least-to-Most decomposition (Topic 2.4)
+        with st.expander(
+            "Stage 3 · Decomposition  (Topic 2.4 Least-to-Most)",
+            expanded=False,
+        ):
+            dc = response.decomposition or {}
+            st.markdown(
+                f"**Is complex:** "
+                f"`{dc.get('is_complex', False)}` · "
+                f"**Sub-needs:** {len(dc.get('sub_needs', []))}"
+            )
+            for i, sn in enumerate(dc.get("sub_needs", []), 1):
+                st.markdown(f"  {i}. {sn}")
+            st.caption(
+                "Simple cases get 1 sub-need (pipeline identical to before). "
+                "Complex cases get 2–5 sub-needs; retrieval runs per "
+                "sub-need then results are merged + deduped."
+            )
+
+        # Stage 4 — Retrieval (Topic 3.4 RAG · Topic 4.3 retrieval)
+        with st.expander(
+            f"Stage 4 · Retrieval  ({len(response.retrieved_candidates)} merged candidates · Topic 3.4 RAG)",
+            expanded=False,
+        ):
+            st.caption(
+                "Cosine similarity over text-embedding-3-small vectors. "
+                "Deduplicated by parent_id (best section wins). For complex "
+                "cases, candidates are the merged top-K across all sub-needs."
+            )
             for c in response.retrieved_candidates:
+                cats = ", ".join(c.categories) if c.categories else "—"
                 st.markdown(
-                    f"**{c.title}** · {c.kind} · score `{c.score:.3f}` · "
-                    f"matched section `{c.best_section}` · "
-                    f"id `{c.parent_id}`"
+                    f"**{c.title}** · `{c.kind}` · score `{c.score:.3f}` · "
+                    f"matched section `{c.best_section}` · id `{c.parent_id}`"
                 )
-                if c.categories:
-                    st.caption(", ".join(c.categories))
+                st.caption(cats)
                 st.markdown("---")
 
-        with st.expander("Raw LLM output (JSON)"):
+        # Stage 5 — CO-STAR prompt sent (Topic 1.2 · Playbook p.26)
+        with st.expander(
+            "Stage 5a · CO-STAR prompt sent to LLM  (Topic 1.2 / Playbook p.26)",
+            expanded=False,
+        ):
+            st.caption(
+                "Six labelled sections (Context, Objective, Style, Tone, "
+                "Audience, Response Format) plus XML-delimited candidate "
+                "blocks. Same template lives in `prompts.py`."
+            )
+            st.code(response.prompt_sent or "(empty)", language="markdown")
+
+        # Stage 5 (cont.) — Re-ranker raw JSON  (Topic 2.4/2.5 CoT)
+        with st.expander(
+            "Stage 5b · Re-ranker raw JSON output  (Topic 2.4 CoT · Topic 2.5 Inner Monologue)",
+            expanded=False,
+        ):
+            st.caption(
+                "JSON mode guarantees parseability. `reasoning_steps` is "
+                "the Inner Monologue surfaced as a structured field, not "
+                "a step-delimiter parse."
+            )
             st.code(response.raw_llm_output or "(empty)", language="json")
 
-        with st.expander("Full RecommendationResponse object"):
+        # Final — full response object (handy for eval replay)
+        with st.expander("Full RecommendationResponse object (JSON dump)"):
             st.json(response.to_dict())

@@ -120,6 +120,12 @@ class RecommendationResponse:
     # decomposer split this case into. For simple cases this is a
     # single-element list; for complex cases 2-5 entries.
     decomposition: dict | None = None
+    # Topic 2.6 Decision Chain — the safety guard's verdict dict. Populated
+    # even for safe inputs (so the Behind-the-Scenes panel can show it).
+    safety_result: dict | None = None
+    # The actual CO-STAR prompt sent to the re-ranker LLM. Useful for the
+    # Behind-the-Scenes panel and for offline eval replay.
+    prompt_sent: str = ""
 
     def to_dict(self) -> dict:
         return {
@@ -216,6 +222,7 @@ def recommend(
             recommendations=[],
             blocked=True,
             block_reason=safety["reason"],
+            safety_result=safety,
             overall_summary="Input refused by safety check.",
         )
 
@@ -231,6 +238,7 @@ def recommend(
             client_situation=client_situation,
             recommendations=[],
             classification=classification,
+            safety_result=safety,
             overall_summary=(
                 "This looks like a general question rather than a client "
                 "case. Try rephrasing as a client's situation (e.g. \"single "
@@ -244,6 +252,7 @@ def recommend(
             client_situation=client_situation,
             recommendations=[],
             classification=classification,
+            safety_result=safety,
             overall_summary=(
                 "This question doesn't appear to be about Singapore social "
                 "services. This tool helps SAOs match clients to MSF "
@@ -288,6 +297,7 @@ def recommend(
             recommendations=[],
             classification=classification,
             decomposition=decomposition,
+            safety_result=safety,
             overall_summary="No candidates matched the filters.",
         )
 
@@ -363,6 +373,8 @@ def recommend(
         classification=classification,
         decomposition=decomposition,
         reasoning_steps=parsed.get("reasoning_steps", []) or [],
+        safety_result=safety,
+        prompt_sent=prompt,
     )
 
 
