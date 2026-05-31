@@ -227,6 +227,20 @@ if submitted:
         cats_md = " ".join(f"`{c}`" for c in response.categories_touched)
         st.markdown(f"**Categories touched:** {cats_md}")
 
+    # ---- Decomposition (Topic 2.4 Least-to-Most) -------------------------
+    if response.decomposition and response.decomposition.get("is_complex"):
+        with st.expander(
+            f"🧩 Least-to-Most decomposition "
+            f"({len(response.decomposition['sub_needs'])} sub-needs)",
+            expanded=True,
+        ):
+            st.caption(
+                "This case has multiple distinct needs. We retrieved against "
+                "each sub-need separately, then merged candidates."
+            )
+            for i, sub in enumerate(response.decomposition["sub_needs"], 1):
+                st.markdown(f"**Sub-need {i}.** {sub}")
+
     # ---- Reasoning chain (Topic 2.4 / 2.5) -------------------------------
     if response.reasoning_steps:
         with st.expander("🧠 AI's reasoning (Chain-of-Thought)", expanded=False):

@@ -46,6 +46,7 @@ from openai import (
     RateLimitError,
 )
 
+from decomposer import step_3_decompose
 from llm import get_completion
 from prompts import make_recommender_prompt, render_candidates_block
 from retriever import Result, get_retriever
@@ -115,6 +116,10 @@ class RecommendationResponse:
     # step-by-step reasoning chain extracted from the JSON response.
     # Empty list when the response was blocked / short-circuited.
     reasoning_steps: list[str] = field(default_factory=list)
+    # Topic 2.4 Least-to-Most decomposition — the sub-needs the
+    # decomposer split this case into. For simple cases this is a
+    # single-element list; for complex cases 2-5 entries.
+    decomposition: dict | None = None
 
     def to_dict(self) -> dict:
         return {
@@ -122,6 +127,7 @@ class RecommendationResponse:
             "blocked": self.blocked,
             "block_reason": self.block_reason,
             "classification": self.classification,
+            "decomposition": self.decomposition,
             "overall_summary": self.overall_summary,
             "categories_touched": self.categories_touched,
             "reasoning_steps": self.reasoning_steps,
@@ -248,15 +254,40 @@ def recommend(
 
     # client_case and scheme_lookup both continue through retrieval.
 
-    # 1. RETRIEVE — embedding-based top-K with dedup + filters.
+    # 0.7 LEAST-TO-MOST decomposition (Topic 2.4)
+    #     For complex multi-need cases, split into discrete sub-needs and
+    #     retrieve against each. Single-need cases yield a 1-element list,
+    #     making the rest of the pipeline behave identically to before.
+    decomposition = step_3_decompose(client_situation)
+    sub_needs = decomposition["sub_needs"]
+
+    # 1. RETRIEVE — embedding-based top-K per sub-need, then merge.
     retriever = get_retriever()
-    candidates = retriever.search(
-        client_situation, k=k_candidates, category=category, kind=kind,
-    )
+    # Per-sub-need budget: retrieve k_candidates each (so single-need
+    # cases match the previous behaviour exactly). Then dedup by
+    # parent_id keeping the best score, and cap the merged pool at
+    # k_candidates total so the re-ranker prompt size is bounded.
+    best_by_parent: dict[str, Result] = {}
+    for sub_need in sub_needs:
+        sub_results = retriever.search(
+            sub_need, k=k_candidates, category=category, kind=kind,
+        )
+        for r in sub_results:
+            existing = best_by_parent.get(r.parent_id)
+            if existing is None or r.score > existing.score:
+                best_by_parent[r.parent_id] = r
+    candidates = sorted(
+        best_by_parent.values(), key=lambda r: -r.score
+    )[:k_candidates]
+    # Re-stamp the rank for clarity (it's a merged pool now).
+    for new_rank, cand in enumerate(candidates, start=1):
+        cand.rank = new_rank
     if not candidates:
         return RecommendationResponse(
             client_situation=client_situation,
             recommendations=[],
+            classification=classification,
+            decomposition=decomposition,
             overall_summary="No candidates matched the filters.",
         )
 
@@ -330,6 +361,7 @@ def recommend(
         retrieved_candidates=candidates,
         raw_llm_output=raw,
         classification=classification,
+        decomposition=decomposition,
         reasoning_steps=parsed.get("reasoning_steps", []) or [],
     )
 
