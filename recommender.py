@@ -111,6 +111,10 @@ class RecommendationResponse:
     # when blocked=False so downstream code / UI can inspect the
     # classification decision.
     classification: dict | None = None
+    # Topic 2.4 Chain-of-Thought / Topic 2.5 Inner Monologue — the LLM's
+    # step-by-step reasoning chain extracted from the JSON response.
+    # Empty list when the response was blocked / short-circuited.
+    reasoning_steps: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
@@ -120,6 +124,7 @@ class RecommendationResponse:
             "classification": self.classification,
             "overall_summary": self.overall_summary,
             "categories_touched": self.categories_touched,
+            "reasoning_steps": self.reasoning_steps,
             "recommendations": [r.to_dict() for r in self.recommendations],
             "n_candidates_considered": len(self.retrieved_candidates),
         }
@@ -325,6 +330,7 @@ def recommend(
         retrieved_candidates=candidates,
         raw_llm_output=raw,
         classification=classification,
+        reasoning_steps=parsed.get("reasoning_steps", []) or [],
     )
 
 

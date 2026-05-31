@@ -49,9 +49,22 @@ if TYPE_CHECKING:
 
 # Separated as its own constant so JSON braces don't conflict with .format()
 # escaping. Cleaner than wrapping the example in {{ }}.
+#
+# The "reasoning_steps" field implements Topic 2.4 Chain-of-Thought /
+# Topic 2.5 Inner Monologue inside JSON mode — the model thinks out loud
+# before producing the recommendations, and the SAO can inspect the
+# reasoning chain in the "Behind the scenes" panel. Crucially, we keep
+# JSON mode for guaranteed parseability — Inner Monologue is a *field*,
+# not a step delimiter.
 _RECOMMENDER_OUTPUT_SCHEMA = """{
   "overall_summary": "<1-sentence summary of the case pattern>",
   "categories_touched": ["<sgw category slug>", "..."],
+  "reasoning_steps": [
+    "Step 1: <identify the key signals in the client situation>",
+    "Step 2: <weigh each candidate against those signals>",
+    "Step 3: <decide which candidates fit strongly vs marginally>",
+    "Step 4: <flag eligibility considerations the SAO must verify>"
+  ],
   "recommendations": [
     {
       "parent_id": "<exact id from one of the candidates>",
@@ -121,14 +134,30 @@ surface the strongest candidates with clear evidence so they can decide
 quickly.
 
 # OBJECTIVE
-From the candidate list below, identify the 3-5 most relevant
-schemes/services for this client. For each one:
-  1. State WHY it fits (cite a short verbatim phrase from the candidate text).
-  2. Flag any key eligibility considerations the SAO should verify.
-  3. Assign a fit_score from 1 (weak) to 5 (strong).
+Work in two phases — think first, then commit to recommendations.
+
+PHASE 1 — Reasoning (your "inner monologue"):
+  Populate the `reasoning_steps` array with 3-5 short bullets walking
+  through your thinking:
+    a. Identify the key signals in the client situation (e.g., "single
+       mother", "lost job", "two children aged 7 and 10").
+    b. Weigh each candidate against those signals.
+    c. Decide which candidates fit strongly vs. marginally vs. not.
+    d. Flag eligibility considerations the SAO must verify.
+
+PHASE 2 — Recommendations:
+  From the candidate list, select the 3-5 most relevant
+  schemes/services. For each one:
+    1. State WHY it fits (cite a short verbatim phrase from the
+       candidate text).
+    2. Flag any key eligibility considerations the SAO should verify.
+    3. Assign a fit_score from 1 (weak) to 5 (strong).
 
 Do NOT include candidates that are clearly off-topic. It is better to
 return 3 strong recommendations than 5 mediocre ones.
+
+The `reasoning_steps` field is REQUIRED — never return an empty array
+there. The reasoning is what makes your recommendations auditable.
 
 # STYLE
 Professional, concise, factual. Plain English. No marketing language.

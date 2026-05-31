@@ -227,6 +227,19 @@ if submitted:
         cats_md = " ".join(f"`{c}`" for c in response.categories_touched)
         st.markdown(f"**Categories touched:** {cats_md}")
 
+    # ---- Reasoning chain (Topic 2.4 / 2.5) -------------------------------
+    if response.reasoning_steps:
+        with st.expander("🧠 AI's reasoning (Chain-of-Thought)", expanded=False):
+            for i, step in enumerate(response.reasoning_steps, 1):
+                # Strip a leading "Step N: " if the LLM included it, to avoid
+                # double-numbering with our own enumeration.
+                clean = step
+                for prefix in (f"Step {i}:", f"Step {i}.", f"{i}.", f"{i})"):
+                    if clean.lstrip().startswith(prefix):
+                        clean = clean.lstrip()[len(prefix):].strip()
+                        break
+                st.markdown(f"**Step {i}.** {clean}")
+
     # ---- Recommendations --------------------------------------------------
     st.divider()
     if not response.recommendations:
