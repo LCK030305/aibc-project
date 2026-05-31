@@ -39,9 +39,17 @@ import sys
 from dataclasses import asdict, dataclass, field
 from json import JSONDecodeError
 
+from openai import (
+    APIConnectionError,
+    AuthenticationError,
+    BadRequestError,
+    RateLimitError,
+)
+
 from llm import get_completion
 from prompts import make_recommender_prompt, render_candidates_block
 from retriever import Result, get_retriever
+from safety import step_1_safety_check
 
 # Force UTF-8 stdout (Windows PowerShell default cp1252 breaks on zwsp).
 # Wrapped in try/except so Streamlit / Jupyter contexts that pre-wrap
@@ -82,7 +90,12 @@ class Recommendation:
 
 @dataclass
 class RecommendationResponse:
-    """Full response from the recommender pipeline (UI + eval consume this)."""
+    """Full response from the recommender pipeline (UI + eval consume this).
+
+    A ``blocked`` response carries an empty ``recommendations`` list and a
+    populated ``block_reason``. The UI is expected to check ``blocked``
+    first and render a refusal banner before any other content.
+    """
 
     client_situation: str
     recommendations: list[Recommendation]
@@ -90,10 +103,15 @@ class RecommendationResponse:
     categories_touched: list[str] = field(default_factory=list)
     retrieved_candidates: list[Result] = field(default_factory=list)
     raw_llm_output: str = ""                      # for debugging / eval replay
+    # Topic 2.6 Decision Chain — first-step refusal carries these fields.
+    blocked: bool = False
+    block_reason: str = ""
 
     def to_dict(self) -> dict:
         return {
             "client_situation": self.client_situation,
+            "blocked": self.blocked,
+            "block_reason": self.block_reason,
             "overall_summary": self.overall_summary,
             "categories_touched": self.categories_touched,
             "recommendations": [r.to_dict() for r in self.recommendations],
@@ -171,6 +189,19 @@ def recommend(
     if n_recommendations > k_candidates:
         raise ValueError("n_recommendations cannot exceed k_candidates")
 
+    # 0. SAFETY CHECK (Topic 2.6 Decision Chain — fail-closed)
+    #    First step of the prompt chain: block prompt-injection / jailbreak
+    #    attempts before any downstream processing or retrieval happens.
+    safety = step_1_safety_check(client_situation)
+    if not safety["is_safe"]:
+        return RecommendationResponse(
+            client_situation=client_situation,
+            recommendations=[],
+            blocked=True,
+            block_reason=safety["reason"],
+            overall_summary="Input refused by safety check.",
+        )
+
     # 1. RETRIEVE — embedding-based top-K with dedup + filters.
     retriever = get_retriever()
     candidates = retriever.search(
@@ -188,11 +219,35 @@ def recommend(
     prompt = make_recommender_prompt(client_situation, candidates_block)
 
     # 3. GENERATE — single LLM call, JSON mode for guaranteed parseability.
-    raw = get_completion(
-        prompt,
-        temperature=0.0,
-        response_format={"type": "json_object"},
-    )
+    #    Topic 2.7 Exception Handling — catch the OpenAI-specific errors
+    #    most likely to fire in a live demo (network flicker, rate burst,
+    #    rotated key, model removed from project) and re-raise with
+    #    user-friendly messages the Streamlit UI surfaces verbatim.
+    try:
+        raw = get_completion(
+            prompt,
+            temperature=0.0,
+            response_format={"type": "json_object"},
+        )
+    except RateLimitError as exc:
+        raise RuntimeError(
+            "OpenAI rate limit hit — wait ~30 seconds and retry."
+        ) from exc
+    except APIConnectionError as exc:
+        raise RuntimeError(
+            "Couldn't reach OpenAI. Check your internet connection and retry."
+        ) from exc
+    except AuthenticationError as exc:
+        raise RuntimeError(
+            "OpenAI authentication failed — your API key may have rotated. "
+            "Update .env (local) or st.secrets (Streamlit Cloud)."
+        ) from exc
+    except BadRequestError as exc:
+        raise RuntimeError(
+            f"OpenAI rejected the request: {getattr(exc, 'message', str(exc))}. "
+            "Often this means the project doesn't allow this model — enable "
+            "it under platform.openai.com → project → Limits → Allowed models."
+        ) from exc
 
     # 4. PARSE + JOIN with retrieval metadata (provenance).
     parsed = _parse_llm_json(raw)

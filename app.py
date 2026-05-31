@@ -208,6 +208,16 @@ if submitted:
             st.error(f"{type(exc).__name__}: {exc}")
             st.stop()
 
+    # ---- Safety refusal (Topic 2.6 Decision Chain block) -----------------
+    if response.blocked:
+        st.divider()
+        st.error(
+            f"🛡️ **Input refused by safety check.**\n\n"
+            f"{response.block_reason}",
+            icon="🚫",
+        )
+        st.stop()
+
     # ---- Case summary -----------------------------------------------------
     st.divider()
     st.subheader("📋 Case summary")
