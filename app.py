@@ -31,7 +31,7 @@ import time
 import streamlit as st
 
 from decomposer import step_3_decompose
-from llm import num_tokens_from_message_rough
+from llm import get_secret, num_tokens_from_message_rough
 from recommender import recommend
 from retriever import get_retriever
 
@@ -48,6 +48,53 @@ st.set_page_config(
     page_icon="🤝",
     layout="wide",
 )
+
+
+# ---------------------------------------------------------------------------
+# Password gate (Topic 8.2 — Password Protect the Streamlit App)
+#
+# Only fires if APP_PASSWORD is configured (via st.secrets in Streamlit
+# Cloud, or .env locally). If unset, the app is open — the right default
+# for local development.
+# ---------------------------------------------------------------------------
+def _password_entered() -> None:
+    """Callback for the password input — store correctness in session_state."""
+    expected = get_secret("APP_PASSWORD")
+    attempt = st.session_state.get("_pwd_attempt", "")
+    if expected and attempt == expected:
+        st.session_state.password_correct = True
+        # Don't keep the cleartext attempt around.
+        del st.session_state["_pwd_attempt"]
+    else:
+        st.session_state.password_correct = False
+
+
+def _require_password() -> bool:
+    """Return True if the user has authenticated (or no password set)."""
+    expected = get_secret("APP_PASSWORD")
+    if not expected:
+        return True  # Open access — no password configured.
+    if st.session_state.get("password_correct"):
+        return True
+    # Render the login screen.
+    st.title("🔒 SAO Co-Pilot")
+    st.caption(
+        "This deployment is password-protected. Please enter the access "
+        "password to continue."
+    )
+    st.text_input(
+        "Password",
+        type="password",
+        key="_pwd_attempt",
+        on_change=_password_entered,
+    )
+    if "password_correct" in st.session_state and not st.session_state["password_correct"]:
+        st.error("Incorrect password — please try again.")
+    return False
+
+
+if not _require_password():
+    st.stop()
 
 
 # ---------------------------------------------------------------------------
