@@ -1,0 +1,82 @@
+[
+  {
+    "id": "S01",
+    "label": "Simple financial help — ComCare",
+    "client_situation": "Single mother of two young children, recently lost her job, needs financial help to pay rent and utilities.",
+    "expected_parent_ids": ["COMCARE-SMTA", "COMCARE-INTERIM-ASSISTANCE", "CJHJsvLn", "wpGyuJUN", "MUIS-FAS"],
+    "expected_categories": ["financial-support", "family-parenting"],
+    "notes": "ComCare suite + SkillsFuture Jobseeker Support + MUIS Zakat are all valid entry points."
+  },
+  {
+    "id": "S02",
+    "label": "Healthcare subsidies — CHAS / MediFund",
+    "client_situation": "Senior with chronic conditions who can't afford regular GP visits and medications.",
+    "expected_parent_ids": ["CHAS", "MEDIFUND", "PIONEER-DAS", "MEDISHIELD", "PKQxhC2q", "DKTZwVPL"],
+    "expected_categories": ["healthcare", "retirement-legacy"],
+    "notes": "Healthcare affordability — CHAS subsidies, MediFund, plus premium-subsidy schemes."
+  },
+  {
+    "id": "S03",
+    "label": "Caregiver of dementia parent",
+    "client_situation": "Working adult caring for elderly parent with mid-stage dementia. Looking for daytime help so they can continue working.",
+    "expected_parent_ids": ["SVC-DDC", "SVC-NHRC", "HCG", "SVC-HPCSH", "CRESTCG", "JqJOoLnT", "o0cdiebU"],
+    "expected_categories": ["caregiving-support", "disability-support"],
+    "notes": "Dementia respite — formal day care + home-based caregiving + caregiver support + Take-a-Break."
+  },
+  {
+    "id": "S04",
+    "label": "Disability — assistive technology",
+    "client_situation": "Young adult with cerebral palsy needs a powered wheelchair to be more independent at home and work.",
+    "expected_parent_ids": ["ATF", "EMPSUPPWD", "ETS", "DPS_MSF", "s1Mns2Os", "TSS", "SVC-DACD", "LPsRp3sD"],
+    "expected_categories": ["disability-support"],
+    "notes": "ATF is the headline; PWD employment/transport schemes and Enabled Living Programme also valid."
+  },
+  {
+    "id": "S05",
+    "label": "Teen suicide warning signs",
+    "client_situation": "Teenager showing suicide warning signs after recent breakup, family is panicked and doesn't know what to do.",
+    "expected_parent_ids": ["SVC-SSCIP", "ECsnBwjK", "SVC-LOBTCS", "CREST-YOUTH", "SVC-LOTSSL", "SVC-SY", "YIT"],
+    "expected_categories": ["mental-health", "counselling-crisis"],
+    "notes": "SOS family + youth-focused mental health + outreach + Local Outreach to Suicide Survivors."
+  },
+  {
+    "id": "S06",
+    "label": "Family in crisis — FSC + counselling",
+    "client_situation": "Couple in conflict, two school-aged children showing emotional distress, family relationships are deteriorating.",
+    "expected_parent_ids": ["SVC-FSCF", "SVC-FSP", "iO9WdkX4", "SVC-SFPFFF", "SVC-MFCM", "SVC-MSCM"],
+    "expected_categories": ["family-parenting", "counselling-crisis"],
+    "notes": "FSC + Family Strengthening + Counselling + MightyKids Family + Maintenance Support."
+  },
+  {
+    "id": "S07",
+    "label": "Low-income family with young child — KidSTART",
+    "client_situation": "Low-income family with a 3-year-old; mother concerned about child's early development, lives in Yishun.",
+    "expected_parent_ids": ["KIDSTART", "INFANT-CHILD-CARE", "KIFAS", "BSG", "BB-CG", "CDAA", "MOE-FAS"],
+    "expected_categories": ["children-youth", "family-parenting", "education-learning"],
+    "notes": "KidSTART for early development + childcare subsidies + Baby Support Grant + Baby Bonus."
+  },
+  {
+    "id": "S08",
+    "label": "Housing — rental + grant for young couple",
+    "client_situation": "Young couple expecting their first child, looking to apply for their first HDB flat with limited savings.",
+    "expected_parent_ids": ["CPF-HG", "ENCPFHG-FAM", "FTPMC-CAT", "ieMs9uMO", "FAM-PRIORITY", "HOUSEL-HDB", "MC-PRIORITY"],
+    "expected_categories": ["housing-shelters", "family-parenting", "financial-support"],
+    "notes": "CPF housing grants + enhanced grant + priority schemes for first-timer parents."
+  },
+  {
+    "id": "S09",
+    "label": "Senior — silver care continuum",
+    "client_situation": "82-year-old widower living alone, mobility declining, daughter lives overseas. He's frail but mentally clear.",
+    "expected_parent_ids": ["SVC-AACAAACHASACS", "SILVERSUPPORT", "SMF", "SVC-HPCSH", "SVC-HM", "SVC-MOWM", "EASE", "ELDERFUND", "SVC-HT", "SVC-MEATM"],
+    "expected_categories": ["retirement-legacy", "caregiving-support", "healthcare"],
+    "notes": "Wide spread of senior services — AAC + financial + mobility + home care/meals/therapy/transport."
+  },
+  {
+    "id": "S10",
+    "label": "Complex multi-need (Least-to-Most stress test)",
+    "client_situation": "A 58-year-old single mother is the primary caregiver for her 82-year-old mother with mid-stage dementia. She also has an autistic teenage son currently struggling in mainstream school. She recently had to cut her work hours to half-time. The family is starting to fall behind on utility bills.",
+    "expected_parent_ids": ["SVC-DDC", "HCG", "COMCARE-SMTA", "SVC-SESSAWII", "SVC-SESSAWNII", "SVC-LASSP", "CRESTCG", "SVC-HPCSH", "o0cdiebU", "JqJOoLnT"],
+    "expected_categories": ["caregiving-support", "disability-support", "financial-support", "education-learning"],
+    "notes": "Stress-tests the decomposer; pure retrieval (whole-paragraph embedding) won't surface SPED items — that requires the decomposer + multi-retrieval merge via recommend()."
+  }
+]

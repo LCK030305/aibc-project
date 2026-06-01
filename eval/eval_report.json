@@ -1,0 +1,383 @@
+{
+  "n_scenarios": 10,
+  "n_retrieval_ok": 10,
+  "n_retrieval_errors": 0,
+  "aggregate": {
+    "recall_at_k": {
+      "5": 0.409,
+      "10": 0.647
+    },
+    "precision_at_k": {
+      "5": 0.58,
+      "10": 0.47
+    },
+    "MRR": 0.82,
+    "llm_judge": null
+  },
+  "duration_sec": 6.7,
+  "per_scenario": [
+    {
+      "id": "S01",
+      "label": "Simple financial help — ComCare",
+      "expected": [
+        "wpGyuJUN",
+        "CJHJsvLn",
+        "COMCARE-INTERIM-ASSISTANCE",
+        "MUIS-FAS",
+        "COMCARE-SMTA"
+      ],
+      "retrieved_top10": [
+        "COMCARE-SMTA",
+        "SVC-WP",
+        "CJHJsvLn",
+        "COMCARE-INTERIM-ASSISTANCE",
+        "MUIS-FAS",
+        "BSG",
+        "wpGyuJUN",
+        "SVC-MSCM",
+        "SSAS",
+        "cVyhpH3s"
+      ],
+      "recall_at_k": {
+        "5": 0.8,
+        "10": 1.0
+      },
+      "precision_at_k": {
+        "5": 0.8,
+        "10": 0.5
+      },
+      "MRR": 1.0,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S02",
+      "label": "Healthcare subsidies — CHAS / MediFund",
+      "expected": [
+        "PKQxhC2q",
+        "MEDISHIELD",
+        "PIONEER-DAS",
+        "CHAS",
+        "DKTZwVPL",
+        "MEDIFUND"
+      ],
+      "retrieved_top10": [
+        "SVC-HM",
+        "SVC-HN",
+        "SVC-HT",
+        "SVC-MOWM",
+        "MEDIFUND",
+        "SVC-IHPCS",
+        "SVC-NHRC",
+        "SVC-MEATM",
+        "SVC-ACP",
+        "SVC-PDC"
+      ],
+      "recall_at_k": {
+        "5": 0.16666666666666666,
+        "10": 0.16666666666666666
+      },
+      "precision_at_k": {
+        "5": 0.2,
+        "10": 0.1
+      },
+      "MRR": 0.2,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S03",
+      "label": "Caregiver of dementia parent",
+      "expected": [
+        "HCG",
+        "o0cdiebU",
+        "CRESTCG",
+        "JqJOoLnT",
+        "SVC-NHRC",
+        "SVC-DDC",
+        "SVC-HPCSH"
+      ],
+      "retrieved_top10": [
+        "SVC-NHRC",
+        "o0cdiebU",
+        "SVC-HPCSH",
+        "SVC-VFH",
+        "SVC-DDC",
+        "bncVrBSn",
+        "HCG",
+        "CRESTCG",
+        "SIVLERJOBS_PORTAL",
+        "SVC-PHC"
+      ],
+      "recall_at_k": {
+        "5": 0.5714285714285714,
+        "10": 0.8571428571428571
+      },
+      "precision_at_k": {
+        "5": 0.8,
+        "10": 0.6
+      },
+      "MRR": 1.0,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S04",
+      "label": "Disability — assistive technology",
+      "expected": [
+        "s1Mns2Os",
+        "LPsRp3sD",
+        "ATF",
+        "DPS_MSF",
+        "EMPSUPPWD",
+        "TSS",
+        "SVC-DACD",
+        "ETS"
+      ],
+      "retrieved_top10": [
+        "SVC-HT",
+        "SVC-DACD",
+        "s1Mns2Os",
+        "TSS",
+        "SMF",
+        "SVC-MEATM",
+        "ATF",
+        "DPS_MSF",
+        "HCG",
+        "LPsRp3sD"
+      ],
+      "recall_at_k": {
+        "5": 0.375,
+        "10": 0.75
+      },
+      "precision_at_k": {
+        "5": 0.6,
+        "10": 0.6
+      },
+      "MRR": 0.5,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S05",
+      "label": "Teen suicide warning signs",
+      "expected": [
+        "SVC-SSCIP",
+        "SVC-LOBTCS",
+        "SVC-LOTSSL",
+        "CREST-YOUTH",
+        "ECsnBwjK",
+        "YIT",
+        "SVC-SY"
+      ],
+      "retrieved_top10": [
+        "SVC-SSCIP",
+        "SVC-LOTSSL",
+        "SVC-LOBTCS",
+        "ECsnBwjK",
+        "SVC-BPCS",
+        "CREST-YOUTH",
+        "SVC-SY",
+        "iO9WdkX4",
+        "SVC-SFPFFF",
+        "IloiKSsT"
+      ],
+      "recall_at_k": {
+        "5": 0.5714285714285714,
+        "10": 0.8571428571428571
+      },
+      "precision_at_k": {
+        "5": 0.8,
+        "10": 0.6
+      },
+      "MRR": 1.0,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S06",
+      "label": "Family in crisis — FSC + counselling",
+      "expected": [
+        "iO9WdkX4",
+        "SVC-FSCF",
+        "SVC-MSCM",
+        "SVC-MFCM",
+        "SVC-SFPFFF",
+        "SVC-FSP"
+      ],
+      "retrieved_top10": [
+        "iO9WdkX4",
+        "SVC-WP",
+        "SVC-SFPFFF",
+        "SVC-TSP",
+        "SVC-CPSCC",
+        "MC-PRIORITY",
+        "SVC-CCETS",
+        "ceeJSWE0",
+        "SVC-RASP",
+        "SVC-FSP"
+      ],
+      "recall_at_k": {
+        "5": 0.3333333333333333,
+        "10": 0.5
+      },
+      "precision_at_k": {
+        "5": 0.4,
+        "10": 0.3
+      },
+      "MRR": 1.0,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S07",
+      "label": "Low-income family with young child — KidSTART",
+      "expected": [
+        "CDAA",
+        "MOE-FAS",
+        "KIFAS",
+        "BSG",
+        "BB-CG",
+        "INFANT-CHILD-CARE",
+        "KIDSTART"
+      ],
+      "retrieved_top10": [
+        "KIDSTART",
+        "SVC-EIPFICE",
+        "Q1UpgN0i",
+        "SVC-EIPFIACPEP",
+        "GNAgZJDj",
+        "PrBDGZa7",
+        "INFANT-CHILD-CARE",
+        "SCFA",
+        "KIFAS",
+        "SVC-SY"
+      ],
+      "recall_at_k": {
+        "5": 0.14285714285714285,
+        "10": 0.42857142857142855
+      },
+      "precision_at_k": {
+        "5": 0.2,
+        "10": 0.3
+      },
+      "MRR": 1.0,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S08",
+      "label": "Housing — rental + grant for young couple",
+      "expected": [
+        "ENCPFHG-FAM",
+        "CPF-HG",
+        "FTPMC-CAT",
+        "ieMs9uMO",
+        "FAM-PRIORITY",
+        "HOUSEL-HDB",
+        "MC-PRIORITY"
+      ],
+      "retrieved_top10": [
+        "FTPMC-CAT",
+        "CPF-HG",
+        "FRESH-START",
+        "FAM-PRIORITY",
+        "OAn8RIRG",
+        "ieMs9uMO",
+        "ENCPFHG-FAM",
+        "QlaRQpLF",
+        "ENCPFHG-SIN",
+        "PUR-NRSF-SIN"
+      ],
+      "recall_at_k": {
+        "5": 0.42857142857142855,
+        "10": 0.7142857142857143
+      },
+      "precision_at_k": {
+        "5": 0.6,
+        "10": 0.5
+      },
+      "MRR": 1.0,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S09",
+      "label": "Senior — silver care continuum",
+      "expected": [
+        "SVC-MEATM",
+        "SVC-HM",
+        "SVC-AACAAACHASACS",
+        "ELDERFUND",
+        "SVC-MOWM",
+        "SMF",
+        "EASE",
+        "SVC-HT",
+        "SILVERSUPPORT",
+        "SVC-HPCSH"
+      ],
+      "retrieved_top10": [
+        "SVC-HM",
+        "SVC-MEATM",
+        "SVC-MOWM",
+        "SVC-HT",
+        "EASE",
+        "SVC-NH",
+        "SVC-PHC",
+        "SVC-DDC",
+        "ELDERFUND",
+        "SVC-HPCSH"
+      ],
+      "recall_at_k": {
+        "5": 0.5,
+        "10": 0.7
+      },
+      "precision_at_k": {
+        "5": 1.0,
+        "10": 0.7
+      },
+      "MRR": 1.0,
+      "error": null,
+      "judge": null
+    },
+    {
+      "id": "S10",
+      "label": "Complex multi-need (Least-to-Most stress test)",
+      "expected": [
+        "HCG",
+        "SVC-SESSAWII",
+        "SVC-HPCSH",
+        "o0cdiebU",
+        "CRESTCG",
+        "JqJOoLnT",
+        "SVC-SESSAWNII",
+        "SVC-LASSP",
+        "SVC-DDC",
+        "COMCARE-SMTA"
+      ],
+      "retrieved_top10": [
+        "SVC-VFH",
+        "CRESTCG",
+        "HCG",
+        "SVC-CITC",
+        "SVC-COTC",
+        "bncVrBSn",
+        "SVC-DDC",
+        "SVC-PHC",
+        "SVC-HPCSH",
+        "o0cdiebU"
+      ],
+      "recall_at_k": {
+        "5": 0.2,
+        "10": 0.5
+      },
+      "precision_at_k": {
+        "5": 0.4,
+        "10": 0.5
+      },
+      "MRR": 0.5,
+      "error": null,
+      "judge": null
+    }
+  ]
+}
