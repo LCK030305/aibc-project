@@ -1,0 +1,46 @@
+# What does NOT get copied into the Docker image.
+# Tighter = smaller image, faster builds, less attack surface.
+
+# Local development artefacts
+.venv/
+.env
+.env.*
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+.coverage.*
+.mypy_cache/
+.ruff_cache/
+
+# Version control
+.git/
+.gitignore
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Personal demo assets (large, unrelated to runtime)
+"Capstone 1 of 2/"
+*.mp4
+*.mov
+*.avi
+
+# Probe outputs (HTML dumps + screenshots from initial DOM investigation)
+samples/
+
+# Transient logs
+data/scrape.log
+*.log
+
+# Archived dead URLs — kept on disk for audit but not needed at runtime
+data/raw/dead/
+
+# Docker meta-files (no need to copy themselves into the image)
+Dockerfile
+.dockerignore
+
+# (Keep README.md / CHANGELOG.md / DEPLOY.md / DOCKER.md so they're
+#  inspectable inside the container — useful when troubleshooting.)

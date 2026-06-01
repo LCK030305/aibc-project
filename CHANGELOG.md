@@ -2,23 +2,24 @@
 
 A chronological record of every block of work, grouped into milestones.
 Each entry links to the commit SHA so a grader can `git checkout` any
-point in the iteration story.
+point in the iteration story. All dates ISO 8601 (Asia/Singapore, UTC+8).
 
 ---
 
-## v2.0 — Production-readiness layer  (current)
+## v2.0 — Production-readiness layer  ·  2026-06-01
 
 Polish layer that makes the project demoable, deployable, and defensible.
 
 | Commit | Block | What it added | Bootcamp topic |
 |---|---|---|---|
+| *(pending)* | **Eval-in-UI + Docker + dates** | Sidebar "📊 Evaluation" panel reads `eval/eval_report.json` and surfaces aggregate metrics live in the app. `Dockerfile` + `.dockerignore` + `DOCKER.md` for containerised deployment. ISO dates added to CHANGELOG section headers. | **Xtra Topic 1** Docker · Topic 4.5 (eval visibility) |
 | `483b353` | **PWD + DEPLOY.md** | Password gate (`_require_password()`) at the top of `app.py`; reads `APP_PASSWORD` via `get_secret()`. Step-by-step GitHub + Streamlit Cloud deploy guide. | Topic 8.2 · 8.4 |
 | `879b76b` | **README-V2 + PPTX-V2** | README rewrite reflecting all A1–A6 + EVAL; new file-map deck slide for Evaluation; expanded curriculum-coverage table to 15 rows. | Documentation polish |
 | `65ab6aa` | **EVAL** | `evaluator.py` with two-metric framework (retrieval@k + LLM judge) over 10 hand-curated scenarios. Generates `eval/eval_report.{json,md}`. Headline metrics: **MRR 0.82 · precision@5 0.58 · recall@10 0.65**. | **Topic 4.5** — RAG Evaluation |
 
 ---
 
-## v1.x — Advanced prompting layer (Container A)
+## v1.x — Advanced prompting layer (Container A)  ·  2026-05-31 → 2026-06-01
 
 The "promote from working to grade-A" pass. Six incremental blocks that
 each add one bootcamp-named technique and ship as a stand-alone commit
@@ -36,7 +37,7 @@ with smoke tests.
 
 ---
 
-## v1.0 — Baseline  (`fc00fa9`)
+## v1.0 — Baseline  (`fc00fa9` · 2026-05-30)
 
 End-to-end working pipeline: Playwright scraper → section-level chunker
 → OpenAI embeddings → cosine retriever with dedup + filters → CO-STAR

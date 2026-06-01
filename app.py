@@ -26,7 +26,9 @@ Streamlit Community Cloud (Week 9): push to GitHub, secrets =
 
 from __future__ import annotations
 
+import json
 import time
+from pathlib import Path
 
 import streamlit as st
 
@@ -34,6 +36,8 @@ from decomposer import step_3_decompose
 from llm import get_secret, num_tokens_from_message_rough
 from recommender import recommend
 from retriever import get_retriever
+
+EVAL_REPORT_PATH = Path(__file__).parent / "eval" / "eval_report.json"
 
 # Approximate gpt-4.1-mini pricing (USD per 1M tokens).
 # Used for the cost-footer estimate; not authoritative.
@@ -212,6 +216,48 @@ with st.sidebar:
     col_a, col_b = st.columns(2)
     col_a.metric("Records", retriever.n_records)
     col_b.metric("Chunks", retriever.n_chunks)
+
+    # ---- Evaluation results (Topic 4.5) ---------------------------------
+    if EVAL_REPORT_PATH.exists():
+        with st.expander("📊 Evaluation (Topic 4.5)", expanded=False):
+            try:
+                report = json.loads(EVAL_REPORT_PATH.read_text(encoding="utf-8"))
+            except Exception:  # noqa: BLE001
+                report = None
+            if report is None:
+                st.caption("Could not parse eval_report.json.")
+            else:
+                agg = report.get("aggregate", {})
+                recall = agg.get("recall_at_k", {})
+                precision = agg.get("precision_at_k", {})
+                mrr = agg.get("MRR", 0)
+                judge = agg.get("llm_judge") or {}
+                n_scenarios = report.get("n_scenarios", 0)
+                duration = report.get("duration_sec", 0)
+                # Headline metric — MRR
+                st.metric("MRR", f"{mrr:.2f}",
+                          help="Mean Reciprocal Rank · first relevant hit rank.")
+                # Recall + precision in compact form
+                r5 = recall.get("5", recall.get(5, 0))
+                r10 = recall.get("10", recall.get(10, 0))
+                p5 = precision.get("5", precision.get(5, 0))
+                p10 = precision.get("10", precision.get(10, 0))
+                st.caption(
+                    f"**recall@5** {r5:.2f}  ·  **recall@10** {r10:.2f}  \n"
+                    f"**precision@5** {p5:.2f}  ·  **precision@10** {p10:.2f}"
+                )
+                if judge.get("mean") is not None:
+                    st.caption(
+                        f"**LLM judge** (5-pt scale, calibrated)  \n"
+                        f"relevance {judge.get('relevance', 0)} · "
+                        f"evidence {judge.get('evidence_quality', 0)} · "
+                        f"flags {judge.get('eligibility_flags', 0)}  ·  "
+                        f"**mean {judge.get('mean', 0)}**"
+                    )
+                st.caption(
+                    f"_{n_scenarios} scenarios · run took {duration:.0f}s_  \n"
+                    f"_Regenerate with_ `python evaluator.py [--no-llm]`"
+                )
 
     st.divider()
     st.caption(
