@@ -153,24 +153,48 @@ def evaluate_retrieval(scenario: dict) -> RetrievalResult:
 # ---------------------------------------------------------------------------
 
 JUDGE_SYSTEM_PROMPT = """\
-You are an experienced Singapore Social Assistance Officer reviewing the
-recommendations produced by an AI assistant. Rate the output on three
-dimensions using a 1-5 Likert scale (5 = excellent, 1 = poor):
+You are a SENIOR Singapore SAO trainer reviewing AI-produced
+recommendations. Your job is to be **critical and honest** — most
+recommendations should NOT score 5/5 unless they are genuinely
+excellent. Calibration matters more than encouragement.
 
+Rate THREE dimensions on a 1-5 scale with these anchors:
+
+  5  Excellent. Recommendations directly fit the case. Rationales are
+     specific to THIS client's circumstances. Eligibility flags point
+     at exactly the right verification items. No obvious gaps.
+  4  Good. Solid fit with minor caveats (a slightly generic rationale,
+     or one missing flag that an experienced SAO would expect).
+  3  Mediocre. Partially fits. Recommendations cover only part of the
+     case OR rationales are generic OR flags are vague.
+  2  Poor. Marginally relevant or significantly off. The SAO would not
+     forward these to the family without major edits.
+  1  Terrible. Misleading or off-topic.
+
+THREE dimensions:
   - relevance         : Do the recommendations actually fit the client's
-                        situation? Do they cover the major needs?
-  - evidence_quality  : Are the rationales specific and grounded in the
-                        client's circumstances (not generic)?
-  - eligibility_flags : Are the verification flags pointing the SAO at
-                        the right things to confirm with the client?
+                        situation? Are any major needs uncovered?
+  - evidence_quality  : Are rationales SPECIFIC to this client (not
+                        repeated boilerplate from the scheme description)?
+                        Do they cite concrete evidence from the scheme?
+  - eligibility_flags : Are the verify-with-client items the RIGHT ones
+                        (income, age, citizenship, household composition
+                        — the things that actually determine eligibility),
+                        or are they generic ("confirm details with SAO")?
 
-Also provide a one-sentence overall assessment.
+Important: a 5 means "I have nothing to suggest improving." If you can
+identify ANY plausible improvement — a missed need, a vague rationale,
+a missing flag — the score should be 4 or below.
+
+Also: identify the strongest WEAKNESS of this output in one short
+phrase. If there's no real weakness, write "none".
 
 Output a single JSON object:
 {
   "relevance":         <int 1-5>,
   "evidence_quality":  <int 1-5>,
   "eligibility_flags": <int 1-5>,
+  "weakness":          "<one short phrase, or 'none'>",
   "overall_comment":   "<one short sentence>"
 }
 """
@@ -183,6 +207,7 @@ class JudgeResult:
     relevance: int = 0
     evidence_quality: int = 0
     eligibility_flags: int = 0
+    weakness: str = ""
     overall_comment: str = ""
     error: str | None = None
 
@@ -248,6 +273,7 @@ def evaluate_with_llm_judge(scenario: dict) -> JudgeResult:
         relevance=int(parsed.get("relevance", 0) or 0),
         evidence_quality=int(parsed.get("evidence_quality", 0) or 0),
         eligibility_flags=int(parsed.get("eligibility_flags", 0) or 0),
+        weakness=str(parsed.get("weakness", "")).strip(),
         overall_comment=str(parsed.get("overall_comment", "")).strip(),
     )
 
@@ -356,6 +382,7 @@ def run(quick: bool = False, no_llm: bool = False) -> None:
                             "relevance": j.relevance,
                             "evidence_quality": j.evidence_quality,
                             "eligibility_flags": j.eligibility_flags,
+                            "weakness": j.weakness,
                             "overall_comment": j.overall_comment,
                             "error": j.error,
                         }

@@ -12,9 +12,14 @@
       "10": 0.47
     },
     "MRR": 0.82,
-    "llm_judge": null
+    "llm_judge": {
+      "relevance": 4.8,
+      "evidence_quality": 4.3,
+      "eligibility_flags": 4.1,
+      "mean": 4.4
+    }
   },
-  "duration_sec": 6.7,
+  "duration_sec": 243.9,
   "per_scenario": [
     {
       "id": "S01",
@@ -48,18 +53,25 @@
       },
       "MRR": 1.0,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 5,
+        "evidence_quality": 4,
+        "eligibility_flags": 4,
+        "weakness": "some rationales are slightly generic and flags could be more specific",
+        "overall_comment": "Recommendations are well-targeted to the client's financial and employment situation, though some rationales and flags could be more detailed and tailored.",
+        "error": null
+      }
     },
     {
       "id": "S02",
       "label": "Healthcare subsidies — CHAS / MediFund",
       "expected": [
+        "MEDIFUND",
+        "DKTZwVPL",
         "PKQxhC2q",
         "MEDISHIELD",
         "PIONEER-DAS",
-        "CHAS",
-        "DKTZwVPL",
-        "MEDIFUND"
+        "CHAS"
       ],
       "retrieved_top10": [
         "SVC-HM",
@@ -83,18 +95,25 @@
       },
       "MRR": 0.2,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 5,
+        "evidence_quality": 4,
+        "eligibility_flags": 4,
+        "weakness": "eligibility flags could be more comprehensive",
+        "overall_comment": "Recommendations are well-targeted to the client's needs, with mostly specific rationales and appropriate eligibility checks, though some flags could be expanded to cover all relevant criteria.",
+        "error": null
+      }
     },
     {
       "id": "S03",
       "label": "Caregiver of dementia parent",
       "expected": [
         "HCG",
-        "o0cdiebU",
-        "CRESTCG",
-        "JqJOoLnT",
-        "SVC-NHRC",
         "SVC-DDC",
+        "CRESTCG",
+        "SVC-NHRC",
+        "JqJOoLnT",
+        "o0cdiebU",
         "SVC-HPCSH"
       ],
       "retrieved_top10": [
@@ -119,20 +138,27 @@
       },
       "MRR": 1.0,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 5,
+        "evidence_quality": 4,
+        "eligibility_flags": 4,
+        "weakness": "some rationales are slightly generic and could be more client-specific",
+        "overall_comment": "Recommendations are well-targeted to the client's caregiving and work needs, but some rationales and flags could be more detailed and tailored.",
+        "error": null
+      }
     },
     {
       "id": "S04",
       "label": "Disability — assistive technology",
       "expected": [
-        "s1Mns2Os",
-        "LPsRp3sD",
-        "ATF",
-        "DPS_MSF",
         "EMPSUPPWD",
-        "TSS",
+        "ETS",
+        "ATF",
+        "s1Mns2Os",
         "SVC-DACD",
-        "ETS"
+        "LPsRp3sD",
+        "TSS",
+        "DPS_MSF"
       ],
       "retrieved_top10": [
         "SVC-HT",
@@ -156,18 +182,25 @@
       },
       "MRR": 0.5,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 5,
+        "evidence_quality": 4,
+        "eligibility_flags": 4,
+        "weakness": "some flags could be more specific",
+        "overall_comment": "Recommendations are well-tailored to the client's needs, though some rationales and flags could be more detailed and precise.",
+        "error": null
+      }
     },
     {
       "id": "S05",
       "label": "Teen suicide warning signs",
       "expected": [
-        "SVC-SSCIP",
-        "SVC-LOBTCS",
-        "SVC-LOTSSL",
         "CREST-YOUTH",
-        "ECsnBwjK",
+        "SVC-SSCIP",
+        "SVC-LOTSSL",
         "YIT",
+        "SVC-LOBTCS",
+        "ECsnBwjK",
         "SVC-SY"
       ],
       "retrieved_top10": [
@@ -192,18 +225,25 @@
       },
       "MRR": 1.0,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 5,
+        "evidence_quality": 5,
+        "eligibility_flags": 4,
+        "weakness": "some eligibility flags could be more comprehensive",
+        "overall_comment": "Recommendations are well-targeted and rationales are specific, but eligibility flags could include more verification points such as citizenship or hospitalization status for all relevant services.",
+        "error": null
+      }
     },
     {
       "id": "S06",
       "label": "Family in crisis — FSC + counselling",
       "expected": [
-        "iO9WdkX4",
-        "SVC-FSCF",
         "SVC-MSCM",
+        "iO9WdkX4",
         "SVC-MFCM",
+        "SVC-FSP",
         "SVC-SFPFFF",
-        "SVC-FSP"
+        "SVC-FSCF"
       ],
       "retrieved_top10": [
         "iO9WdkX4",
@@ -227,19 +267,26 @@
       },
       "MRR": 1.0,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 5,
+        "evidence_quality": 5,
+        "eligibility_flags": 5,
+        "weakness": "none",
+        "overall_comment": "Recommendations are well-tailored to the family’s conflict and children’s emotional distress, with precise rationales and appropriate verification flags.",
+        "error": null
+      }
     },
     {
       "id": "S07",
       "label": "Low-income family with young child — KidSTART",
       "expected": [
-        "CDAA",
-        "MOE-FAS",
+        "KIDSTART",
         "KIFAS",
         "BSG",
         "BB-CG",
-        "INFANT-CHILD-CARE",
-        "KIDSTART"
+        "MOE-FAS",
+        "CDAA",
+        "INFANT-CHILD-CARE"
       ],
       "retrieved_top10": [
         "KIDSTART",
@@ -263,19 +310,26 @@
       },
       "MRR": 1.0,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 4,
+        "evidence_quality": 4,
+        "eligibility_flags": 4,
+        "weakness": "some recommendations hinge on unconfirmed diagnosis",
+        "overall_comment": "Recommendations are generally well-targeted to the low-income family with a young child, but some services require confirmed developmental issues which are not yet established.",
+        "error": null
+      }
     },
     {
       "id": "S08",
       "label": "Housing — rental + grant for young couple",
       "expected": [
-        "ENCPFHG-FAM",
-        "CPF-HG",
-        "FTPMC-CAT",
         "ieMs9uMO",
+        "FTPMC-CAT",
+        "ENCPFHG-FAM",
         "FAM-PRIORITY",
-        "HOUSEL-HDB",
-        "MC-PRIORITY"
+        "MC-PRIORITY",
+        "CPF-HG",
+        "HOUSEL-HDB"
       ],
       "retrieved_top10": [
         "FTPMC-CAT",
@@ -299,22 +353,29 @@
       },
       "MRR": 1.0,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 5,
+        "evidence_quality": 5,
+        "eligibility_flags": 5,
+        "weakness": "none",
+        "overall_comment": "The recommendations are well-tailored to the young couple's situation, with specific rationales and appropriate eligibility verification flags.",
+        "error": null
+      }
     },
     {
       "id": "S09",
       "label": "Senior — silver care continuum",
       "expected": [
-        "SVC-MEATM",
-        "SVC-HM",
-        "SVC-AACAAACHASACS",
-        "ELDERFUND",
-        "SVC-MOWM",
-        "SMF",
-        "EASE",
-        "SVC-HT",
+        "SVC-HPCSH",
         "SILVERSUPPORT",
-        "SVC-HPCSH"
+        "SMF",
+        "SVC-MEATM",
+        "EASE",
+        "SVC-HM",
+        "SVC-HT",
+        "ELDERFUND",
+        "SVC-AACAAACHASACS",
+        "SVC-MOWM"
       ],
       "retrieved_top10": [
         "SVC-HM",
@@ -338,22 +399,29 @@
       },
       "MRR": 1.0,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 4,
+        "evidence_quality": 4,
+        "eligibility_flags": 3,
+        "weakness": "eligibility flags are somewhat generic and incomplete",
+        "overall_comment": "Recommendations are well-targeted to the client's frailty and living situation, but eligibility flags could be more precise and comprehensive.",
+        "error": null
+      }
     },
     {
       "id": "S10",
       "label": "Complex multi-need (Least-to-Most stress test)",
       "expected": [
         "HCG",
-        "SVC-SESSAWII",
-        "SVC-HPCSH",
-        "o0cdiebU",
-        "CRESTCG",
-        "JqJOoLnT",
-        "SVC-SESSAWNII",
-        "SVC-LASSP",
         "SVC-DDC",
-        "COMCARE-SMTA"
+        "CRESTCG",
+        "SVC-HPCSH",
+        "SVC-LASSP",
+        "SVC-SESSAWNII",
+        "COMCARE-SMTA",
+        "o0cdiebU",
+        "JqJOoLnT",
+        "SVC-SESSAWII"
       ],
       "retrieved_top10": [
         "SVC-VFH",
@@ -377,7 +445,14 @@
       },
       "MRR": 0.5,
       "error": null,
-      "judge": null
+      "judge": {
+        "relevance": 5,
+        "evidence_quality": 4,
+        "eligibility_flags": 4,
+        "weakness": "slightly generic mental health rationales",
+        "overall_comment": "Recommendations are well-targeted to the client's caregiving and financial challenges, though some mental health rationales could be more tailored.",
+        "error": null
+      }
     }
   ]
 }
