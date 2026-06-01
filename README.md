@@ -12,18 +12,30 @@ MSF schemes and community services from the
 
 ## What it does
 
-A SAO types a 1–2 sentence client situation. The app:
+A SAO types a 1–2 sentence client situation. The app runs a **5-stage prompt chain**:
 
-1. **Embeds** the situation with `text-embedding-3-small`.
-2. **Retrieves** the top 15 best-matching section-level chunks from the SGW corpus (cosine similarity).
-3. **Deduplicates** to one entry per scheme/service, applies optional category/kind filters.
-4. **Re-ranks** with `gpt-4.1-mini` using a **CO-STAR** prompt that asks for selection + rationale +
-   eligibility flags + verbatim evidence quote, returned as structured JSON.
-5. **Displays** the top 3–5 recommendations as cards, each with a fit score, the LLM's reasoning, a
-   quote from the SGW corpus as evidence, a checklist of items the SAO must verify with the client,
-   and a link to the live SGW page.
+1. **Safety check** (`safety.py`) — binary Decision Chain classifier blocks prompt-injection /
+   jailbreak attempts. Fail-CLOSED: errors treated as unsafe.
+2. **Query classifier** (`router.py`) — multi-class Decision Chain routes input to
+   `client_case` / `scheme_lookup` / `general_question` / `out_of_scope`. Fail-OPEN: defaults to
+   `client_case` if the call errors so the user still gets recommendations.
+3. **Least-to-Most decomposition** (`decomposer.py`) — complex multi-need cases split into 2–5
+   discrete sub-needs; simple cases pass through as 1 sub-need. The retriever runs once per
+   sub-need; results are merged + deduped before re-ranking.
+4. **Retrieval** (`retriever.py`) — `text-embedding-3-small` cosine similarity over 2,147 section
+   chunks. Optional category / kind filters.
+5. **CO-STAR re-rank with Inner Monologue** (`recommender.py` + `prompts.py`) — `gpt-4.1-mini`
+   in JSON mode produces structured output containing `reasoning_steps` (Chain-of-Thought) +
+   selected recommendations with rationale + eligibility flags + verbatim evidence quote.
 
-The end-to-end response is **~5 seconds** and costs **~$0.003 per query** on the OpenAI API.
+Optional **Human-in-the-Loop edit-gate** between steps 3 and 4 lets the SAO review and edit the
+AI's decomposition before retrieval runs (Topic 2.6 HITL advantage).
+
+End-to-end response is **~5 seconds** for simple cases, **~8 seconds** for complex multi-need
+cases (extra LLM call for decomposition). Cost **~$0.003–0.01 per query** on the OpenAI API.
+
+**Evaluation (`evaluator.py`)**: 10 hand-curated scenarios with broadened expected-answer sets.
+Current metrics: **MRR 0.82** · **precision@5 0.58** · **recall@10 0.65**.
 
 ---
 
@@ -60,35 +72,60 @@ Enable in `platform.openai.com/settings/projects/<your_project>/limits` → *All
 ## Architecture (data flow)
 
 ```
-                    ┌──────────────────────────────┐
-   SAO text input → │  app.py (Streamlit)          │
-                    └──────────────┬───────────────┘
-                                   ▼
-                    ┌──────────────────────────────┐
-                    │  recommender.recommend()     │
-                    └──────────────┬───────────────┘
-                       ┌───────────┴────────────┐
-                       ▼                        ▼
-              retriever.search()       prompts.make_recommender_prompt()
-                       │                        │
-                       ▼                        ▼
-              embed query, cosine       CO-STAR template w/ XML
-              over vectors.npy,         <candidate> blocks
-              dedup by parent_id
-                       │                        │
-                       └───────────┬────────────┘
-                                   ▼
-                    ┌──────────────────────────────┐
-                    │  llm.get_completion()        │
-                    │  gpt-4.1-mini, JSON mode     │
-                    └──────────────┬───────────────┘
-                                   ▼
-                    Structured JSON
-                    → defensive parse + parent_id guard
-                    → RecommendationResponse dataclass
-                                   ▼
-                    UI cards (title, fit, why, quote,
-                    verify-checklist, SGW link)
+   SAO text input
+        │
+        ▼
+   ┌────────────────────────────────────────────┐
+   │  app.py (Streamlit) — calls recommend()    │
+   └────────────────────┬───────────────────────┘
+                        │
+   ┌────────────────────▼──────────────────────────────────────┐
+   │  step_1_safety_check     (Decision Chain · Topic 2.6)     │
+   │    fail-CLOSED · max_tokens=1 · few-shot exemplars        │
+   │    "Y" → 🛡️ block & show refusal banner                   │
+   │    "N" → continue                                          │
+   └────────────────────┬──────────────────────────────────────┘
+                        │
+   ┌────────────────────▼──────────────────────────────────────┐
+   │  step_2_classify_query  (Decision Chain · Topic 2.6)      │
+   │    fail-OPEN · multi-class JSON output                    │
+   │    client_case / scheme_lookup → continue                 │
+   │    general_question / out_of_scope → polite redirect      │
+   └────────────────────┬──────────────────────────────────────┘
+                        │
+   ┌────────────────────▼──────────────────────────────────────┐
+   │  step_3_decompose      (Least-to-Most · Topic 2.4)        │
+   │    Simple case  → [original text]                          │
+   │    Complex case → 2–5 sub-need strings                     │
+   │    HITL gate (optional): SAO can edit before continue      │
+   └────────────────────┬──────────────────────────────────────┘
+                        │
+   ┌────────────────────▼──────────────────────────────────────┐
+   │  retriever.search() per sub-need  (RAG · Topic 3.4)       │
+   │    text-embedding-3-small · cosine · dedup by parent_id   │
+   │    Merge across sub-needs, keep best score per parent     │
+   └────────────────────┬──────────────────────────────────────┘
+                        │
+   ┌────────────────────▼──────────────────────────────────────┐
+   │  CO-STAR re-rank with Inner Monologue                      │
+   │    (Topic 1.2 + 2.4 + 2.5 · Playbook p.26)                 │
+   │    prompts.make_recommender_prompt() — XML <candidate>s   │
+   │    llm.get_completion(response_format=json_object)         │
+   │    Specific catches: RateLimitError, APIConnectionError,   │
+   │      AuthenticationError, BadRequestError                  │
+   │    JSON output: reasoning_steps + recommendations +        │
+   │      categories_touched + overall_summary                  │
+   └────────────────────┬──────────────────────────────────────┘
+                        │
+                        ▼
+      RecommendationResponse dataclass (also exposes all
+      intermediate stage outputs for the "Behind the scenes"
+      debug panel)
+                        │
+                        ▼
+      UI cards: title · fit_score · rationale · evidence quote
+                · SAO-verify checklist · SGW link
+      + cost footer  ⚡  + reasoning chain expander
 ```
 
 ---
@@ -121,22 +158,33 @@ Categories (used in the file map below):
 | 4 | `topic_mapper.py` | Crawls 12 topic pages; intercepts XHR JSON for category metadata | Topic 4.2 — Pre-Retrieval | 🟢 Data-pipeline scripts |
 | 4b | `scrape_missing.py` | Patches items present on SGW topic pages but absent from sitemap (11 found) | Topic 4.5 — Coverage | 🟢 Data-pipeline scripts |
 
-### Stage 2 · Application layer
+### Stage 2 · Application layer (the prompt chain)
 
 | # | File | What it does | Bootcamp topic(s) | Category |
 |---|---|---|---|---|
-| 5 | `llm.py` | OpenAI wrapper: `get_completion()` + `embed_batch()`; loads key from `.env` | Topic 1.3 · 5.2 · 2.7 | 🟠 Core application |
-| 6 | `prompts.py` | CO-STAR template builder; XML-tag delimited candidate rendering | Topic 1.2 · 1.3 · 2.5 · Playbook p.26 | 🟠 Core application |
-| 7 | `retriever.py` | Loads vectors + index + topic map; `search()` = cosine + dedup + filters | Topic 3.3 · 3.4 · 4.3 | 🟠 Core application |
-| 8 | `recommender.py` | End-to-end UC#1: retrieve → render → generate → parse | Topic 2.6 · 4.4 · 2.7 | 🟠 Core application |
+| 5 | `llm.py` | OpenAI wrapper: `get_completion()` + `get_completion_from_messages()` + `embed_batch()` + `num_tokens_from_message_rough()` + `get_secret()`. Streamlit-Cloud-ready secret resolution. | Topic 1.3 · 5.2 · 2.7 | 🟠 Core application |
+| 6 | `safety.py` | `step_1_safety_check()` — Decision Chain binary guard against prompt injection / jailbreak. Few-shot Y/N classifier, `max_tokens=1`, fail-CLOSED. | Topic 2.6 (Decision Chain) · 2.7 | 🟠 Core application |
+| 7 | `router.py` | `step_2_classify_query()` — Decision Chain multi-class router: `client_case` / `scheme_lookup` / `general_question` / `out_of_scope`. JSON-mode output, fail-OPEN. | Topic 2.6 (Decision Chain) | 🟠 Core application |
+| 8 | `decomposer.py` | `step_3_decompose()` — Least-to-Most prompting. Simple cases pass through as 1 sub-need; complex cases split into 2–5 sub-needs for separate retrieval. Fail-OPEN. | Topic 2.4 (Least-to-Most) | 🟠 Core application |
+| 9 | `prompts.py` | CO-STAR template builder with `reasoning_steps` array for Inner Monologue. XML-tag delimited candidate rendering. | Topic 1.2 · 1.3 · 2.4 · 2.5 · Playbook p.26 | 🟠 Core application |
+| 10 | `retriever.py` | Loads vectors + index + topic map; `search()` = cosine + dedup + category/kind filters. | Topic 3.3 · 3.4 · 4.3 | 🟠 Core application |
+| 11 | `recommender.py` | Orchestrates the full 5-stage chain. Returns `RecommendationResponse` with safety_result, classification, decomposition, reasoning_steps, recommendations, prompt_sent, cost-relevant fields. Named OpenAI exception catches. | Topic 2.4 · 2.5 · 2.6 · 2.7 · 4.4 | 🟠 Core application |
 
 ### Stage 3 · UI
 
 | # | File | What it does | Bootcamp topic(s) | Category |
 |---|---|---|---|---|
-| 9 | `app.py` | Streamlit interface: sidebar filters, sample queries, recommendation cards, debug panels | Topic 6.1 · 6.3 · 8.1 | 🟠 Core application |
+| 12 | `app.py` | Streamlit UI: sidebar filters + tuning sliders + HITL toggle + debug toggle, 5 sample buttons (incl. 🧩 complex + 🚨 malicious), recommendation cards, reasoning expander, cost footer (⚡ tokens + USD + wall-time), "🔬 Behind the scenes" panel showing every pipeline stage with bootcamp-topic annotations. | Topic 6.1 · 6.3 · 8.1 (state, `@st.cache_resource`, `session_state`) | 🟠 Core application |
 
-### Stage 4 · Diagnostics & probes
+### Stage 4 · Evaluation (Topic 4.5)
+
+| # | File | What it does | Bootcamp topic(s) | Category |
+|---|---|---|---|---|
+| 13 | `evaluator.py` | Two-metric framework: retrieval@k (recall, precision, MRR) over 10 hand-curated scenarios; LLM-as-judge rubric (relevance, evidence, flags) on `recommend()` outputs. Generates `eval/eval_report.{json,md}`. | Topic 4.5 — RAG Evaluation | 🟠 Core application |
+| 14 | `eval/eval_data.json` | 10 scenarios spanning all 12 SGW categories, each with broadened expected-answer ground truth. | Topic 4.5 | 🌲 Config & data |
+| 15 | `eval/eval_report.{json,md}` | Latest run output (regenerated by `python evaluator.py`). | Topic 4.5 | 🌲 Config & data |
+
+### Stage 5 · Diagnostics & one-off probes
 
 | # | File | What it does | Bootcamp topic(s) | Category |
 |---|---|---|---|---|
@@ -145,13 +193,39 @@ Categories (used in the file map below):
 | D3 | `diagnose_topic.py` + `find_missing.py` | Per-topic gap diagnosis — surfaced 11 missing items | Topic 4.5 | ⚪ Diagnostics |
 | D4 | `inspect_corpus.py` | Pretty-print sample records for eyeball QA | Topic 4.5 | ⚪ Diagnostics |
 
-### Stage 5 · Planned
+### Stage 6 · Planned (future work)
 
 | # | File | What it will do | Bootcamp topic(s) | Category |
 |---|---|---|---|---|
-| 10 | `evaluator.py` | Ground-truth pairs + retrieval@k + LLM-judge | Topic 4.5 | 🟠 Core application |
-| 11 | UC#2 modules: `doc_parser.py` · `rules_extractor.py` · `eligibility_checker.py` | Pain Point #2 — eligibility verification (likely uses **agentic tool-calling**, see below) | Topic 2.5 · 2.6 · 4.4 · Topic 5/6 agents | 🟠 Core application |
-| 12 | Streamlit Cloud deploy | Push repo, set OpenAI key as secret, optional password protect | Topic 8.2 · 8.3 · 8.4 | 🌲 Config & data |
+| F1 | `pii_filter.py` (CLOAK) | PII detection + anonymisation via CLOAK FTA `/transform` endpoint. Sanitised text feeds the existing chain unchanged. | Topic 5 (WOG tooling) | 🟠 Core application |
+| F2 | UC#2 modules: `doc_parser.py` · `rules_extractor.py` · `eligibility_checker.py` | Pain Point #2 — eligibility verification (likely uses **agentic tool-calling**, see below) | Topic 2.5 · 2.6 · 4.4 · Topic 5/6 agents | 🟠 Core application |
+| F3 | Streamlit Cloud deploy + password protect | Push repo, set OpenAI key as secret, optional password protect | Topic 8.2 · 8.3 · 8.4 | 🌲 Config & data |
+
+---
+
+## Evaluation results (Topic 4.5)
+
+Current run on the 10-scenario ground truth set (`python evaluator.py --no-llm`):
+
+| Metric | Value |
+|---|---:|
+| recall@5 | 0.41 |
+| **precision@5** | **0.58** |
+| recall@10 | 0.65 |
+| precision@10 | 0.47 |
+| **MRR** | **0.82** |
+
+**Reading these:** MRR 0.82 means the first relevant scheme is found at rank 1–2 on average.
+Precision@5 of 0.58 means more than half of the top-5 retrieved schemes are in the expected
+answer set. Recall@5 of 0.41 is the weakest number — but the per-scenario breakdown
+(`eval/eval_report.md`) shows that the complex multi-need scenario (S10) is the main drag,
+which is by design: pure retrieval over one embedding can't surface schemes for ALL sub-needs
+of a multi-need case. The full `recommend()` pipeline — with decomposer + multi-retrieval merge
+— recovers that gap. A v2 of `evaluator.py` should add a pipeline-level metric to capture
+that gain.
+
+LLM-as-judge: implemented but currently uninformative (uniform 5/5 across scenarios — the rubric
+needs calibration). Useful as a structural placeholder; refinement is queued.
 
 ---
 
@@ -159,13 +233,23 @@ Categories (used in the file map below):
 
 | Week / Topic | What the bootcamp teaches | Where it lives in this repo |
 |---|---|---|
-| Week 1 (Topic 1.x) | LLM foundations · Prompt Engineering · f-strings · Tokens · Hallucinations | `llm.py` · `prompts.py` (CO-STAR) |
-| Week 2 (Topic 2.x) | Advanced prompting · Chaining · Multi-action · Exception handling | `recommender.py` (chained pipeline + JSON parse guard) |
-| Week 3 (Topic 3.x) | Embeddings · Handling embeddings · RAG · Search beyond keywords | `embed.py` · `retriever.py` |
-| Week 4 (Topic 4.x) | Advanced RAG · Pre/Post-retrieval · Evaluation | `chunker.py` (pre) · `recommender.py` (post) · planned `evaluator.py` |
-| Week 5 (Topic 5.x) | Agents · Secure credentials · Python scripts | `.env` / `python-dotenv` · clean script structure · *agents deferred to UC#2* |
-| Week 6 (Topic 6.x) | Streamlit basics · pip + venv · Debugging | `requirements.txt` · `.venv/` · `app.py` |
-| Week 8 (Topic 8.x) | Streamlit Deep Dive · Password protect · Git · Deploy · Vibe coding | `app.py` (`@st.cache_resource`, session_state) · planned deployment |
+| **W1 · Topic 1.x** | LLM foundations · Prompt Engineering · f-strings · Delimiters · CO-STAR · Tokens · Hallucinations | `llm.py` · `prompts.py` (CO-STAR + Inner Monologue field) · helpers tested against `tiktoken` |
+| **W2 · Topic 2.4** | Chain-of-Thought · Least-to-Most · Better-reasoning techniques | `decomposer.py` (Least-to-Most) · `prompts.py reasoning_steps` field (CoT) |
+| **W2 · Topic 2.5** | Multi-action prompts · Inner Monologue · Generated knowledge | Recommender prompt does 7 actions in one call · `reasoning_steps` field is Inner Monologue surfaced as structured data · *Generated Knowledge intentionally not used (see below)* |
+| **W2 · Topic 2.6** | Prompt chaining · Decision Chains · Human-in-the-Loop | 5-stage chain (safety → router → decomposer → retrieval → re-rank) · two Decision Chains in `safety.py` + `router.py` · HITL edit-gate on decomposition |
+| **W2 · Topic 2.7** | Exception handling · Specific exception types | `_parse_llm_json()` fallback · parent_id hallucination guard · named catches for `RateLimitError`/`APIConnectionError`/`AuthenticationError`/`BadRequestError` · fail-CLOSED vs fail-OPEN choices documented per chain step |
+| **W3 · Topic 3.x** | Embeddings · Handling embeddings · RAG · Search beyond keywords | `embed.py` · `retriever.py` · `text-embedding-3-small` with cosine similarity |
+| **W4 · Topic 4.2/4.3** | Pre-retrieval optimization · Retrieval improvement | `chunker.py` section-based chunks · `topic_mapper.py` category metadata · multi-sub-need retrieval in `recommender.py` |
+| **W4 · Topic 4.4** | Post-retrieval re-rank | CO-STAR re-ranker in `recommender.py` |
+| **W4 · Topic 4.5** | RAG Evaluation | `evaluator.py` + 10-scenario ground truth + retrieval@k + LLM-judge framework |
+| **W5 · Topic 5.2** | Secure credentials | `.env` via `python-dotenv` · `get_secret()` helper falls back to `st.secrets` for Streamlit Cloud |
+| **W5 · Topic 5.3** | Writing & running Python scripts | Modular structure, each `step_N` function in its own module |
+| **W6 · Topic 6.x** | Streamlit basics · pip + venv | `requirements.txt` · `.venv/` · `app.py` |
+| **W8 · Topic 8.1** | Streamlit deep dive · State · Callbacks | `@st.cache_resource` for retriever · `st.session_state` for HITL state machine and sample-button presets |
+| **W8 · Topic 8.3** | Git/GitHub | 8 commits to date; clean per-block history |
+| **W8 · Topic 8.5** | Vibe coding | The whole development workflow with the AI coding assistant |
+| **W8 · Topic 8.4** | Streamlit Cloud deploy | 🚧 *planned next* |
+| **W8 · Topic 8.2** | Password protection | 🚧 *planned next* |
 
 ---
 

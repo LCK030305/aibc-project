@@ -323,29 +323,41 @@ add_stage_table(s, STAGE_HEADERS, [
 
 
 # ---------------------------------------------------------------------------
-# Slide 5 — Stage 2 (Application layer)
+# Slide 5 — Stage 2 (Application layer — the 5-stage prompt chain)
 # ---------------------------------------------------------------------------
 s = add_blank_slide()
-add_title(s, "Stage 2 · Application layer",
-          subtitle="Runtime modules called on every recommendation request. Designed to be imported anywhere — CLI, Streamlit, future API.")
+add_title(s, "Stage 2 · Application layer  (the 5-stage prompt chain)",
+          subtitle="Runtime modules called on every recommendation request. Each step is its own focused module — Topic 2.6 Native Prompt Chaining.")
 add_stage_table(s, STAGE_HEADERS, [
     ["5", "llm.py",
-     "Thin OpenAI wrapper: get_completion() (chat) + embed_batch() (vectors); loads key from .env.",
-     "Topic 1.3 — f-strings · Topic 5.2 — Credentials · Topic 2.7 — Exceptions",
+     "OpenAI wrapper: get_completion, get_completion_from_messages, embed_batch, num_tokens, get_secret (st.secrets → .env fallback).",
+     "Topic 1.3 · 5.2 · 2.7",
      "Core application"],
-    ["6", "prompts.py",
-     "CO-STAR template builder; XML-tag delimited candidate rendering.",
-     "Topic 1.2 — Prompt Engineering · Topic 1.3 — Delimiters · Topic 2.5 — Multi-action · Playbook p.26 (CO-STAR)",
+    ["6", "safety.py",
+     "step_1_safety_check — Decision Chain guard vs prompt injection / jailbreak. Few-shot Y/N, max_tokens=1, fail-CLOSED.",
+     "Topic 2.6 (Decision Chain) · 2.7",
      "Core application"],
-    ["7", "retriever.py",
-     "Loads vectors + index + topic map; search() does cosine + dedup + filter; returns typed Result objects.",
-     "Topic 3.3 — Applying Embeddings · Topic 3.4 — RAG · Topic 4.3 — Improving Retrieval",
+    ["7", "router.py",
+     "step_2_classify_query — Decision Chain multi-class router: client_case / scheme_lookup / general / out-of-scope. Fail-OPEN.",
+     "Topic 2.6 (Decision Chain)",
      "Core application"],
-    ["8", "recommender.py",
-     "End-to-end UC#1: retrieve → render → generate → parse; returns RecommendationResponse.",
-     "Topic 2.6 — Prompt Chaining · Topic 4.4 — Post-Retrieval · Topic 2.7 — Exceptions",
+    ["8", "decomposer.py",
+     "step_3_decompose — Least-to-Most. Simple cases pass through; complex cases split into 2-5 sub-needs for separate retrieval + merge.",
+     "Topic 2.4 (Least-to-Most)",
      "Core application"],
-], x=0.5, y=1.6, w=12.3, h=5.0, col_widths_pct=STAGE_COL_WIDTHS)
+    ["9", "prompts.py",
+     "CO-STAR template with reasoning_steps field (Inner Monologue). XML-tag delimited candidates.",
+     "Topic 1.2 · 1.3 · 2.4 · 2.5 · Playbook p.26",
+     "Core application"],
+    ["10", "retriever.py",
+     "Cosine search over text-embedding-3-small vectors with dedup + category/kind filters.",
+     "Topic 3.3 · 3.4 · 4.3",
+     "Core application"],
+    ["11", "recommender.py",
+     "Orchestrates the full 5-stage chain. Named OpenAI exception catches. Exposes all stage outputs for the Behind-the-Scenes panel.",
+     "Topic 2.4 · 2.5 · 2.6 · 2.7 · 4.4",
+     "Core application"],
+], x=0.5, y=1.45, w=12.3, h=5.7, col_widths_pct=STAGE_COL_WIDTHS)
 
 
 # ---------------------------------------------------------------------------
@@ -355,9 +367,9 @@ s = add_blank_slide()
 add_title(s, "Stage 3 · UI",
           subtitle="The SAO-facing surface. Built lightweight so we can iterate fast and deploy to Streamlit Community Cloud later.")
 add_stage_table(s, STAGE_HEADERS, [
-    ["9", "app.py",
-     "Streamlit UI: sidebar filters (category / kind / pool size), sample queries, recommendation cards with rationale + evidence + eligibility flags, debug panels.",
-     "Topic 6.1 — Understanding Streamlit · Topic 6.3 — Working with Streamlit · Topic 8.1 — Streamlit Deep Dive (state, @st.cache_resource)",
+    ["12", "app.py",
+     "Streamlit UI: sidebar filters + tuning sliders + HITL toggle + debug toggle, 5 sample buttons (incl. 🧩 complex + 🚨 malicious), recommendation cards, reasoning expander, cost footer (⚡ tokens + USD + latency), Behind-the-Scenes pipeline-stage panel.",
+     "Topic 6.1 · 6.3 · 8.1 (state, @st.cache_resource, session_state)",
      "Core application"],
 ], x=0.5, y=1.6, w=12.3, h=3.0, col_widths_pct=STAGE_COL_WIDTHS)
 
@@ -390,10 +402,56 @@ add_text(
 
 
 # ---------------------------------------------------------------------------
-# Slide 7 — Stage 4 (Diagnostics)
+# Slide 7 — Stage 4 (Evaluation)
 # ---------------------------------------------------------------------------
 s = add_blank_slide()
-add_title(s, "Stage 4 · Diagnostics & probes",
+add_title(s, "Stage 4 · Evaluation  (Topic 4.5)",
+          subtitle="Two-metric framework over 10 hand-curated scenarios. Latest run: MRR 0.82 · precision@5 0.58 · recall@10 0.65.")
+add_stage_table(s, STAGE_HEADERS, [
+    ["13", "evaluator.py",
+     "Two metrics: retrieval@k (recall, precision, MRR) for pure-retriever quality; LLM-as-judge for recommend() output quality. Saves eval_report.{json,md}.",
+     "Topic 4.5 — RAG Evaluation",
+     "Core application"],
+    ["14", "eval/eval_data.json",
+     "10 scenarios spanning all 12 SGW categories with broadened expected-answer ground truth.",
+     "Topic 4.5",
+     "Config & data"],
+    ["15", "eval/eval_report.{json, md}",
+     "Latest run output. Re-generated by python evaluator.py [--no-llm | --quick].",
+     "Topic 4.5",
+     "Config & data"],
+], x=0.5, y=1.6, w=12.3, h=4.0, col_widths_pct=STAGE_COL_WIDTHS)
+
+# Aside: headline metrics callout
+note_y = 5.7
+note = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(note_y),
+                          Inches(12.3), Inches(1.4))
+note.fill.solid()
+note.fill.fore_color.rgb = LIGHT_ROW
+note.line.color.rgb = BORDER
+note.line.width = Pt(0.5)
+bar = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(note_y),
+                         Inches(0.15), Inches(1.4))
+bar.fill.solid()
+bar.fill.fore_color.rgb = CAT_CORE
+bar.line.fill.background()
+add_text(s, "Headline metrics", 0.85, note_y + 0.1, 11.5, 0.4,
+         font_size=15, bold=True, color=CAT_CORE)
+add_text(
+    s,
+    "MRR 0.82 — first relevant scheme at rank 1-2 on average.  "
+    "Precision@5 = 0.58 means more than half of top-5 retrieved are valid answers.  "
+    "Recall@10 = 0.65 — about two-thirds of all valid answers in top 10.",
+    0.85, note_y + 0.5, 11.5, 0.85,
+    font_size=13, color=TEXT_DARK,
+)
+
+
+# ---------------------------------------------------------------------------
+# Slide 8 — Stage 5 (Diagnostics)
+# ---------------------------------------------------------------------------
+s = add_blank_slide()
+add_title(s, "Stage 5 · Diagnostics & probes",
           subtitle="One-off scripts kept in the repo so any reviewer can re-run the forensics that informed our design decisions.")
 add_stage_table(s, STAGE_HEADERS, [
     ["D1", "probe_dom.py",
@@ -416,23 +474,23 @@ add_stage_table(s, STAGE_HEADERS, [
 
 
 # ---------------------------------------------------------------------------
-# Slide 8 — Stage 5 (Planned)
+# Slide 9 — Stage 6 (Planned)
 # ---------------------------------------------------------------------------
 s = add_blank_slide()
-add_title(s, "Stage 5 · Planned",
-          subtitle="Where the project goes next — already aligned to Weeks 4–9 of the bootcamp.")
+add_title(s, "Stage 6 · Planned",
+          subtitle="Where the project goes next. Each item drops in additively without reworking the existing chain.")
 add_stage_table(s, STAGE_HEADERS, [
-    ["10", "evaluator.py",
-     "Ground-truth pairs (~10 client scenarios → expected schemes) + retrieval@k metric + LLM-judge ranking.",
-     "Topic 4.5 — RAG Evaluation",
+    ["F1", "pii_filter.py (CLOAK)",
+     "PII detection + anonymisation via CLOAK FTA /transform endpoint. Sanitised text feeds the existing chain unchanged. Side-by-side Raw vs Sanitised UI panes.",
+     "Topic 5 (WOG tooling, secure data handling)",
      "Core application"],
-    ["11", "doc_parser.py · rules_extractor.py · eligibility_checker.py",
-     "UC#2 (Pain Point #2) — extract structured facts from uploaded client docs, match against the 'who' / 'apply' chunks already in our corpus.",
-     "Topic 2.5 — Multi-action · Topic 2.6 — Chaining · Topic 4.4 — Post-Retrieval",
+    ["F2", "doc_parser.py · rules_extractor.py · eligibility_checker.py",
+     "UC#2 (Pain Point #2) — extract structured facts from uploaded client docs, match against the 'who' / 'apply' chunks. Likely uses agentic tool-calling (Archetype #4).",
+     "Topic 2.5 · 2.6 · 4.4 · Topic 5/6 agents",
      "Core application"],
-    ["12", "Streamlit Cloud deployment",
-     "Push repo to GitHub, set OPENAI_API_KEY as a Streamlit secret, optional password protection.",
-     "Topic 8.2 — Password Protect · Topic 8.3 — Git / GitHub · Topic 8.4 — Deploy to Community Cloud",
+    ["F3", "Streamlit Cloud deployment + password",
+     "Push repo to GitHub, set secrets, optional password protection, get a public URL.",
+     "Topic 8.2 · 8.3 · 8.4",
      "Config & data"],
 ], x=0.5, y=1.6, w=12.3, h=5.0, col_widths_pct=STAGE_COL_WIDTHS)
 
@@ -445,20 +503,36 @@ add_title(s, "Bootcamp curriculum coverage",
           subtitle="Every topic block the bootcamp teaches has a corresponding artefact in the repo.")
 
 ALIGN_ROWS = [
-    ["Week 1", "LLM foundations · Prompt Engineering · f-strings · Tokens · Hallucinations",
-     "llm.py · prompts.py (CO-STAR)"],
-    ["Week 2", "Advanced prompting · Chaining · Multi-action · Exception handling",
-     "recommender.py (chained pipeline + JSON parse guard) · llm.py"],
-    ["Week 3 (Topic 3.x)", "Embeddings · Handling embeddings · RAG · Search beyond keywords",
-     "embed.py · retriever.py"],
-    ["Week 4 (Topic 4.x)", "Advanced RAG · Pre / Post-retrieval · Evaluation",
-     "chunker.py (pre) · recommender.py (post) · planned evaluator.py"],
-    ["Week 5 (Topic 5.x)", "Agents · Secure credentials · Python scripts",
-     ".env / python-dotenv · scraper.py · clean script structure"],
-    ["Week 6 (Topic 6.x)", "Streamlit basics · pip + venv · Debugging",
+    ["W1 · 1.x", "LLM foundations · CO-STAR · f-strings · Delimiters · Tokens · Hallucinations",
+     "llm.py · prompts.py (CO-STAR + Inner Monologue) · tiktoken helper"],
+    ["W2 · 2.4", "Chain-of-Thought · Least-to-Most · Better-reasoning",
+     "decomposer.py · prompts.py reasoning_steps field"],
+    ["W2 · 2.5", "Multi-action · Inner Monologue",
+     "Recommender does 7 actions in one call · reasoning_steps surfaced as field"],
+    ["W2 · 2.6", "Prompt chaining · Decision Chains · Human-in-the-Loop",
+     "5-stage chain · safety.py + router.py Decision Chains · HITL edit-gate"],
+    ["W2 · 2.7", "Exception handling · Specific exception types",
+     "Named openai exceptions · fail-CLOSED vs fail-OPEN per chain step · JSON parse guard"],
+    ["W3 · 3.x", "Embeddings · RAG · Search beyond keywords",
+     "embed.py · retriever.py · text-embedding-3-small"],
+    ["W4 · 4.2/4.3", "Pre-retrieval optimisation · Retrieval improvement",
+     "chunker.py section chunks · topic_mapper.py · multi-sub-need retrieval"],
+    ["W4 · 4.4", "Post-retrieval re-rank",
+     "CO-STAR re-ranker in recommender.py"],
+    ["W4 · 4.5", "RAG Evaluation",
+     "evaluator.py + 10 scenarios + retrieval@k + LLM-judge framework"],
+    ["W5 · 5.2", "Secure credentials",
+     ".env via python-dotenv · get_secret() falls back to st.secrets"],
+    ["W6 · 6.x", "Streamlit basics · pip + venv",
      "requirements.txt · .venv/ · app.py"],
-    ["Week 8 (Topic 8.x)", "Streamlit Deep Dive · Password protect · Git · Deploy · (Vibe coding)",
-     "app.py (@st.cache_resource, session_state) · planned deployment"],
+    ["W8 · 8.1", "Streamlit deep dive · State · Callbacks",
+     "@st.cache_resource · session_state for HITL state machine"],
+    ["W8 · 8.3", "Git / GitHub",
+     "10+ commits to date · clean per-block history"],
+    ["W8 · 8.5", "Vibe coding",
+     "The whole development workflow with the AI coding assistant"],
+    ["W8 · 8.2 / 8.4", "Password protect · Streamlit Cloud deploy",
+     "🚧 planned next"],
 ]
 add_stage_table(
     s,
