@@ -181,21 +181,27 @@ def recommend(
     n_recommendations: int = 5,
     category: str | None = None,
     kind: str | None = None,
+    override_sub_needs: list[str] | None = None,
 ) -> RecommendationResponse:
     """Run the full UC#1 pipeline: retrieve → re-rank → reason → structure.
 
     Args:
-        client_situation  : Free-text description of the client's situation.
-                            One short paragraph works best — too long and
-                            the embedding signal dilutes.
-        k_candidates      : How many candidates to pull from the retriever.
-                            More = more options for the LLM to weigh but
-                            longer prompt and higher cost. Default 15 keeps
-                            prompt size ~15 KB which is well within limits.
-        n_recommendations : Max recommendations to keep from the LLM output.
-        category          : Optional SGW category slug to filter retrieval
-                            (e.g., "financial-support" only).
-        kind              : Optional "scheme" or "service" filter.
+        client_situation   : Free-text description of the client's situation.
+                             One short paragraph works best — too long and
+                             the embedding signal dilutes.
+        k_candidates       : How many candidates to pull from the retriever.
+                             More = more options for the LLM to weigh but
+                             longer prompt and higher cost. Default 15 keeps
+                             prompt size ~15 KB which is well within limits.
+        n_recommendations  : Max recommendations to keep from the LLM output.
+        category           : Optional SGW category slug to filter retrieval
+                             (e.g., "financial-support" only).
+        kind               : Optional "scheme" or "service" filter.
+        override_sub_needs : If provided, SKIP the decomposer LLM call and
+                             use these sub-needs verbatim. This is the
+                             HITL hook (Topic 2.6 advantage): the SAO
+                             reviews and edits the AI's decomposition,
+                             then submits the edited version for retrieval.
 
     Returns:
         :class:`RecommendationResponse` with structured results + provenance.
@@ -267,7 +273,20 @@ def recommend(
     #     For complex multi-need cases, split into discrete sub-needs and
     #     retrieve against each. Single-need cases yield a 1-element list,
     #     making the rest of the pipeline behave identically to before.
-    decomposition = step_3_decompose(client_situation)
+    #     HITL hook (Topic 2.6): if `override_sub_needs` was supplied, the
+    #     SAO has edited the decomposer's output; we use theirs verbatim
+    #     and skip the LLM call.
+    if override_sub_needs is not None:
+        clean_overrides = [s.strip() for s in override_sub_needs if s.strip()]
+        if not clean_overrides:
+            clean_overrides = [client_situation]
+        decomposition = {
+            "is_complex": len(clean_overrides) > 1,
+            "sub_needs": clean_overrides,
+            "edited_by_sao": True,
+        }
+    else:
+        decomposition = step_3_decompose(client_situation)
     sub_needs = decomposition["sub_needs"]
 
     # 1. RETRIEVE — embedding-based top-K per sub-need, then merge.
