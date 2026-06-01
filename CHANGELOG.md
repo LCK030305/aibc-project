@@ -12,7 +12,7 @@ Polish layer that makes the project demoable, deployable, and defensible.
 
 | Commit | Block | What it added | Bootcamp topic |
 |---|---|---|---|
-| *(pending)* | **Eval-in-UI + Docker + dates** | Sidebar "📊 Evaluation" panel reads `eval/eval_report.json` and surfaces aggregate metrics live in the app. `Dockerfile` + `.dockerignore` + `DOCKER.md` for containerised deployment. ISO dates added to CHANGELOG section headers. | **Xtra Topic 1** Docker · Topic 4.5 (eval visibility) |
+| `40e8842` | **Eval-in-UI + Docker + dates** | Sidebar "📊 Evaluation" panel reads `eval/eval_report.json` and surfaces aggregate metrics live in the app. `Dockerfile` + `.dockerignore` + `DOCKER.md` for containerised deployment. ISO dates added to CHANGELOG section headers. | **Xtra Topic 1** Docker · Topic 4.5 (eval visibility) |
 | `483b353` | **PWD + DEPLOY.md** | Password gate (`_require_password()`) at the top of `app.py`; reads `APP_PASSWORD` via `get_secret()`. Step-by-step GitHub + Streamlit Cloud deploy guide. | Topic 8.2 · 8.4 |
 | `879b76b` | **README-V2 + PPTX-V2** | README rewrite reflecting all A1–A6 + EVAL; new file-map deck slide for Evaluation; expanded curriculum-coverage table to 15 rows. | Documentation polish |
 | `65ab6aa` | **EVAL** | `evaluator.py` with two-metric framework (retrieval@k + LLM judge) over 10 hand-curated scenarios. Generates `eval/eval_report.{json,md}`. Headline metrics: **MRR 0.82 · precision@5 0.58 · recall@10 0.65**. | **Topic 4.5** — RAG Evaluation |
