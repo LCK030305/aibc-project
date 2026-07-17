@@ -1,6 +1,37 @@
-playwright==1.60.0
-openai>=1.50.0
-python-dotenv>=1.0.0
-numpy>=2.0.0
+# Runtime dependencies for the SAO Navigator Streamlit app.
+# Only packages the running app.py + recommender pipeline need.
+#
+# Not included (dev/eval only, run locally not on Streamlit Cloud):
+#   - ragas          → used only by ragas_eval.py for offline evaluation
+#   - playwright     → used only by scraper.py to build the corpus (offline)
+#   - python-pptx    → used only by add_crewai_slide.py / build_pptx.py (offline)
+#   - python-docx    → used only for reading test-case .docx files (offline)
+#
+# All version constraints use >= (permissive) so Streamlit Cloud can
+# resolve compatible wheels for its Python version. Tested locally on
+# Python 3.13.14 (see requirements-py314-frozen.txt for a full exact
+# snapshot of the local dev environment).
+
+# --- Streamlit + core ---
 streamlit>=1.40.0
+python-dotenv>=1.0.0
+
+# --- OpenAI / tokenisation ---
+openai>=1.50.0
 tiktoken>=0.7.0
+
+# --- Numerics + HTTP ---
+numpy>=2.0.0
+requests>=2.30.0
+
+# --- Retrieval (BM25 sparse + Excel export) ---
+rank_bm25>=0.2.2
+openpyxl>=3.1.0
+
+# --- Multi-agent Deep Mode (Topic 5.5) ---
+# NOTE: crewai pulls in ~50+ transitive deps (chromadb, langchain-*,
+# opentelemetry, etc). Streamlit Cloud build may take 3-5 minutes.
+# If cloud deployment is too heavy, remove this line and disable the
+# "Deep Analysis Mode" sidebar toggle — fast single-shot mode works
+# without any CrewAI deps.
+crewai>=1.10.0
