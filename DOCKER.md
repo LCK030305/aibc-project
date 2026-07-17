@@ -18,7 +18,7 @@ From the project root:
 
 ```powershell
 cd "D:\AI\1. MSF_AI_LLM_bootcamp_GovTech_SGPoly_May2026\Capstone assignment"
-docker build -t sao-co-pilot:latest .
+docker build -t sao-navigator:latest .
 ```
 
 First build downloads the Python base image (~120 MB) and installs
@@ -33,7 +33,7 @@ embeddings). Tight enough for most container registries.
 ## Run locally (with your `.env`)
 
 ```powershell
-docker run -p 8501:8501 --env-file .env sao-co-pilot:latest
+docker run -p 8501:8501 --env-file .env sao-navigator:latest
 ```
 
 Open http://localhost:8501.
@@ -55,7 +55,7 @@ explicitly at run time:
 docker run -p 8501:8501 `
   -e OPENAI_API_KEY="sk-proj-..." `
   -e APP_PASSWORD="..." `
-  sao-co-pilot:latest
+  sao-navigator:latest
 ```
 
 When the CLOAK PII layer ships, also add:
@@ -74,18 +74,18 @@ works everywhere.
 ## Run detached (background) — useful for a long-running demo
 
 ```powershell
-docker run -d -p 8501:8501 --env-file .env --name sao-co-pilot sao-co-pilot:latest
+docker run -d -p 8501:8501 --env-file .env --name sao-navigator sao-navigator:latest
 ```
 
 - `-d` runs detached (returns a container ID, frees your terminal)
-- `--name sao-co-pilot` names the container for easy reference
+- `--name sao-navigator` names the container for easy reference
 
 Manage it:
 
 ```powershell
-docker logs -f sao-co-pilot       # tail logs
-docker stop sao-co-pilot          # graceful stop
-docker rm   sao-co-pilot          # remove stopped container
+docker logs -f sao-navigator       # tail logs
+docker stop sao-navigator          # graceful stop
+docker rm   sao-navigator          # remove stopped container
 ```
 
 ---
@@ -97,7 +97,7 @@ The image declares a healthcheck (`/_stcore/health` every 30s). Orchestrators
 and restart it automatically. View the current status:
 
 ```powershell
-docker inspect --format='{{.State.Health.Status}}' sao-co-pilot
+docker inspect --format='{{.State.Health.Status}}' sao-navigator
 ```
 
 Outputs `healthy`, `starting`, or `unhealthy`.
@@ -110,11 +110,11 @@ CStack is GovTech's internal Kubernetes platform. High-level path:
 
 1. **Tag** the image for the CStack container registry:
    ```
-   docker tag sao-co-pilot:latest <cstack-registry>/<namespace>/sao-co-pilot:v1.0
+   docker tag sao-navigator:latest <cstack-registry>/<namespace>/sao-navigator:v1.0
    ```
 2. **Push** to the registry (requires CStack auth):
    ```
-   docker push <cstack-registry>/<namespace>/sao-co-pilot:v1.0
+   docker push <cstack-registry>/<namespace>/sao-navigator:v1.0
    ```
 3. **Deploy** via the CStack UI or `kubectl apply -f deployment.yaml`,
    referencing the image tag and setting secrets via Kubernetes
@@ -147,11 +147,11 @@ capstone demo.
 
 | What | Command |
 |---|---|
-| Build | `docker build -t sao-co-pilot:latest .` |
-| Run (foreground) | `docker run -p 8501:8501 --env-file .env sao-co-pilot:latest` |
-| Run (background) | `docker run -d -p 8501:8501 --env-file .env --name sao-co-pilot sao-co-pilot:latest` |
-| Stop | `docker stop sao-co-pilot` |
-| Remove | `docker rm sao-co-pilot` |
-| Inspect health | `docker inspect --format='{{.State.Health.Status}}' sao-co-pilot` |
-| View logs | `docker logs -f sao-co-pilot` |
-| Open shell inside | `docker exec -it sao-co-pilot /bin/bash` |
+| Build | `docker build -t sao-navigator:latest .` |
+| Run (foreground) | `docker run -p 8501:8501 --env-file .env sao-navigator:latest` |
+| Run (background) | `docker run -d -p 8501:8501 --env-file .env --name sao-navigator sao-navigator:latest` |
+| Stop | `docker stop sao-navigator` |
+| Remove | `docker rm sao-navigator` |
+| Inspect health | `docker inspect --format='{{.State.Health.Status}}' sao-navigator` |
+| View logs | `docker logs -f sao-navigator` |
+| Open shell inside | `docker exec -it sao-navigator /bin/bash` |

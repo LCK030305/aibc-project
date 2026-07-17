@@ -1,4 +1,4 @@
-# SAO Co-Pilot — production container image
+# SAO Navigator — production container image
 #
 # Bootcamp ties:
 #   - Xtra Topic 1 — "Deploying Prototype as a Containerized App"
@@ -7,16 +7,16 @@
 #                  needed since the container itself is the isolation)
 #
 # Build:
-#   docker build -t sao-co-pilot:latest .
+#   docker build -t sao-navigator:latest .
 #
 # Run (local):
-#   docker run -p 8501:8501 --env-file .env sao-co-pilot:latest
+#   docker run -p 8501:8501 --env-file .env sao-navigator:latest
 #
 # Run (production, with explicit secret):
 #   docker run -p 8501:8501 \
 #       -e OPENAI_API_KEY="sk-proj-..." \
 #       -e APP_PASSWORD="..." \
-#       sao-co-pilot:latest
+#       sao-navigator:latest
 
 # ---------------------------------------------------------------------------
 # Base image — Python 3.11 slim. ~120 MB before any pip installs.

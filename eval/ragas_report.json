@@ -1,0 +1,98 @@
+{
+  "framework": "RAGAS v0.4.3 (industry-standard RAG eval)",
+  "judge_llm": "gpt-4.1-mini @ temperature=0",
+  "judge_embeddings": "text-embedding-3-small",
+  "timestamp": "2026-06-16T10:55:58",
+  "n_scenarios": 10,
+  "n_evaluated": 9,
+  "aggregates": {
+    "faithfulness": 0.652,
+    "answer_relevancy": 0.729,
+    "llm_context_precision_with_reference": 0.582,
+    "context_recall": 0.574,
+    "factual_correctness(mode=f1)": 0.358
+  },
+  "per_row": [
+    {
+      "id": "S01",
+      "label": "Simple financial help — ComCare",
+      "faithfulness": 0.75,
+      "answer_relevancy": 0.7797593415967132,
+      "llm_context_precision_with_reference": 0.99999999998,
+      "context_recall": 0.6666666666666666,
+      "factual_correctness(mode=f1)": 0.23
+    },
+    {
+      "id": "S02",
+      "label": "Healthcare subsidies — CHAS / MediFund",
+      "faithfulness": 0.42105263157894735,
+      "answer_relevancy": 0.7770083238119218,
+      "llm_context_precision_with_reference": 0.19999999998,
+      "context_recall": 0.0,
+      "factual_correctness(mode=f1)": 0.32
+    },
+    {
+      "id": "S03",
+      "label": "Caregiver of dementia parent",
+      "faithfulness": 0.8260869565217391,
+      "answer_relevancy": 0.7820110759267298,
+      "llm_context_precision_with_reference": 0.8486111110969676,
+      "context_recall": 0.8333333333333334,
+      "factual_correctness(mode=f1)": 0.34
+    },
+    {
+      "id": "S04",
+      "label": "Disability — assistive technology",
+      "faithfulness": 0.6363636363636364,
+      "answer_relevancy": 0.7925130790752889,
+      "llm_context_precision_with_reference": 0.5249999999868751,
+      "context_recall": 1.0,
+      "factual_correctness(mode=f1)": 0.24
+    },
+    {
+      "id": "S05",
+      "label": "Teen suicide warning signs",
+      "faithfulness": 0.47368421052631576,
+      "answer_relevancy": 0.7274526899766239,
+      "llm_context_precision_with_reference": 0.24285714284499998,
+      "context_recall": 0.5,
+      "factual_correctness(mode=f1)": 0.48
+    },
+    {
+      "id": "S06",
+      "label": "Family in crisis — FSC + counselling",
+      "faithfulness": 0.75,
+      "answer_relevancy": 0.7296676007824278,
+      "llm_context_precision_with_reference": 0.33333333331666665,
+      "context_recall": 0.5,
+      "factual_correctness(mode=f1)": 0.45
+    },
+    {
+      "id": "S07",
+      "label": "Low-income family with young child — KidSTART",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.6163172813560812,
+      "llm_context_precision_with_reference": 0.6845238095066964,
+      "context_recall": 0.5,
+      "factual_correctness(mode=f1)": 0.67
+    },
+    {
+      "id": "S09",
+      "label": "Senior — silver care continuum",
+      "faithfulness": 0.5555555555555556,
+      "answer_relevancy": 0.6080653994197391,
+      "llm_context_precision_with_reference": 0.5666666666477778,
+      "context_recall": 0.5,
+      "factual_correctness(mode=f1)": 0.31
+    },
+    {
+      "id": "S10",
+      "label": "Complex multi-need (Least-to-Most stress test)",
+      "faithfulness": 0.4583333333333333,
+      "answer_relevancy": 0.745893390722844,
+      "llm_context_precision_with_reference": 0.8333333332916666,
+      "context_recall": 0.6666666666666666,
+      "factual_correctness(mode=f1)": 0.18
+    }
+  ]
+}

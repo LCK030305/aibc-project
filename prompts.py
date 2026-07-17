@@ -70,9 +70,9 @@ _RECOMMENDER_OUTPUT_SCHEMA = """{
       "parent_id": "<exact id from one of the candidates>",
       "title": "<exact title from that candidate>",
       "fit_score": <integer 1-5, where 5 = strongly fits>,
-      "rationale": "<1-2 sentences on why this fits this client>",
+      "rationale": "<1-2 sentences on why this fits this client. EVERY claim here MUST appear in the candidate's matched_section. Do NOT introduce facts the candidate text does not state.>",
       "eligibility_flags": ["<short note on something the SAO should verify>"],
-      "evidence_quote": "<short verbatim phrase from the candidate text>"
+      "evidence_quote": "<a CHARACTER-EXACT substring copied from this candidate's matched_section, 10-30 words. DO NOT paraphrase, summarise, or rewrite. If no verbatim phrase supports the rationale, set this to empty string and lower the fit_score by 1.>"
     }
   ]
 }"""
@@ -148,10 +148,16 @@ PHASE 1 — Reasoning (your "inner monologue"):
 PHASE 2 — Recommendations:
   From the candidate list, select the 3-5 most relevant
   schemes/services. For each one:
-    1. State WHY it fits (cite a short verbatim phrase from the
-       candidate text).
-    2. Flag any key eligibility considerations the SAO should verify.
-    3. Assign a fit_score from 1 (weak) to 5 (strong).
+    1. State WHY it fits — every claim in the rationale MUST be
+       supported by the candidate's matched_section text. Do NOT
+       invent eligibility details or scheme features.
+    2. Provide a **character-exact verbatim quote** from that
+       candidate's matched_section that supports your rationale.
+       This is a copy-paste, not a paraphrase.
+    3. Flag any key eligibility considerations the SAO should verify.
+    4. Assign a fit_score from 1 (weak) to 5 (strong). If you cannot
+       find a verbatim quote that supports the rationale, the
+       fit_score is at most 3.
 
 Do NOT include candidates that are clearly off-topic. It is better to
 return 3 strong recommendations than 5 mediocre ones.

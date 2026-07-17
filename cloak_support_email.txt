@@ -1,0 +1,117 @@
+To:      cloak@tech.gov.sg
+Subject: L4 Free-Text Anonymisation API — 403 "Invalid Authentication
+         token!" with valid personal keys
+
+Dear CLOAK team,
+
+I am a public officer with the Ministry of Social and Family Development
+(MSF) evaluating CLOAK's Free-Text Anonymisation (FTA) API for integration
+into an internal prototype. The prototype helps welfare officers identify
+the most relevant schemes and community services from SupportGoWhere for
+the families they support; CLOAK FTA is the fail-CLOSED PII guard that
+sanitises case-officer interview notes before they are sent to an LLM.
+
+I have requested and received personal L4 keys via cloak.gov.sg (key
+suffix ...2584, expiring 2026-09-07). However every signed request to the
+/transform endpoint returns:
+
+    HTTP 403 — {"data": null, "error": "Unauthorized",
+                "message": "Invalid Authentication token!"}
+
+I would be grateful for guidance on which of the items below is the
+source of the failure.
+
+------------------------------------------------------------------
+Summary of investigation so far
+------------------------------------------------------------------
+Key technical facts from the debug log (cloak_debug.log, attached):
+
+  1. Date stamp is 20260613 (UTC) — machine clock is correct, so this
+     is not a date-skew issue.
+  2. Keys load with the expected lengths (public 20 chars, private 40
+     chars) — not a .env parse problem.
+  3. Canonical request includes the content-type header only, lowercase,
+     matching the documented CLOAK-AUTH scheme.
+  4. Server is reachable and returns the Access-Control-Allow-Origin
+     header. Endpoint URL is alive and the request body is well-formed
+     JSON, so the failure is specifically in the signature / credential
+     check.
+
+This narrows the likely cause to one of three things, which is what the
+questions below are trying to confirm:
+
+  - The documented CLOAK-AUTH signing scheme has been updated since my
+    reference implementation was written.
+  - The SignedHeaders set needs to include more headers (e.g., accept,
+    x-cloak-service, host) and not just content-type.
+  - An account-side activation step is required beyond key issuance.
+
+------------------------------------------------------------------
+What I tried
+------------------------------------------------------------------
+- Endpoint   : POST https://ext-api.cloak.gov.sg/prod/L4/transform
+- Service    : fta
+- Headers    : Content-Type, Accept, Authorization, x-cloak-service
+- Auth scheme: CLOAK-AUTH Credential=<public_key>,
+               SignedHeaders=content-type,
+               Signature=<HMAC-SHA256 signature>
+- Signing    : HMAC-SHA256 derived-key scheme matching the documented
+               CLOAK-AUTH specification (AWS-Sig-v4-style):
+               date_key -> service_key -> signing_key ->
+               final signature over the string-to-sign.
+- Date stamp : UTC, format YYYYMMDDT000000Z  (e.g. 20260613T000000Z).
+               My machine UTC clock is correct (verified in the log).
+- Keys       : Public key length 20, private key length 40. Both load
+               correctly from .env (length check in the log).
+- Payload    : Minimal valid JSON with text, language, entities,
+               score_threshold, anonymizers.
+
+A full debug capture is attached (cloak_debug.log). It contains:
+  - local + UTC timestamps,
+  - the verbatim canonical request,
+  - the string-to-sign,
+  - the final HMAC-SHA256 signature,
+  - the request headers (Authorization safely masked),
+  - the request body, and
+  - the response headers + verbatim 403 body.
+
+No secret material (private key, full Authorization header) is included
+in the log.
+
+------------------------------------------------------------------
+Questions / requests
+------------------------------------------------------------------
+1. Is the endpoint URL "https://ext-api.cloak.gov.sg/prod/L4/transform"
+   still the correct L4 FTA endpoint?
+
+2. Is the documented CLOAK-AUTH signing scheme (derived-key chain
+   date -> service -> "cloak_request" -> final HMAC) still current
+   for personal L4 keys, or has it been updated? In particular:
+     a. Is the formatted_date string still "YYYYMMDDT000000Z" (zero
+        time-of-day), or should it carry the actual UTC time-of-day?
+     b. Is the derived-key chain still
+        sign(sign(sign("CLOAK-AUTH"+private, date), service),
+             "cloak_request")?
+     c. Is the SignedHeaders set still "content-type" (single header)
+        when only Content-Type is being signed?
+
+3. Could you share the current L4 Guide / Swagger / OpenAPI spec for
+   /transform? The link on cloak.gov.sg is behind sign-in and I would
+   like to confirm I am following the latest specification.
+
+4. Is there any account-side activation step (beyond receiving the
+   keys by email) that I may have missed?
+
+I would be happy to test against a sample text the team provides, or
+join a brief screenshare if helpful.
+
+Thank you very much for your assistance.
+
+Best regards,
+Danny Lim
+[role / division — please complete]
+Ministry of Social and Family Development
+ioeiot@yahoo.com.sg
+
+------------------------------------------------------------------
+Attachment: cloak_debug.log  (~3 KB, plain text)

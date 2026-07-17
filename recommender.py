@@ -46,12 +46,20 @@ from openai import (
     RateLimitError,
 )
 
+from bm25_retriever import get_bm25, rrf_merge
 from decomposer import step_3_decompose
+from faithfulness_check import audit_recommendations
+from hyde import generate_hypothetical_scheme
 from llm import get_completion
+from pii_filter import sanitize
 from prompts import make_recommender_prompt, render_candidates_block
 from retriever import Result, get_retriever
 from router import step_2_classify_query
 from safety import step_1_safety_check
+
+# Topic 5.5 — CrewAI multi-agent Deep Mode (opt-in).
+# Imported lazily inside recommend() to avoid loading CrewAI when running
+# in fast single-shot mode (CrewAI pulls in chromadb, opentelemetry, etc).
 
 # Force UTF-8 stdout (Windows PowerShell default cp1252 breaks on zwsp).
 # Wrapped in try/except so Streamlit / Jupyter contexts that pre-wrap
@@ -85,6 +93,14 @@ class Recommendation:
     url: str = ""
     categories: list[str] = field(default_factory=list)
     retrieval_score: float = 0.0                  # original cosine score
+    # Topic 4.4 Post-Retrieval verification — populated by the secondary
+    # faithfulness self-check pass in ``faithfulness_check.py``. Values:
+    #   "verified"    — every claim in the rationale is grounded in source
+    #   "partial"     — rationale mostly grounded, minor paraphrase
+    #   "unsupported" — rationale invents facts not in source
+    #   "unverified"  — audit pass failed (fail-OPEN) or skipped
+    faithfulness_status: str = "unverified"
+    faithfulness_note: str = ""
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -126,10 +142,31 @@ class RecommendationResponse:
     # The actual CO-STAR prompt sent to the re-ranker LLM. Useful for the
     # Behind-the-Scenes panel and for offline eval replay.
     prompt_sent: str = ""
+    # Topic 5.5.2 CLOAK PII guard — ``sanitized_situation`` is the text
+    # that actually went to every LLM and the retriever (PII redacted).
+    # ``client_situation`` above is preserved unchanged as the raw input
+    # for UI display. ``pii_result`` carries the full sanitize() return:
+    # which entities were redacted at which offsets, useful for audit and
+    # for the "raw vs sanitised" side-by-side UI pane.
+    sanitized_situation: str = ""
+    pii_result: dict | None = None
+    # Topic 5.5 CrewAI Deep Mode — populated only when recommend() was
+    # called with deep_mode=True. ``triaged_categories`` is what the
+    # Coordinator agent decided; ``specialist_drafts`` is the per-agent
+    # output that fed the Aggregator (visible in the UI "Specialist
+    # perspectives" expander). Empty list / False in fast mode.
+    deep_mode_used: bool = False
+    triaged_categories: list[str] = field(default_factory=list)
+    specialist_drafts: list[dict] = field(default_factory=list)
+    # Topic 5.5 Agent #15 (Case Documentation Officer) — plain-English
+    # summary usable both as family communication AND SAO case-record
+    # entry. Populated only in Deep Mode.
+    case_summary: str = ""
 
     def to_dict(self) -> dict:
         return {
             "client_situation": self.client_situation,
+            "sanitized_situation": self.sanitized_situation,
             "blocked": self.blocked,
             "block_reason": self.block_reason,
             "classification": self.classification,
@@ -139,6 +176,9 @@ class RecommendationResponse:
             "reasoning_steps": self.reasoning_steps,
             "recommendations": [r.to_dict() for r in self.recommendations],
             "n_candidates_considered": len(self.retrieved_candidates),
+            "pii_entities_redacted": (
+                len((self.pii_result or {}).get("items", []) or [])
+            ),
         }
 
 
@@ -182,6 +222,12 @@ def recommend(
     category: str | None = None,
     kind: str | None = None,
     override_sub_needs: list[str] | None = None,
+    bypass_pii: bool = False,
+    pii_score_threshold: float = 0.3,
+    skip_faithfulness_audit: bool = False,
+    use_hyde: bool = True,
+    use_bm25: bool = True,
+    deep_mode: bool = False,
 ) -> RecommendationResponse:
     """Run the full UC#1 pipeline: retrieve → re-rank → reason → structure.
 
@@ -218,33 +264,90 @@ def recommend(
     if n_recommendations > k_candidates:
         raise ValueError("n_recommendations cannot exceed k_candidates")
 
-    # 0. SAFETY CHECK (Topic 2.6 Decision Chain — fail-closed)
-    #    First step of the prompt chain: block prompt-injection / jailbreak
-    #    attempts before any downstream processing or retrieval happens.
-    safety = step_1_safety_check(client_situation)
+    # STAGE 0: CLOAK PII GUARD (Topic 5.5.2 — Free-Text Anonymisation)
+    # -----------------------------------------------------------------
+    # Before ANY downstream LLM call or embedding, run the input through
+    # CLOAK's `/transform` endpoint. Identifying entities (PERSON, NRIC,
+    # addresses, phones, emails, bank accounts, dates) are redacted to
+    # labelled tokens; matcher-relevant signal (life events, family
+    # structure, financial state) is preserved.
+    #
+    # FAIL-CLOSED: if CLOAK errors (network down, rate limit, signing
+    # mismatch), we refuse the request rather than risk leaking raw PII.
+    # ``bypass_pii=True`` skips CLOAK — for offline dev only; production
+    # callers (Streamlit, batch, RPA) should never set this.
+    if bypass_pii:
+        sanitized_text = client_situation
+        pii_result: dict = {
+            "success": True, "bypassed": True,
+            "sanitised": client_situation,
+            "original": client_situation, "items": [],
+        }
+    else:
+        pii_result = sanitize(
+            client_situation, score_threshold=pii_score_threshold,
+        )
+        if not pii_result.get("success"):
+            return RecommendationResponse(
+                client_situation=client_situation,
+                sanitized_situation="",
+                recommendations=[],
+                blocked=True,
+                block_reason=(
+                    "PII guard (CLOAK) unavailable — refusing to forward "
+                    "raw text to the LLM. "
+                    f"Reason: {pii_result.get('error', 'unknown')}"
+                ),
+                pii_result=pii_result,
+                overall_summary="Blocked at PII guard (fail-CLOSED).",
+            )
+        sanitized_text = pii_result["sanitised"]
+
+    # 1. SAFETY CHECK (Topic 2.6 Decision Chain — fail-closed)
+    #    Block prompt-injection / jailbreak attempts before any downstream
+    #    processing or retrieval happens. Operates on the SANITISED text
+    #    (which is what would actually go to OpenAI).
+    safety = step_1_safety_check(sanitized_text)
     if not safety["is_safe"]:
         return RecommendationResponse(
             client_situation=client_situation,
+            sanitized_situation=sanitized_text,
             recommendations=[],
             blocked=True,
             block_reason=safety["reason"],
             safety_result=safety,
+            pii_result=pii_result,
             overall_summary="Input refused by safety check.",
         )
 
-    # 0.5 ROUTING (Topic 2.6 Decision Chain — multi-class, fail-open)
-    #     Classify the input intent. general_question and out_of_scope
-    #     short-circuit the pipeline with a helpful redirect; client_case
-    #     and scheme_lookup both proceed to retrieval.
-    classification = step_2_classify_query(client_situation)
+    # ---- Deep Mode branch (Topic 5.5 CrewAI multi-agent) ----------------
+    # Opt-in alternative to the fast single-shot pipeline below. CrewAI
+    # imports happen lazily here so fast mode doesn't pay the import cost.
+    if deep_mode:
+        return _recommend_deep_mode(
+            client_situation=client_situation,
+            sanitized_text=sanitized_text,
+            pii_result=pii_result,
+            safety=safety,
+            n_recommendations=n_recommendations,
+            skip_faithfulness_audit=skip_faithfulness_audit,
+        )
+
+    # 2. ROUTING (Topic 2.6 Decision Chain — multi-class, fail-open)
+    #    Classify the input intent. general_question and out_of_scope
+    #    short-circuit the pipeline with a helpful redirect; client_case
+    #    and scheme_lookup both proceed to retrieval.
+    classification = step_2_classify_query(sanitized_text)
     category_tag = classification["category"]
 
     if category_tag == "general_question":
         return RecommendationResponse(
             client_situation=client_situation,
+            sanitized_situation=sanitized_text,
             recommendations=[],
             classification=classification,
             safety_result=safety,
+            pii_result=pii_result,
             overall_summary=(
                 "This looks like a general question rather than a client "
                 "case. Try rephrasing as a client's situation (e.g. \"single "
@@ -256,9 +359,11 @@ def recommend(
     if category_tag == "out_of_scope":
         return RecommendationResponse(
             client_situation=client_situation,
+            sanitized_situation=sanitized_text,
             recommendations=[],
             classification=classification,
             safety_result=safety,
+            pii_result=pii_result,
             overall_summary=(
                 "This question doesn't appear to be about Singapore social "
                 "services. This tool helps SAOs match clients to MSF "
@@ -269,41 +374,99 @@ def recommend(
 
     # client_case and scheme_lookup both continue through retrieval.
 
-    # 0.7 LEAST-TO-MOST decomposition (Topic 2.4)
-    #     For complex multi-need cases, split into discrete sub-needs and
-    #     retrieve against each. Single-need cases yield a 1-element list,
-    #     making the rest of the pipeline behave identically to before.
-    #     HITL hook (Topic 2.6): if `override_sub_needs` was supplied, the
-    #     SAO has edited the decomposer's output; we use theirs verbatim
-    #     and skip the LLM call.
+    # 3. LEAST-TO-MOST decomposition (Topic 2.4)
+    #    For complex multi-need cases, split into discrete sub-needs and
+    #    retrieve against each. Single-need cases yield a 1-element list,
+    #    making the rest of the pipeline behave identically to before.
+    #    HITL hook (Topic 2.6): if `override_sub_needs` was supplied, the
+    #    SAO has edited the decomposer's output; we use theirs verbatim
+    #    and skip the LLM call.
     if override_sub_needs is not None:
         clean_overrides = [s.strip() for s in override_sub_needs if s.strip()]
         if not clean_overrides:
-            clean_overrides = [client_situation]
+            clean_overrides = [sanitized_text]
         decomposition = {
             "is_complex": len(clean_overrides) > 1,
             "sub_needs": clean_overrides,
             "edited_by_sao": True,
         }
     else:
-        decomposition = step_3_decompose(client_situation)
+        decomposition = step_3_decompose(sanitized_text)
     sub_needs = decomposition["sub_needs"]
 
-    # 1. RETRIEVE — embedding-based top-K per sub-need, then merge.
+    # 4. RETRIEVE — hybrid dense + HyDE + BM25, fused with RRF.
+    #
+    # Topic 4.2 (Pre-Retrieval) — HyDE generates a hypothetical SGW-style
+    # scheme description for each sub-need, then we embed that and search.
+    # Closes the vocabulary gap between SAO phrasing and SGW phrasing.
+    #
+    # Topic 4.3 (Retrieval) — BM25 sparse keyword retrieval catches exact
+    # acronym matches (CHAS, MUIS-FAS, ATF, EASE) that the embedder may
+    # miss because they're rare tokens. Run alongside dense retrieval.
+    #
+    # Topic 4.3 (Retrieval) — Reciprocal Rank Fusion combines the three
+    # ranked lists without needing to normalise scores across retrievers.
+    #
+    # Per-sub-need budget: each retriever pulls k_candidates. We then RRF-
+    # merge and filter to parent_ids we have full Result objects for
+    # (i.e., found by dense or HyDE). BM25 acts mainly as a re-ranker —
+    # its votes shift dense+HyDE hits in the final order.
     retriever = get_retriever()
-    # Per-sub-need budget: retrieve k_candidates each (so single-need
-    # cases match the previous behaviour exactly). Then dedup by
-    # parent_id keeping the best score, and cap the merged pool at
-    # k_candidates total so the re-ranker prompt size is bounded.
+    bm25 = get_bm25() if use_bm25 else None
+
     best_by_parent: dict[str, Result] = {}
     for sub_need in sub_needs:
-        sub_results = retriever.search(
+        # (a) Dense retrieval over the original sub-need.
+        dense_results = retriever.search(
             sub_need, k=k_candidates, category=category, kind=kind,
         )
-        for r in sub_results:
+        dense_pids = [r.parent_id for r in dense_results]
+
+        # (b) HyDE — embed a hypothetical SGW-style description.
+        hyde_pids: list[str] = []
+        if use_hyde:
+            hyde_text = generate_hypothetical_scheme(sub_need)
+            if hyde_text and hyde_text != sub_need:
+                hyde_results = retriever.search(
+                    hyde_text, k=k_candidates,
+                    category=category, kind=kind,
+                )
+                hyde_pids = [r.parent_id for r in hyde_results]
+                # Fold HyDE hits into the same Result map (keep best score).
+                for r in hyde_results:
+                    existing = best_by_parent.get(r.parent_id)
+                    if existing is None or r.score > existing.score:
+                        best_by_parent[r.parent_id] = r
+
+        # (c) BM25 sparse retrieval.
+        bm25_pids: list[str] = []
+        if bm25 is not None:
+            bm25_hits = bm25.search(sub_need, k=k_candidates)
+            bm25_pids = [pid for pid, _ in bm25_hits]
+
+        # Fold dense hits in (and let them win ties — they already filter
+        # by category/kind, which BM25 / HyDE don't).
+        for r in dense_results:
             existing = best_by_parent.get(r.parent_id)
             if existing is None or r.score > existing.score:
                 best_by_parent[r.parent_id] = r
+
+        # (d) RRF — combine the three ranked lists for this sub-need.
+        ranked_lists = [pids for pids in [dense_pids, hyde_pids, bm25_pids] if pids]
+        merged_pids = rrf_merge(ranked_lists, top_k=k_candidates * 2)
+
+        # Re-score the parents using their RRF order so later sub-needs'
+        # cross-merge respects this sub-need's ranking. (We piggy-back on
+        # the existing score field — higher = better.)
+        n = len(merged_pids)
+        for rank, pid in enumerate(merged_pids):
+            if pid not in best_by_parent:
+                continue
+            rrf_boost = (n - rank) / max(n, 1)  # 1.0 → 0.0
+            current = best_by_parent[pid].score
+            # Take the max so dense's category-filtered priority isn't lost.
+            best_by_parent[pid].score = max(current, rrf_boost)
+
     candidates = sorted(
         best_by_parent.values(), key=lambda r: -r.score
     )[:k_candidates]
@@ -313,16 +476,19 @@ def recommend(
     if not candidates:
         return RecommendationResponse(
             client_situation=client_situation,
+            sanitized_situation=sanitized_text,
             recommendations=[],
             classification=classification,
             decomposition=decomposition,
             safety_result=safety,
+            pii_result=pii_result,
             overall_summary="No candidates matched the filters.",
         )
 
-    # 2. RENDER — build CO-STAR prompt with candidates as XML blocks.
+    # 5. RENDER — build CO-STAR prompt with candidates as XML blocks.
+    #    Prompt uses the SANITISED text so no raw PII reaches OpenAI.
     candidates_block = render_candidates_block(candidates)
-    prompt = make_recommender_prompt(client_situation, candidates_block)
+    prompt = make_recommender_prompt(sanitized_text, candidates_block)
 
     # 3. GENERATE — single LLM call, JSON mode for guaranteed parseability.
     #    Topic 2.7 Exception Handling — catch the OpenAI-specific errors
@@ -333,6 +499,11 @@ def recommend(
         raw = get_completion(
             prompt,
             temperature=0.0,
+            # 5 full recommendation cards (title + summary + eligibility flags +
+            # evidence quotes + reasoning) easily exceed the 1024-token default,
+            # especially on complex multi-need cases — truncation produces
+            # invalid JSON. 4096 is well within gpt-4.1-mini's 32k output cap.
+            max_tokens=4096,
             response_format={"type": "json_object"},
         )
     except RateLimitError as exc:
@@ -374,7 +545,7 @@ def recommend(
             title=item.get("title", cand.title),
             fit_score=int(item.get("fit_score", 0) or 0),
             rationale=item.get("rationale", ""),
-            eligibility_flags=item.get("eligibility_flags", []) or [],
+            eligibility_flags=_normalize_flags(item.get("eligibility_flags")),
             evidence_quote=item.get("evidence_quote", ""),
             kind=cand.kind,
             url=cand.url,
@@ -382,8 +553,16 @@ def recommend(
             retrieval_score=cand.score,
         ))
 
+    # 7. FAITHFULNESS AUDIT (Topic 4.4 Post-Retrieval verification)
+    #    Secondary LLM pass: for each recommendation, verify the rationale
+    #    is grounded in the candidate's source text and the evidence_quote
+    #    is an exact substring. Mutates each rec in-place. Fail-OPEN.
+    if recs and not skip_faithfulness_audit:
+        audit_recommendations(sanitized_text, recs, cand_by_pid)
+
     return RecommendationResponse(
         client_situation=client_situation,
+        sanitized_situation=sanitized_text,
         recommendations=recs,
         overall_summary=parsed.get("overall_summary", ""),
         categories_touched=parsed.get("categories_touched", []) or [],
@@ -393,6 +572,7 @@ def recommend(
         decomposition=decomposition,
         reasoning_steps=parsed.get("reasoning_steps", []) or [],
         safety_result=safety,
+        pii_result=pii_result,
         prompt_sent=prompt,
     )
 
@@ -436,6 +616,177 @@ def _demo() -> None:
                 print(f"         quote     : \"{r.evidence_quote}\"")
             print(f"         url       : {r.url}")
             print()
+
+
+# ---------------------------------------------------------------------------
+# Deep Mode (Topic 5.5 CrewAI) — opt-in multi-agent alternative
+# ---------------------------------------------------------------------------
+
+_chunk_lookup_cache: dict[str, Result] | None = None
+
+
+def _normalize_flags(value) -> list[str]:
+    """Coerce LLM ``eligibility_flags`` output to a clean ``list[str]``.
+
+    LLMs sometimes return a bare string (e.g., ``"Verify"``) instead of
+    the requested ``["Verify ..."]`` list. Without normalisation the
+    Streamlit UI iterates the string character-by-character and
+    displays one bullet per letter (V / e / r / i / f / y). This
+    guarantees whatever came out — string, list, dict, None — becomes
+    a clean list of non-empty strings.
+    """
+    if value is None:
+        return []
+    if isinstance(value, str):
+        s = value.strip()
+        return [s] if s else []
+    if isinstance(value, (list, tuple)):
+        out: list[str] = []
+        for item in value:
+            if item is None:
+                continue
+            s = str(item).strip()
+            if s:
+                out.append(s)
+        return out
+    # Anything else (dict, number, etc.) — best-effort stringify.
+    s = str(value).strip()
+    return [s] if s else []
+
+
+def _build_chunk_lookup() -> dict[str, Result]:
+    """Build a parent_id → minimal Result lookup once per process.
+
+    Used to feed the faithfulness audit with source text for each
+    crew-produced recommendation (which carries parent_id but not
+    section_text). Cheap one-time JSONL scan, cached.
+    """
+    global _chunk_lookup_cache
+    if _chunk_lookup_cache is not None:
+        return _chunk_lookup_cache
+    from collections import defaultdict
+    from pathlib import Path
+    chunks_path = (
+        Path(__file__).parent / "data" / "chunks" / "chunks.jsonl"
+    )
+    by_parent: dict[str, list[dict]] = defaultdict(list)
+    with chunks_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            c = json.loads(line)
+            by_parent[c["parent_id"]].append(c)
+    lookup: dict[str, Result] = {}
+    for pid, chunks in by_parent.items():
+        best = next(
+            (c for c in chunks if c.get("section") == "tagline"), chunks[0]
+        )
+        lookup[pid] = Result(
+            rank=0,
+            score=0.0,
+            parent_id=pid,
+            kind=best.get("kind", ""),
+            title=best.get("title", ""),
+            tagline=best.get("tagline", ""),
+            url=best.get("url", ""),
+            best_section=best.get("section", "tagline"),
+            section_text=best.get("text", ""),
+            categories=[],
+        )
+    _chunk_lookup_cache = lookup
+    return lookup
+
+
+def _recommend_deep_mode(
+    client_situation: str,
+    sanitized_text: str,
+    pii_result: dict,
+    safety: dict,
+    n_recommendations: int,
+    skip_faithfulness_audit: bool,
+) -> RecommendationResponse:
+    """Run the CrewAI Deep Mode pipeline and return a RecommendationResponse.
+
+    Pipeline (after CLOAK Stage 0 + Safety, which already ran upstream):
+      - Coordinator agent triages → 2-4 SGW category specialists
+      - Specialists run in parallel via CrewAI async_execution
+      - Aggregator synthesises into ranked top-5 with verbatim citations
+      - Same faithfulness audit (Topic 4.4) runs on the final output
+    """
+    # Lazy import — only loaded when deep_mode=True (avoids ~3s CrewAI
+    # import cost on every fast-mode call).
+    from crew_runner import run_deep_analysis
+
+    try:
+        crew_out = run_deep_analysis(sanitized_text)
+    except Exception as exc:  # noqa: BLE001 - surface as a blocked response
+        return RecommendationResponse(
+            client_situation=client_situation,
+            sanitized_situation=sanitized_text,
+            recommendations=[],
+            blocked=True,
+            block_reason=(
+                f"Deep Analysis Mode (CrewAI) failed: "
+                f"{type(exc).__name__}: {str(exc)[:200]}"
+            ),
+            safety_result=safety,
+            pii_result=pii_result,
+            deep_mode_used=True,
+            overall_summary="Deep Mode crew execution failed.",
+        )
+
+    # Build Recommendation objects from the Aggregator's output.
+    chunk_lookup = _build_chunk_lookup()
+    recs: list[Recommendation] = []
+    for item in crew_out.get("recommendations", [])[:n_recommendations]:
+        pid = item.get("parent_id", "")
+        source = chunk_lookup.get(pid)
+        recs.append(Recommendation(
+            parent_id=pid,
+            title=item.get("title") or (source.title if source else pid),
+            fit_score=int(item.get("fit_score", 0) or 0),
+            rationale=item.get("rationale", ""),
+            eligibility_flags=_normalize_flags(item.get("eligibility_flags")),
+            evidence_quote=item.get("evidence_quote", ""),
+            kind=source.kind if source else "",
+            url=source.url if source else "",
+            categories=source.categories if source else [],
+            retrieval_score=0.0,  # not applicable in crew mode
+        ))
+
+    # Faithfulness audit (Topic 4.4) on crew output — same pass as fast
+    # mode. Reuses _build_chunk_lookup() to provide source text per pid.
+    if recs and not skip_faithfulness_audit:
+        cand_by_pid = {r.parent_id: chunk_lookup.get(r.parent_id) for r in recs}
+        cand_by_pid = {k: v for k, v in cand_by_pid.items() if v is not None}
+        if cand_by_pid:
+            audit_recommendations(sanitized_text, recs, cand_by_pid)
+
+    # Build the retrieved_candidates list from triaged category specialists'
+    # consolidated outputs (so the Behind-the-Scenes panel still has data)
+    retrieved_results: list[Result] = []
+    for draft in crew_out.get("specialist_drafts", []):
+        for r_item in draft.get("recommendations", []):
+            pid = r_item.get("parent_id", "")
+            src = chunk_lookup.get(pid)
+            if src is not None:
+                retrieved_results.append(src)
+
+    return RecommendationResponse(
+        client_situation=client_situation,
+        sanitized_situation=sanitized_text,
+        recommendations=recs,
+        overall_summary=crew_out.get("overall_summary", ""),
+        categories_touched=crew_out.get("categories_touched", []) or [],
+        retrieved_candidates=retrieved_results,
+        raw_llm_output=json.dumps(crew_out, indent=2)[:5000],
+        reasoning_steps=crew_out.get("reasoning_steps", []) or [],
+        safety_result=safety,
+        pii_result=pii_result,
+        deep_mode_used=True,
+        triaged_categories=crew_out.get("triaged_categories", []) or [],
+        specialist_drafts=crew_out.get("specialist_drafts", []) or [],
+        case_summary=crew_out.get("case_summary", "") or "",
+        prompt_sent="(Deep Mode — multi-agent CrewAI; no single prompt)",
+    )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,67 @@
+==============================================================================
+CLOAK FTA debug capture
+==============================================================================
+
+Local time      : 2026-06-15T21:41:32.855067
+UTC time        : 2026-06-15T13:41:32.855111+00:00
+UTC date stamp  : 20260615  (used for date_key derivation)
+
+Public key      : ****************2584  (length=20)
+Private key     : (length=40; value never printed)
+
+URL             : https://ext-api.cloak.gov.sg/prod/L4/transform
+Path            : /prod/L4/transform
+Query params    : {}
+Service         : fta
+
+--- Canonical request ---------------------------------------
+POST
+/prod/L4/transform
+
+content-type:application/json
+
+content-type
+19c0f073def7a146359e24a8d377ba538ccd9570c4e6d21b81a9e188e3663b2b
+--- end canonical request -----------------------------------
+
+--- String to sign ------------------------------------------
+CLOAK-AUTH
+20260615T000000Z
+b77c095283a7ff00ef33089f1812c21b78404bb0738f937e340ccd6a33b5e417
+--- end string to sign --------------------------------------
+
+Final signature : 471ef3732724c29c3fd393b1fdb4b8855bee7a1a1369a84b430a3f3d6fc955eb
+
+--- Request headers (Authorization masked) ------------------
+  Content-Type: application/json
+  Accept: application/json
+  Authorization: CLOAK-AUTH Credential=****************2584  (length=20),SignedHeaders=content-type,Signature=471ef3732724c29c3fd393b1fdb4b8855bee7a1a1369a84b430a3f3d6fc955eb
+  x-cloak-service: fta
+
+--- Request body (JSON, sorted keys) ------------------------
+{"anonymizers":{"EMAIL_ADDRESS":{"new_value":"<EMAIL_ADDRESS>","type":"replace"},"PERSON":{"new_value":"<PERSON>","type":"replace"},"PHONE_NUMBER":{"new_value":"<PHONE_NUMBER>","type":"replace"},"SG_ADDRESS":{"new_value":"<SG_ADDRESS>","type":"replace"},"SG_BANK_ACCOUNT_NUMBER":{"new_value":"<SG_BANK_ACCOUNT_NUMBER>","type":"replace"},"SG_NRIC_FIN":{"new_value":"<SG_NRIC_FIN>","type":"replace"}},"entities":["PERSON","SG_NRIC_FIN","PHONE_NUMBER","EMAIL_ADDRESS","SG_BANK_ACCOUNT_NUMBER","SG_ADDRESS"],"language":"en","score_threshold":0.3,"text":"John Tan lives at Block 100 Ang Mo Kio."}
+--- end request body ----------------------------------------
+
+Sending POST ...
+
+HTTP status     : 200 OK
+
+--- Response headers ----------------------------------------
+  Date: Mon, 15 Jun 2026 13:41:38 GMT
+  Content-Type: application/json
+  Content-Length: 318
+  Connection: keep-alive
+  Server: nginx
+  Access-Control-Allow-Origin: *
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Content-Security-Policy: default-src 'self'
+  Strict-Transport-Security: max-age=63072000
+
+--- Response body (verbatim) --------------------------------
+{"text": "<PERSON> lives at <SG_ADDRESS>.", "items": [{"start": 18, "end": 30, "entity_type": "SG_ADDRESS", "original_text": "Block 100 Ang Mo Kio", "text": "<SG_ADDRESS>", "operator": "replace"}, {"start": 0, "end": 8, "entity_type": "PERSON", "original_text": "John Tan", "text": "<PERSON>", "operator": "replace"}]}
+--- end response body ---------------------------------------
+
+==============================================================================
+Log written to: cloak_debug.log
+==============================================================================
