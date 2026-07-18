@@ -35,3 +35,13 @@ openpyxl>=3.1.0
 # "Deep Analysis Mode" sidebar toggle — fast single-shot mode works
 # without any CrewAI deps.
 crewai>=1.10.0
+
+# --- Streamlit Cloud compatibility pin ---
+# chromadb (transitive dep of crewai) uses pydantic-settings for its
+# config. pydantic-settings >=2.10.0 rejects chromadb's `Optional[Any]`
+# type on chroma_server_nofile → import fails → CrewAI Deep Mode
+# crashes with:
+#   ConfigError: unable to infer type for attribute "chroma_server_nofile"
+# Pinning below 2.10 keeps chromadb's config parseable until upstream
+# chromadb ships a fix.
+pydantic-settings<2.10.0
