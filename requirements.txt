@@ -28,26 +28,20 @@ requests>=2.30.0
 rank_bm25>=0.2.2
 openpyxl>=3.1.0
 
-# --- Multi-agent Deep Mode (Topic 5.5) — LOCAL ONLY ---
-# CrewAI + chromadb are DELIBERATELY EXCLUDED from cloud requirements
-# because:
-#   (a) Streamlit Cloud runs Python 3.14, and every modern CrewAI
-#       release (>= 0.14.0) hard-restricts to Python <3.14 in its
-#       package metadata → pip resolution fails with:
-#           Could not find a version that satisfies crewai>=1.10.0
-#   (b) Even on compatible Python, CrewAI+chromadb+langchain transitive
-#       deps consume >800 MB, exceeding the Streamlit Cloud free-tier
-#       1 GB RAM ceiling for larger client-case queries.
+# --- Multi-agent Deep Mode (Topic 5.5) ---
+# NOTE: crewai pulls in ~50+ transitive deps (chromadb, langchain-*,
+# opentelemetry, etc). Streamlit Cloud build takes 3-5 minutes.
 #
-# LOCAL development still runs on Python 3.13.14 where CrewAI installs
-# cleanly (see requirements-py314-frozen.txt for the full frozen list).
-# Deep Analysis Mode is fully functional locally and demonstrated for
-# the LaunchPad submission via screenshots / screencast.
+# chromadb constraint MUST match CrewAI's own upper bound.
+# CrewAI's dependency spec: `chromadb~=1.1.0` (i.e., >=1.1.0, <1.2.0).
+# Using `chromadb>=1.1.2` alone creates a false conflict because pip
+# interprets it as potentially wanting 1.2.x+. Matching CrewAI's
+# ~=1.1.0 range avoids the conflict AND ensures pydantic-settings
+# 2.10+ compatibility (chromadb 1.1.x fixed the earlier
+# chroma_server_nofile type-inference issue).
 #
-# app.py detects the absence of the crewai module at startup
-# (`CREWAI_AVAILABLE`) and disables the "Deep Analysis Mode" sidebar
-# toggle when running on cloud — so cloud users see a clear "local
-# install required" message instead of a runtime crash.
-#
-# crewai>=1.10.0            ← intentionally commented out
-# chromadb>=1.1.2           ← intentionally commented out
+# If runtime "chroma_server_nofile" error still appears on cloud
+# despite this pin, the CREWAI_AVAILABLE flag in app.py (paired with
+# the disabled Deep Mode checkbox) provides graceful degradation.
+crewai>=1.10.0
+chromadb~=1.1.0
