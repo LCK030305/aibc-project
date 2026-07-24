@@ -38,6 +38,21 @@ from llm import get_secret, num_tokens_from_message_rough
 from recommender import recommend
 from retriever import get_retriever
 
+# ─── CrewAI availability check (Deep Mode) ────────────────────────
+# CrewAI is deliberately excluded from cloud requirements.txt because
+# Streamlit Cloud runs Python 3.14 (which CrewAI's metadata excludes).
+# See the comment block in requirements.txt for full rationale.
+#
+# Locally: crewai is installed → CREWAI_AVAILABLE = True → Deep Mode
+# checkbox in the sidebar is enabled.
+# On cloud: crewai import fails → CREWAI_AVAILABLE = False → Deep Mode
+# checkbox is disabled with a "local install required" tooltip.
+try:
+    import crewai  # noqa: F401 — used only to detect availability
+    CREWAI_AVAILABLE = True
+except ImportError:
+    CREWAI_AVAILABLE = False
+
 EVAL_REPORT_PATH = Path(__file__).parent / "eval" / "eval_report.json"
 
 # Approximate gpt-4.1-mini pricing (USD per 1M tokens).
@@ -229,6 +244,7 @@ with st.sidebar:
     deep_mode_enabled = st.checkbox(
         "🧑‍🤝‍🧑 Deep Analysis Mode (CrewAI · Topic 5.5)",
         value=False,
+        disabled=not CREWAI_AVAILABLE,
         help=(
             "When ON, replaces the fast single-shot RAG pipeline with a "
             "CrewAI multi-agent crew. A Coordinator agent triages the "
@@ -241,8 +257,18 @@ with st.sidebar:
             "top-5 recommendations. Slower (~20-30 sec) and more "
             "expensive (~$0.02/query) but mirrors MSF's multidisciplinary "
             "case-conference practice."
+            if CREWAI_AVAILABLE else
+            "⚠️ Deep Mode unavailable on this deployment — CrewAI is "
+            "excluded from Streamlit Cloud requirements because Cloud "
+            "runs Python 3.14 which CrewAI does not support. Fully "
+            "functional locally; see the LaunchPad submission for "
+            "screenshots / screencast of the 15-agent crew flow."
         ),
     )
+    if not CREWAI_AVAILABLE:
+        st.caption(
+            "⚠️ _Deep Mode is local-only on this deployment_"
+        )
 
     # ---- 🛡️ Privacy Guard (CLOAK) -------------------------------------
     # Topic 5.5.2 — GovTech's Central Privacy Toolkit. Every LLM-bound
