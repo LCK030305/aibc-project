@@ -31,10 +31,13 @@ openpyxl>=3.1.0
 # --- Multi-agent Deep Mode (Topic 5.5) ---
 # NOTE: crewai pulls in ~50+ transitive deps (chromadb, langchain-*,
 # opentelemetry, etc). Streamlit Cloud build may take 3-5 minutes.
-# WARNING: On Streamlit Cloud, chromadb has a config-parsing incompat
-# with newer pydantic-settings — ticking "Deep Analysis Mode" on the
-# deployed app will fail with:
-#     ConfigError: unable to infer type for attribute "chroma_server_nofile"
-# Fast single-shot mode (Deep Mode unticked) works fully. Deep Mode
-# is fully functional LOCALLY; use screenshots or video for the demo.
 crewai>=1.10.0
+
+# Chromadb pin — CrewAI hard-requires pydantic-settings>=2.10.0
+# (so we can't downgrade that), and old chromadb versions fail to load
+# their config under pydantic-settings 2.10+ with:
+#     ConfigError: unable to infer type for attribute "chroma_server_nofile"
+# Pinning chromadb upward to a version with fixed field typing.
+# If this specific version fails to install on cloud, try >=1.0.15 or
+# fall back to just removing this line and running Deep Mode local-only.
+chromadb>=1.1.2
