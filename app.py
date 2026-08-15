@@ -35,7 +35,7 @@ import streamlit as st
 from decomposer import step_3_decompose
 from excel_export import recommendations_to_excel_bytes
 from llm import get_secret, num_tokens_from_message_rough
-from recommender import recommend
+from recommender import Recommendation, recommend
 from retriever import get_retriever
 
 # ─── CrewAI availability check (Deep Mode) ────────────────────────
@@ -54,6 +54,47 @@ except ImportError:
     CREWAI_AVAILABLE = False
 
 EVAL_REPORT_PATH = Path(__file__).parent / "eval" / "eval_report.json"
+
+# ─── Fit-score rubric (shared markdown) ───────────────────────────
+# Rendered inside two expanders: (a) HITL #2 review panel, and (b) top
+# of the final recommendations section. Kept as a module constant so
+# the two panels never drift apart.
+FIT_RUBRIC_MARKDOWN = (
+    "**Fit is the AI's confidence, on a 1–5 scale, that this "
+    "specific scheme applies to THIS specific family's situation.**\n\n"
+    "A **5/5** is NOT a rating of the scheme itself — it's a rating "
+    "of how well the scheme fits this particular client. The higher "
+    "the score, the more directly the AI could match the family's "
+    "stated circumstances to the scheme's eligibility criteria.\n\n"
+    "---\n\n"
+    "The LLM (`gpt-4.1-mini`) assigns each recommendation a "
+    "**Fit score from 1 to 5** based on:\n\n"
+    "1. **Eligibility overlap** — how directly the scheme's criteria "
+    "match the client's stated circumstances (single mother, income "
+    "band, life event, etc.).\n"
+    "2. **Verbatim-quote guard** — if the LLM cannot find a "
+    "character-exact quote from the source that supports its "
+    "rationale, the Fit is **capped at 3** (anti-hallucination).\n"
+    "3. **Directness of match** — a scheme that addresses the "
+    "client's primary need scores higher than a tangential match.\n\n"
+    "**Score meaning:**\n\n"
+    "| Score | What the AI is thinking | What the SAO should do |\n"
+    "|:-:|:--|:--|\n"
+    "| **5** | Strong fit — direct match + verbatim source support | "
+    "*\"Prioritise this in the family conversation — apply now.\"* |\n"
+    "| **4** | Good fit — clear match, needs one SAO check | "
+    "*\"Very likely a match — just double-check the eligibility "
+    "criteria.\"* |\n"
+    "| **3** | Moderate — often capped here (no verbatim quote) | "
+    "*\"Worth reviewing — treat as a lead, not a certainty.\"* |\n"
+    "| **2** | Weak — partial match; treat as a lead | *\"Consider "
+    "only if higher-scored options don't apply.\"* |\n"
+    "| **1** | Poor — kept only for transparency | *\"Skip unless "
+    "you know something the AI doesn't.\"* |\n\n"
+    "The **Fit rationale** under each recommendation is the LLM's "
+    "explanation of why that specific score was given. SAO-added "
+    "recommendations default to 5/5 (your endorsement)."
+)
 
 # Approximate gpt-4.1-mini pricing (USD per 1M tokens).
 # Used for the cost-footer estimate; not authoritative.
@@ -233,32 +274,70 @@ with st.sidebar:
         help="Reveals retrieved candidates, raw LLM output, and full response.",
     )
     hitl_enabled = st.checkbox(
-        "🧑‍⚖️ Human-in-the-loop on complex cases (Topic 2.6)",
+        "🧑‍⚖️ Human-in-the-loop #1: review AI's case breakdown "
+        "(Sub-need Decomposer · Topic 2.6)",
         value=False,
         help=(
-            "When ON, complex multi-need cases pause after decomposition. "
-            "The SAO reviews and can edit the sub-needs before retrieval "
-            "runs. Topic 2.6 — 'Human-in-the-Loop as part of the workflow'."
+            "When ON, complex multi-need cases pause after the AI breaks "
+            "the case into sub-needs. The SAO reviews and can edit the "
+            "breakdown before retrieval runs. Fires from the Sub-need "
+            "Decomposer LLM call (pre-retrieval, both Fast and Deep Mode). "
+            "Topic 2.6 — 'Human-in-the-Loop as part of the workflow'."
+        ),
+    )
+    aggregator_hitl_enabled = st.checkbox(
+        "🧑‍⚖️ Human-in-the-loop #2: review AI's top-5 recommendations "
+        "(Agent #14 Aggregator · Topic 2.6)",
+        value=False,
+        help=(
+            "When ON, pause after the AI ranks the top-5. The SAO can "
+            "uncheck items to exclude, edit rationales, and add their own "
+            "recommendations before finalising. 'AI proposes, SAO disposes.' "
+            "In Deep Mode fires after Agent #14 (Aggregator); in Fast Mode "
+            "fires after the single re-ranker LLM call. "
+            "Topic 2.6 — 'Human-in-the-Loop as part of the workflow'."
+        ),
+    )
+    case_docs_hitl_enabled = st.checkbox(
+        "🧑‍⚖️ Human-in-the-loop #3: review AI's case documentation "
+        "(Agent #15 Case Documentation Officer · Topic 2.6)",
+        value=False,
+        help=(
+            "When ON (Deep Mode only), pause after Agent #15 (Case "
+            "Documentation Officer) writes the plain-English narrative. "
+            "The SAO reviews and can edit before finalising — the same "
+            "text serves both as family communication AND as the SAO's "
+            "case-record entry. "
+            "Topic 2.6 — 'Human-in-the-Loop as part of the workflow'."
+        ),
+    )
+    show_curriculum_mapping = st.checkbox(
+        "🗺️ Show mapping of bootcamp curriculum to vibe-coding solution",
+        value=False,
+        help=(
+            "Displays a diagram at the bottom of the page mapping every "
+            "bootcamp topic (Week 1–8) to the concrete file / feature in "
+            "this repo. Same content as PPT slide 15."
         ),
     )
     deep_mode_enabled = st.checkbox(
-        "🧑‍🤝‍🧑 Deep Analysis Mode (CrewAI · Topic 5.5)",
+        "🧑‍🤝‍🧑 Enable all 15 agents — full crew review "
+        "(Deep Analysis Mode · CrewAI · Topic 5.5)",
         value=False,
         disabled=not CREWAI_AVAILABLE,
         help=(
             "When ON, replaces the fast single-shot RAG pipeline with a "
-            "CrewAI multi-agent crew. A Coordinator agent triages the "
-            "case to 2-4 SGW category specialists (out of 12 defined: "
-            "Financial, Family, Caregiving, Healthcare, Mental Health, "
-            "Crisis, Disability, Children, Education, Housing, Senior, "
-            "Employment). Triaged specialists run in parallel, each "
-            "using a category-filtered retriever as a Tool. An "
-            "Aggregator agent synthesises their drafts into the final "
-            "top-5 recommendations. Slower (~20-30 sec) and more "
-            "expensive (~$0.02/query) but mirrors MSF's multidisciplinary "
-            "case-conference practice."
+            "15-agent CrewAI crew: the Triaging Agent picks 2–4 of the 12 "
+            "domain-specialist agents (Financial · Family · Caregiving · "
+            "Healthcare · Mental Health · Crisis · Disability · Children "
+            "· Education · Housing · Senior · Employment) to review the "
+            "case in parallel; the Aggregator Agent synthesises their "
+            "drafts into the final top-5; the Case Documentation Officer "
+            "writes the plain-English family narrative. Slower (~20–30 "
+            "sec) and more expensive (~$0.02/query) but mirrors MSF's "
+            "multidisciplinary case-conference practice."
             if CREWAI_AVAILABLE else
-            "⚠️ Deep Mode unavailable on this deployment — CrewAI is "
+            "⚠️ 15-agent mode unavailable on this deployment — CrewAI is "
             "excluded from Streamlit Cloud requirements because Cloud "
             "runs Python 3.14 which CrewAI does not support. Fully "
             "functional locally; see the LaunchPad submission for "
@@ -396,7 +475,7 @@ client_situation = st.text_area(
 )
 
 submitted = st.button(
-    "🔍 Find recommendations",
+    "🔍 Find recommendations in SupportGoWhere",
     type="primary",
     disabled=not client_situation.strip(),
 )
@@ -411,6 +490,23 @@ submitted = st.button(
 # ---------------------------------------------------------------------------
 if "hitl_staged" not in st.session_state:
     st.session_state.hitl_staged = None  # holds {"situation": ..., "sub_needs": [...]}
+
+# ---------------------------------------------------------------------------
+# Aggregator HITL state (Topic 2.6 — 2nd HITL)
+#
+# Pauses AFTER recommend() returns, before the top-5 cards render. The SAO
+# reviews the AI's ranking, unchecks items to exclude, edits rationales,
+# then clicks Confirm to finalise. Query counter suffixes widget keys so
+# each new query starts with fresh checkbox/textarea state.
+# ---------------------------------------------------------------------------
+if "agg_hitl_reviewed" not in st.session_state:
+    st.session_state.agg_hitl_reviewed = False
+if "case_docs_hitl_reviewed" not in st.session_state:
+    st.session_state.case_docs_hitl_reviewed = False
+if "case_docs_edited_by_sao" not in st.session_state:
+    st.session_state.case_docs_edited_by_sao = False
+if "query_counter" not in st.session_state:
+    st.session_state.query_counter = 0
 
 
 def _run_full_recommend(text: str, overrides=None):
@@ -452,6 +548,33 @@ elapsed_sec = 0.0
 
 # Branch 1 — first click on "Find recommendations"
 if submitted:
+    # New query — reset aggregator-HITL state so a prior review doesn't
+    # leak into this run. Bump the query counter to give the new run
+    # fresh widget keys (checkboxes / text areas).
+    st.session_state.query_counter += 1
+    st.session_state.agg_hitl_reviewed = False
+    st.session_state.case_docs_hitl_reviewed = False
+    st.session_state.case_docs_edited_by_sao = False
+
+    # Reset HITL #1 (case-breakdown) extra-slot counter + wipe any leftover
+    # sub-need widget values from a prior HITL session.
+    st.session_state.hitl_extra_slots = 0
+    for k in list(st.session_state.keys()):
+        if k.startswith("hitl_sub_need_"):
+            del st.session_state[k]
+
+    # Reset HITL #2 (aggregator) extra-slot counter + wipe any leftover
+    # SAO-added recommendation widget values from a prior HITL session.
+    st.session_state.agg_extra_slots = 0
+    for k in list(st.session_state.keys()):
+        if (
+            k.startswith("agg_extra_title_")
+            or k.startswith("agg_extra_rationale_")
+            or k.startswith("agg_extra_url_")
+            or k.startswith("agg_extra_include_")
+        ):
+            del st.session_state[k]
+
     if hitl_enabled:
         # Preflight: just decompose so we know if HITL gate should engage.
         with st.spinner("Pre-flight: decomposing client situation…"):
@@ -478,27 +601,51 @@ if response is None and st.session_state.hitl_staged is not None:
     st.subheader("🧑‍⚖️ Review & edit the AI's decomposition")
     st.caption(
         "The AI split this case into the sub-needs below. **You're the SAO** — "
-        "edit, remove, or add sub-needs to better match what you know about "
-        "the client. Retrieval will run against your edited list."
+        "review and adjust to match what you know about the client. Retrieval "
+        "will run against your final list."
     )
+    st.info(
+        "💡 **How to use this panel:**  "
+        "• **Edit** — click any box, type/delete like a normal text field.  "
+        "• **Remove** — clear a box (leave it empty); it will be dropped.  "
+        "• **Add** — click *➕ Add another sub-need* to insert one the AI missed.  "
+        "• **Cancel** — discards this review; your original client situation "
+        "is kept so you can rewrite it before re-submitting.",
+        icon="💡",
+    )
+
+    # Extra empty slots the SAO added via the "Add" button. Reset on each
+    # new query submission (see Branch 1). Persists across the reruns
+    # that happen inside a single HITL session.
+    if "hitl_extra_slots" not in st.session_state:
+        st.session_state.hitl_extra_slots = 0
+
+    total_slots = len(staged["sub_needs"]) + st.session_state.hitl_extra_slots
     edited_sub_needs: list[str] = []
-    for i, sn in enumerate(staged["sub_needs"], 1):
+    for i in range(1, total_slots + 1):
+        initial = staged["sub_needs"][i - 1] if i <= len(staged["sub_needs"]) else ""
         edited = st.text_area(
             f"Sub-need {i}",
-            value=sn,
+            value=initial,
             key=f"hitl_sub_need_{i}",
             height=70,
         )
         edited_sub_needs.append(edited)
-    col_a, col_b = st.columns([1, 1])
+
+    col_a, col_b, col_c = st.columns([2, 1, 1])
     if col_a.button("✅ Proceed with these sub-needs", type="primary"):
         with st.spinner("Retrieving + re-ranking using your edited sub-needs…"):
             response, elapsed_sec = _run_full_recommend(
                 staged["situation"], overrides=edited_sub_needs,
             )
         st.session_state.hitl_staged = None
-    if col_b.button("❌ Cancel"):
+        st.session_state.hitl_extra_slots = 0
+    if col_b.button("➕ Add another sub-need"):
+        st.session_state.hitl_extra_slots += 1
+        st.rerun()
+    if col_c.button("❌ Cancel"):
         st.session_state.hitl_staged = None
+        st.session_state.hitl_extra_slots = 0
         st.rerun()
     if response is None:
         st.stop()
@@ -685,6 +832,178 @@ if response is not None:
                     if d.get("evidence_quote"):
                         st.caption(f'   > _{d["evidence_quote"]}_')
 
+    # ---- AGGREGATOR HITL GATE (Topic 2.6 — 2nd HITL) --------------------
+    # Pause between the AI's top-5 output and the final card render. The
+    # SAO reviews, unchecks items to exclude, edits rationales, then
+    # clicks Confirm to finalise. Skipped when: toggle OFF, response
+    # empty/blocked, or already reviewed this query.
+    if (
+        aggregator_hitl_enabled
+        and response.recommendations
+        and not st.session_state.agg_hitl_reviewed
+    ):
+        st.divider()
+        st.subheader("🧑‍⚖️ Review the AI's top-5 recommendations")
+        st.caption(
+            "The AI ranked the retrieved candidates and produced the "
+            "top-5 below. **You're the SAO — you own the final call.**"
+        )
+        st.info(
+            "💡 **How to use this panel:**  "
+            "• **Exclude** — uncheck the *Include* box on any recommendation "
+            "you don't want to pass to the family.  "
+            "• **Edit rationale** — click into the rationale box and reword "
+            "however you'd explain it to the client.  "
+            "• **Add your own** — click *➕ Add my own recommendation* to "
+            "insert a scheme the AI missed (fit score defaults to 5/5 since "
+            "you're endorsing it).  "
+            "• **Confirm** — clicking *✅ Confirm & finalise* renders the "
+            "final cards using only your checked items (AI + your own).  "
+            "• **Cancel** — discards this query entirely; you can rewrite "
+            "the case and re-submit.",
+            icon="💡",
+        )
+        with st.expander(
+            "📊 How is 'Fit' calculated? (scoring rubric)",
+            expanded=False,
+        ):
+            st.markdown(FIT_RUBRIC_MARKDOWN)
+        q = st.session_state.query_counter
+        for i, rec in enumerate(response.recommendations):
+            with st.container(border=True):
+                col_check, col_score = st.columns([6, 1])
+                with col_check:
+                    st.checkbox(
+                        f"**Include:** {rec.title}",
+                        value=True,
+                        key=f"agg_include_{q}_{i}",
+                    )
+                    st.caption(
+                        f"{rec.kind} · ID `{rec.parent_id}`"
+                    )
+                with col_score:
+                    st.metric("Fit", f"{rec.fit_score}/5")
+                st.text_area(
+                    f"Fit rationale — why the AI scored this {rec.fit_score}/5 (editable)",
+                    value=rec.rationale,
+                    key=f"agg_rationale_{q}_{i}",
+                    height=90,
+                    help=(
+                        "This is the LLM's explanation of why this "
+                        f"recommendation earned a Fit of {rec.fit_score}/5. "
+                        "See the '📊 How is Fit calculated?' expander (shown "
+                        "after you Confirm) for the scoring rubric."
+                    ),
+                )
+                if rec.evidence_quote:
+                    st.markdown(f"> _{rec.evidence_quote}_")
+                if rec.url:
+                    st.link_button("View on SupportGoWhere ↗", rec.url)
+
+        # ---- SAO's own additions (Extra slots) ----------------------------
+        # Each click of "Add my own recommendation" appends one empty slot
+        # here. Slots persist across Streamlit reruns within a single HITL
+        # session; reset on new query submission (Branch 1).
+        if "agg_extra_slots" not in st.session_state:
+            st.session_state.agg_extra_slots = 0
+        extra_count = st.session_state.agg_extra_slots
+        for j in range(extra_count):
+            with st.container(border=True):
+                col_check, col_score = st.columns([6, 1])
+                with col_check:
+                    st.checkbox(
+                        f"**🧑 Your addition #{j + 1}** — include in final list",
+                        value=True,
+                        key=f"agg_extra_include_{q}_{j}",
+                    )
+                    st.caption(
+                        "This slot lets you add a scheme or service the AI "
+                        "missed. Leave the title blank to skip this slot."
+                    )
+                with col_score:
+                    st.metric("Fit", "5/5")
+                st.text_input(
+                    "Scheme / service name",
+                    key=f"agg_extra_title_{q}_{j}",
+                    placeholder="e.g. ComCare Short-to-Medium-Term Assistance",
+                )
+                st.text_area(
+                    "Rationale — why you're recommending this",
+                    key=f"agg_extra_rationale_{q}_{j}",
+                    height=80,
+                    placeholder=(
+                        "e.g. Client meets ComCare income criteria; "
+                        "immediate rent arrears qualify for the top-up."
+                    ),
+                )
+                st.text_input(
+                    "URL (optional)",
+                    key=f"agg_extra_url_{q}_{j}",
+                    placeholder="https://supportgowhere.life.gov.sg/...",
+                )
+
+        col_confirm, col_add, col_cancel = st.columns([2, 1, 1])
+        if col_confirm.button(
+            "✅ Confirm & finalise recommendations",
+            type="primary", key=f"agg_confirm_{q}",
+        ):
+            approved: list = []
+            # (a) AI's kept recommendations
+            for i, rec in enumerate(response.recommendations):
+                if st.session_state.get(f"agg_include_{q}_{i}", True):
+                    rec.rationale = st.session_state.get(
+                        f"agg_rationale_{q}_{i}", rec.rationale,
+                    )
+                    approved.append(rec)
+            # (b) SAO-added recommendations (only if title non-empty)
+            for j in range(extra_count):
+                if not st.session_state.get(f"agg_extra_include_{q}_{j}", True):
+                    continue
+                title = st.session_state.get(
+                    f"agg_extra_title_{q}_{j}", ""
+                ).strip()
+                if not title:
+                    continue  # skip empty slots
+                approved.append(Recommendation(
+                    parent_id=f"SAO-ADDED-{j + 1}",
+                    title=title,
+                    fit_score=5,  # SAO's endorsement = 5/5
+                    rationale=(
+                        st.session_state.get(
+                            f"agg_extra_rationale_{q}_{j}", ""
+                        ).strip()
+                        or "(SAO-added — no rationale provided)"
+                    ),
+                    kind="SAO-added",
+                    url=st.session_state.get(
+                        f"agg_extra_url_{q}_{j}", ""
+                    ).strip(),
+                    faithfulness_status="unverified",
+                    faithfulness_note=(
+                        "Added by SAO — bypasses AI faithfulness audit."
+                    ),
+                ))
+            response.recommendations = approved
+            st.session_state.last_response = response
+            st.session_state.agg_hitl_reviewed = True
+            st.session_state.agg_extra_slots = 0
+            st.rerun()
+        if col_add.button(
+            "➕ Add my own recommendation",
+            key=f"agg_add_{q}",
+        ):
+            st.session_state.agg_extra_slots += 1
+            st.rerun()
+        if col_cancel.button(
+            "❌ Cancel & discard this query",
+            key=f"agg_cancel_{q}",
+        ):
+            st.session_state.last_response = None
+            st.session_state.agg_hitl_reviewed = False
+            st.session_state.agg_extra_slots = 0
+            st.rerun()
+        st.stop()
+
     # ---- Recommendations --------------------------------------------------
     st.divider()
     if not response.recommendations:
@@ -692,7 +1011,13 @@ if response is not None:
                 "rephrasing the situation.")
     else:
         title_prefix = "🎯 Aggregator's final top" if response.deep_mode_used else "🎯 Top"
+        if aggregator_hitl_enabled and st.session_state.agg_hitl_reviewed:
+            title_prefix = "✅ SAO-approved top"
         st.subheader(f"{title_prefix} {len(response.recommendations)} recommendations")
+
+        # ---- 📊 How is "Fit" calculated? (rubric explainer) --------------
+        with st.expander("📊 How is 'Fit' calculated?", expanded=False):
+            st.markdown(FIT_RUBRIC_MARKDOWN)
         for rec in response.recommendations:
             with st.container(border=True):
                 head_cols = st.columns([4, 1])
@@ -705,7 +1030,10 @@ if response is not None:
                 with head_cols[1]:
                     st.metric("Fit", f"{rec.fit_score}/5")
 
-                st.markdown(f"**Why it fits:** {rec.rationale}")
+                st.markdown(
+                    f"**Fit rationale (scored {rec.fit_score}/5):** "
+                    f"{rec.rationale}"
+                )
 
                 if rec.evidence_quote:
                     st.markdown(f"> _{rec.evidence_quote}_")
@@ -780,9 +1108,75 @@ if response is not None:
         # Reads best in this position because judges / SAOs first
         # scan the ranked list, then read the narrative summary.
         if response.deep_mode_used and response.case_summary:
+            # ---- HITL #3 GATE (Topic 2.6) ----------------------------
+            # Pause between Agent #15's output and the final rendered
+            # narrative. The SAO reviews, edits the wording, then clicks
+            # Confirm. Skipped when: toggle OFF, or already reviewed.
+            if (
+                case_docs_hitl_enabled
+                and not st.session_state.case_docs_hitl_reviewed
+            ):
+                st.divider()
+                st.subheader("🧑‍⚖️ Review the case documentation")
+                st.caption(
+                    "Agent #15 drafted the plain-English narrative below. "
+                    "**You're the SAO — you own the final wording** that "
+                    "will serve both as family communication AND as your "
+                    "case-record entry."
+                )
+                st.info(
+                    "💡 **How to use this panel:**  "
+                    "• **Edit** — click into the box and reword any part "
+                    "of the narrative to match your tone or add case-specific "
+                    "context the AI couldn't know.  "
+                    "• **Confirm** — clicking *✅ Confirm & finalise* saves "
+                    "your version and displays it as the final documentation.  "
+                    "• **Keep original** — clicks discards any edits and "
+                    "uses Agent #15's version unchanged.",
+                    icon="💡",
+                )
+                q = st.session_state.query_counter
+                edited_summary = st.text_area(
+                    "Case documentation (editable)",
+                    value=response.case_summary,
+                    key=f"case_docs_edit_{q}",
+                    height=380,
+                )
+                col_c, col_k = st.columns([2, 1])
+                if col_c.button(
+                    "✅ Confirm & finalise case documentation",
+                    type="primary", key=f"case_docs_confirm_{q}",
+                ):
+                    original = (response.case_summary or "").strip()
+                    st.session_state.case_docs_edited_by_sao = (
+                        edited_summary.strip() != original
+                    )
+                    response.case_summary = edited_summary
+                    st.session_state.last_response = response
+                    st.session_state.case_docs_hitl_reviewed = True
+                    st.rerun()
+                if col_k.button(
+                    "↩️ Keep AI's original version",
+                    key=f"case_docs_keep_{q}",
+                ):
+                    st.session_state.case_docs_hitl_reviewed = True
+                    st.session_state.case_docs_edited_by_sao = False
+                    st.rerun()
+                st.stop()
+
+            # ---- Final case documentation panel ---------------------
+            title_suffix = ""
+            if (
+                case_docs_hitl_enabled
+                and st.session_state.case_docs_hitl_reviewed
+            ):
+                if st.session_state.case_docs_edited_by_sao:
+                    title_suffix = "  ·  ✏️ SAO-edited"
+                else:
+                    title_suffix = "  ·  ✅ SAO-reviewed"
             with st.expander(
                 "📝 Case documentation & family communication  "
-                "(Agent #15 · plain-English summary)",
+                f"(Agent #15 · plain-English summary){title_suffix}",
                 expanded=True,
             ):
                 st.caption(
@@ -920,3 +1314,35 @@ if response is not None:
         # Final — full response object (handy for eval replay)
         with st.expander("Full RecommendationResponse object (JSON dump)"):
             st.json(response.to_dict())
+
+
+# ---------------------------------------------------------------------------
+# 🗺️ Bootcamp curriculum → vibe-coding solution mapping
+#
+# Sidebar checkbox toggles a diagram at the very bottom of the page. Same
+# content as PPT slide 15. If the image file doesn't exist yet, show an
+# instruction for the user to export it from PowerPoint.
+# ---------------------------------------------------------------------------
+if show_curriculum_mapping:
+    st.divider()
+    st.subheader("🗺️ Bootcamp curriculum → vibe-coding solution")
+    st.caption(
+        "Maps every bootcamp week and topic to the concrete file, agent, "
+        "or feature that implements it in the Claude vibe coding repo. "
+        "Same content as PPT slide 15 (Bootcamp curriculum coverage)."
+    )
+    from pathlib import Path as _P
+    _mapping_image = _P(__file__).parent / "samples" / "curriculum_mapping.png"
+    if _mapping_image.exists():
+        st.image(str(_mapping_image), use_container_width=True)
+    else:
+        st.info(
+            f"💡 **Image not found yet** — save a screenshot of PPT slide "
+            f"15 as `samples/curriculum_mapping.png` and this will render "
+            f"automatically. Expected path: `{_mapping_image}`\n\n"
+            "**How to export from PowerPoint:** open the deck → go to "
+            "slide 15 → File → Export → File Format: PNG → Save just this "
+            "slide → move the resulting file to the `samples/` folder and "
+            "rename to `curriculum_mapping.png`.",
+            icon="🗺️",
+        )
