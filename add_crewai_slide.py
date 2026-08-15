@@ -133,25 +133,46 @@ def _annotation(slide, x, y, w, h, text, *, color=C_MUTED, size=9,
     return tb
 
 
-def _remove_last_slide_if_matches(prs):
-    """If the last slide contains SLIDE_MARKER, remove it."""
-    if not prs.slides:
-        return False
-    last = prs.slides[-1]
-    found = False
-    for shape in last.shapes:
-        if shape.has_text_frame and SLIDE_MARKER in shape.text_frame.text:
-            found = True; break
-    if not found:
-        return False
-    idx = len(prs.slides) - 1
+def _remove_slide_at_index(prs, idx):
+    """Remove slide at `idx` from the presentation (0-indexed)."""
     sldIdLst = prs.slides._sldIdLst
     sldId = list(sldIdLst)[idx]
     rId = sldId.attrib[qn("r:id")]
     prs.part.drop_rel(rId)
     sldIdLst.remove(sldId)
-    print(f"Removed previous CrewAI slide (was slide {idx + 1}).")
-    return True
+
+
+def _move_slide(prs, old_index, new_index):
+    """Reorder slides: move slide from old_index to new_index."""
+    xml_slides = prs.slides._sldIdLst
+    slides = list(xml_slides)
+    xml_slides.remove(slides[old_index])
+    xml_slides.insert(new_index, slides[old_index])
+
+
+def _find_and_remove_all_matching(prs):
+    """Find and remove EVERY slide whose text contains SLIDE_MARKER.
+
+    Returns the position (0-indexed) of the FIRST removed slide so the
+    replacement can be re-inserted at that position.
+    """
+    first_removed_idx = None
+    while True:
+        found_idx = None
+        for i, s in enumerate(prs.slides):
+            for shape in s.shapes:
+                if shape.has_text_frame and SLIDE_MARKER in shape.text_frame.text:
+                    found_idx = i
+                    break
+            if found_idx is not None:
+                break
+        if found_idx is None:
+            break
+        if first_removed_idx is None:
+            first_removed_idx = found_idx
+        _remove_slide_at_index(prs, found_idx)
+        print(f"Removed CrewAI slide at position {found_idx + 1}.")
+    return first_removed_idx
 
 
 # ─── Slide build ───────────────────────────────────────────────────────────
@@ -164,43 +185,52 @@ def build_slide(prs):
 
     # ─── Title + subtitle ─────────────────────────────────────────────
     title_box = slide.shapes.add_textbox(
-        Inches(0.5), Inches(0.20), Inches(SW - 1.0), Inches(0.50),
+        Inches(0.5), Inches(0.15), Inches(SW - 1.0), Inches(0.45),
     )
-    _set_text(title_box, SLIDE_TITLE, size=22, bold=True, color=C_TITLE,
+    _set_text(title_box, SLIDE_TITLE, size=20, bold=True, color=C_TITLE,
               align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP)
 
     subtitle_box = slide.shapes.add_textbox(
-        Inches(0.5), Inches(0.72), Inches(SW - 1.0), Inches(0.30),
+        Inches(0.5), Inches(0.60), Inches(SW - 1.0), Inches(0.28),
     )
     _set_text(
         subtitle_box,
         "Opt-in multi-agent crew alongside fast single-shot RAG. "
-        "Mirrors MSF multidisciplinary case-conference practice.",
-        size=11, color=C_MUTED, align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP,
+        "3 opt-in Human-in-the-Loop gates give the SAO end-to-end control.",
+        size=10, color=C_MUTED, align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP,
     )
 
-    # ─── Top stack: SAO note → CLOAK → Safety ────────────────────────
+    # ─── Top stack: SAO note → CLOAK → Safety → HITL #1 ──────────────
     BOX_W = 3.0
     BOX_X = CX - BOX_W / 2
 
-    _box(slide, BOX_X, 1.10, BOX_W, 0.38, C_HITL_FILL, C_HITL_LINE,
+    _box(slide, BOX_X, 0.95, BOX_W, 0.32, C_HITL_FILL, C_HITL_LINE,
          "SAO interview note", size=10, bold=True)
-    _arrow(slide, CX, 1.48, CX, 1.60)
+    _arrow(slide, CX, 1.27, CX, 1.35)
 
-    _box(slide, BOX_X, 1.60, BOX_W, 0.42, C_UNCHANGED_FILL, C_UNCHANGED_LINE,
-         "Stage 0 — CLOAK PII Guard\n(unchanged · Topic 5.5.2)",
+    _box(slide, BOX_X, 1.35, BOX_W, 0.36, C_UNCHANGED_FILL, C_UNCHANGED_LINE,
+         "Stage 0 — CLOAK PII Guard (Topic 5.5.2)",
          size=9, bold=True)
-    _arrow(slide, CX, 2.02, CX, 2.14)
+    _arrow(slide, CX, 1.71, CX, 1.79)
 
-    _box(slide, BOX_X, 2.14, BOX_W, 0.38, C_UNCHANGED_FILL, C_UNCHANGED_LINE,
-         "Safety check (unchanged · Topic 2.6)", size=10, bold=True)
-    _arrow(slide, CX, 2.52, CX, 2.64)
+    _box(slide, BOX_X, 1.79, BOX_W, 0.32, C_UNCHANGED_FILL, C_UNCHANGED_LINE,
+         "Safety check (Topic 2.6)", size=10, bold=True)
+    _arrow(slide, CX, 2.11, CX, 2.19)
+
+    # NEW: HITL #1 — SAO reviews AI's case breakdown (opt-in)
+    _box(slide, BOX_X, 2.19, BOX_W, 0.36, C_HITL_FILL, C_HITL_LINE,
+         "HITL #1 (opt-in) — SAO reviews AI's case breakdown",
+         size=9, bold=True)
+    _annotation(slide, BOX_X + BOX_W + 0.10, 2.22, 3.5, 0.34,
+                "Toggle in sidebar · Topic 2.6",
+                align=PP_ALIGN.LEFT)
+    _arrow(slide, CX, 2.55, CX, 2.64)
 
     # ─── CrewAI container ─────────────────────────────────────────────
     CR_X = 0.4
     CR_Y = 2.64
     CR_W = SW - 0.8        # 12.53"
-    CR_H = 3.55            # 2.64 to 6.19
+    CR_H = 3.35            # was 3.55 — 0.20 shorter to fit HITL #3 below
     container = slide.shapes.add_shape(
         MSO_SHAPE.ROUNDED_RECTANGLE,
         Inches(CR_X), Inches(CR_Y), Inches(CR_W), Inches(CR_H),
@@ -271,30 +301,39 @@ def build_slide(prs):
         align=PP_ALIGN.CENTER,
     )
 
-    # Aggregator Agent (#14)
-    AGG_W = 3.6
-    AGG_X = CX - AGG_W - 0.25
+    # Aggregator Agent (#14) — narrower to make room for HITL #2 gate
+    AGG_W = 2.9
+    AGG_X = CX - AGG_W - 0.75  # 0.75 leaves room for HITL #2 (1.30 wide, half=0.65) + small gap
     AGG_Y = grid_bottom_y + 0.35
     AGG_H = 0.55
     _box(slide, AGG_X, AGG_Y, AGG_W, AGG_H,
          C_AGENT_FILL, C_AGENT_LINE,
          "AGGREGATOR Agent (#14)\nranks top-5 with verbatim citations",
-         size=10, bold=True)
+         size=9, bold=True)
+
+    # NEW: HITL #2 — SAO reviews AI's top-5 (opt-in) — BETWEEN Agg and CDO
+    H2_W = 1.30
+    H2_X = CX - H2_W / 2
+    H2_Y = AGG_Y
+    H2_H = AGG_H
+    _box(slide, H2_X, H2_Y, H2_W, H2_H,
+         C_HITL_FILL, C_HITL_LINE,
+         "HITL #2\n(opt-in)\nreview top-5", size=8, bold=True)
 
     # Case Documentation Officer Agent (#15) — receives Aggregator's output
-    DOC_W = 3.6
-    DOC_X = CX + 0.25
+    DOC_W = 2.9
+    DOC_X = CX + 0.75
     DOC_Y = AGG_Y
     DOC_H = 0.55
     _box(slide, DOC_X, DOC_Y, DOC_W, DOC_H,
          C_AGENT_FILL, C_AGENT_LINE,
          "CASE DOCUMENTATION OFFICER Agent (#15)\n"
          "plain-English summary (family + record)",
-         size=9, bold=True)
+         size=8, bold=True)
 
-    # Right-side annotation for both bottom-row agents
-    _annotation(slide, DOC_X + DOC_W + 0.15, AGG_Y + 0.10,
-                2.5, 0.55, "← 2 LLM calls\n(Aggregator, then Docs)")
+    # Right-side annotation for the bottom row
+    _annotation(slide, DOC_X + DOC_W + 0.10, AGG_Y + 0.10,
+                2.3, 0.55, "← 2 LLM calls\n(Aggregator, then Docs)")
 
     # Thin converge arrows from each specialist agent to Aggregator
     agg_top_x = AGG_X + AGG_W / 2
@@ -303,10 +342,17 @@ def build_slide(prs):
         _arrow(slide, cx, cy_bot, agg_top_x, agg_top_y,
                color=C_ARROW_FAN, width=0.5, head_size="sm")
 
-    # Arrow from Aggregator to Case Documentation Officer
+    # Arrow from Aggregator to HITL #2 gate
     _arrow(
         slide,
         AGG_X + AGG_W, AGG_Y + AGG_H / 2,
+        H2_X, H2_Y + H2_H / 2,
+        color=C_ARROW, width=1.2, head_size="med",
+    )
+    # Arrow from HITL #2 gate to Case Documentation Officer
+    _arrow(
+        slide,
+        H2_X + H2_W, H2_Y + H2_H / 2,
         DOC_X, DOC_Y + DOC_H / 2,
         color=C_ARROW, width=1.2, head_size="med",
     )
@@ -333,7 +379,8 @@ def build_slide(prs):
 
     _box(slide, BOX_X, HITL_Y, BOX_W, 0.38,
          C_HITL_FILL, C_HITL_LINE,
-         "SAO reviews (HITL — end-of-crew)", size=10, bold=True)
+         "HITL #3 (opt-in) — SAO reviews AI's case documentation",
+         size=9, bold=True)
 
     # Footer
     foot = slide.shapes.add_textbox(
@@ -352,8 +399,24 @@ def main():
     prs = Presentation(PPT_FILE)
     before = len(prs.slides)
     print(f"Opened PPT — {before} slides before.")
-    _remove_last_slide_if_matches(prs)
+
+    # Remove ALL existing CrewAI slides (safety: handles a prior buggy run
+    # that appended a duplicate at the end). Capture the FIRST removed
+    # position so we can put the fresh one back there.
+    original_position = _find_and_remove_all_matching(prs)
+
+    # Add new slide (goes to end)
     build_slide(prs)
+
+    # Move it back to its original position (default: keep at end)
+    if original_position is not None:
+        new_index = len(prs.slides) - 1
+        _move_slide(prs, new_index, original_position)
+        print(
+            f"Moved new CrewAI slide from position {new_index + 1} "
+            f"to position {original_position + 1}."
+        )
+
     prs.save(PPT_FILE)
     print(f"Saved — {len(prs.slides)} slides after.")
 
