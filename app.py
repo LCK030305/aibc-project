@@ -488,6 +488,38 @@ submitted = st.button(
 # decomposition and retrieval. We use session_state to carry the staged
 # preflight result across the rerun triggered by the first button click.
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# 🗺️ Curriculum-mapping renderer — called BEFORE every st.stop() from HITL
+# gates so the section always shows up when the sidebar checkbox is on,
+# regardless of which HITL is currently pausing the flow. Also called at
+# the true bottom of the app.
+# ---------------------------------------------------------------------------
+def _render_curriculum_mapping():
+    if not show_curriculum_mapping:
+        return
+    st.divider()
+    st.subheader("🗺️ Bootcamp curriculum → vibe-coding solution")
+    st.caption(
+        "Maps every bootcamp week and topic to the concrete file, agent, "
+        "or feature that implements it in the Claude vibe coding repo. "
+        "Same content as PPT slide 15 (Bootcamp curriculum coverage)."
+    )
+    _mapping_image = Path(__file__).parent / "samples" / "curriculum_mapping.png"
+    if _mapping_image.exists():
+        st.image(str(_mapping_image), use_container_width=True)
+    else:
+        st.info(
+            f"💡 **Image not found yet** — save a screenshot of PPT slide "
+            f"15 as `samples/curriculum_mapping.png` and this will render "
+            f"automatically. Expected path: `{_mapping_image}`\n\n"
+            "**How to export from PowerPoint:** open the deck → go to "
+            "slide 15 → File → Export → File Format: PNG → Save just this "
+            "slide → move the resulting file to the `samples/` folder and "
+            "rename to `curriculum_mapping.png`.",
+            icon="🗺️",
+        )
+
+
 if "hitl_staged" not in st.session_state:
     st.session_state.hitl_staged = None  # holds {"situation": ..., "sub_needs": [...]}
 
@@ -648,6 +680,7 @@ if response is None and st.session_state.hitl_staged is not None:
         st.session_state.hitl_extra_slots = 0
         st.rerun()
     if response is None:
+        _render_curriculum_mapping()
         st.stop()
 
 
@@ -1002,6 +1035,7 @@ if response is not None:
             st.session_state.agg_hitl_reviewed = False
             st.session_state.agg_extra_slots = 0
             st.rerun()
+        _render_curriculum_mapping()
         st.stop()
 
     # ---- Recommendations --------------------------------------------------
@@ -1162,6 +1196,7 @@ if response is not None:
                     st.session_state.case_docs_hitl_reviewed = True
                     st.session_state.case_docs_edited_by_sao = False
                     st.rerun()
+                _render_curriculum_mapping()
                 st.stop()
 
             # ---- Final case documentation panel ---------------------
@@ -1316,33 +1351,7 @@ if response is not None:
             st.json(response.to_dict())
 
 
-# ---------------------------------------------------------------------------
-# 🗺️ Bootcamp curriculum → vibe-coding solution mapping
-#
-# Sidebar checkbox toggles a diagram at the very bottom of the page. Same
-# content as PPT slide 15. If the image file doesn't exist yet, show an
-# instruction for the user to export it from PowerPoint.
-# ---------------------------------------------------------------------------
-if show_curriculum_mapping:
-    st.divider()
-    st.subheader("🗺️ Bootcamp curriculum → vibe-coding solution")
-    st.caption(
-        "Maps every bootcamp week and topic to the concrete file, agent, "
-        "or feature that implements it in the Claude vibe coding repo. "
-        "Same content as PPT slide 15 (Bootcamp curriculum coverage)."
-    )
-    from pathlib import Path as _P
-    _mapping_image = _P(__file__).parent / "samples" / "curriculum_mapping.png"
-    if _mapping_image.exists():
-        st.image(str(_mapping_image), use_container_width=True)
-    else:
-        st.info(
-            f"💡 **Image not found yet** — save a screenshot of PPT slide "
-            f"15 as `samples/curriculum_mapping.png` and this will render "
-            f"automatically. Expected path: `{_mapping_image}`\n\n"
-            "**How to export from PowerPoint:** open the deck → go to "
-            "slide 15 → File → Export → File Format: PNG → Save just this "
-            "slide → move the resulting file to the `samples/` folder and "
-            "rename to `curriculum_mapping.png`.",
-            icon="🗺️",
-        )
+# Curriculum mapping renders via _render_curriculum_mapping() defined
+# earlier — called both here (true bottom of app) and before each HITL
+# st.stop() so it's always visible when the sidebar checkbox is on.
+_render_curriculum_mapping()
