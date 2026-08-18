@@ -62,6 +62,29 @@ except ImportError:
     DOCX_AVAILABLE = False
 
 
+def _sgt_now():
+    """Return current datetime in Singapore Time (UTC+8, no DST).
+
+    Streamlit Cloud runs on US timezones - hard-coding UTC+8 keeps
+    filename and Word-doc timestamps consistent for Singapore users.
+    """
+    import datetime as _dt
+    return _dt.datetime.now(_dt.timezone(_dt.timedelta(hours=8)))
+
+
+def _sgt_stamp_short() -> str:
+    """Compact 24-hour timestamp for filenames: '18 Aug 2026, 22h49'."""
+    return _sgt_now().strftime("%d %b %Y, %Hh%M")
+
+
+def _sgt_stamp_long() -> str:
+    """Formal 12-hour timestamp for in-document meta: '18 August 2026 at 10:49pm'."""
+    now = _sgt_now()
+    hour12 = now.hour % 12 or 12
+    ampm = "am" if now.hour < 12 else "pm"
+    return f"{now.strftime('%d %B %Y')} at {hour12}:{now.minute:02d}{ampm}"
+
+
 def _build_case_docx_bytes(narrative: str, recommendations) -> bytes:
     """Build a Word document bytes payload with the case narrative + SGW
     apply-here links (as true clickable Word hyperlinks). Called only
@@ -117,14 +140,8 @@ def _build_case_docx_bytes(narrative: str, recommendations) -> bytes:
     for run in title.runs:
         run.font.color.rgb = _navy
 
-    # Byline / date - "18 August 2026 at 2:30pm" style
-    _now = _dt.datetime.now()
-    _hour12 = _now.hour % 12 or 12
-    _ampm = "am" if _now.hour < 12 else "pm"
-    stamp = (
-        f"{_now.strftime('%d %B %Y')} at "
-        f"{_hour12}:{_now.minute:02d}{_ampm}"
-    )
+    # Byline / date - "18 August 2026 at 10:49pm" style, Singapore time
+    stamp = _sgt_stamp_long()
     meta = doc.add_paragraph()
     meta_run = meta.add_run(
         f"Generated: {stamp}  |  Ministry of Social and Family "
@@ -1457,7 +1474,7 @@ if response is not None:
             data=xlsx_bytes,
             file_name=(
                 f"SAO Recommendations - "
-                f"{time.strftime('%d %b %Y, %Hh%M')}.xlsx"
+                f"{_sgt_stamp_short()}.xlsx"
             ),
             mime=(
                 "application/vnd.openxmlformats-officedocument."
@@ -1631,7 +1648,7 @@ if response is not None:
                         response.case_summary or "",
                         response.recommendations or [],
                     )
-                    _stamp = time.strftime("%d %b %Y, %Hh%M")
+                    _stamp = _sgt_stamp_short()
                     st.download_button(
                         label="📥 Download case documentation (Word .docx)",
                         data=_docx_bytes,
