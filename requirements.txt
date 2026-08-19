@@ -5,7 +5,6 @@
 #   - ragas          → used only by ragas_eval.py for offline evaluation
 #   - playwright     → used only by scraper.py to build the corpus (offline)
 #   - python-pptx    → used only by add_crewai_slide.py / build_pptx.py (offline)
-#   - python-docx    → used only for reading test-case .docx files (offline)
 #
 # All version constraints use >= (permissive) so Streamlit Cloud can
 # resolve compatible wheels for its Python version. Tested locally on
@@ -27,6 +26,9 @@ requests>=2.30.0
 # --- Retrieval (BM25 sparse + Excel export) ---
 rank_bm25>=0.2.2
 openpyxl>=3.1.0
+
+# --- Word (.docx) case documentation download ---
+python-docx>=1.0.0
 
 # --- Multi-agent Deep Mode (Topic 5.5) ---
 # NOTE: crewai pulls in ~50+ transitive deps (chromadb, langchain-*,
