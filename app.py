@@ -55,11 +55,17 @@ except ImportError:
 
 # python-docx availability check (used for the "Download case
 # documentation" .docx button in the final case-doc panel).
+# Catches everything - not just ImportError - because environments
+# occasionally raise ModuleNotFoundError, AttributeError, or a version
+# incompatibility at import time. Also records the exact failure so
+# we can surface it in the fallback caption for debugging on Cloud.
 try:
     from docx import Document as _DocxDocument  # noqa: F401
     DOCX_AVAILABLE = True
-except ImportError:
+    DOCX_IMPORT_ERROR = None
+except Exception as _docx_err:
     DOCX_AVAILABLE = False
+    DOCX_IMPORT_ERROR = f"{type(_docx_err).__name__}: {str(_docx_err)[:200]}"
 
 
 def _sgt_now():
@@ -1684,6 +1690,10 @@ if response is not None:
                         "Cloud; for local dev run "
                         "`pip install python-docx`)._"
                     )
+                    if DOCX_IMPORT_ERROR:
+                        st.caption(
+                            f"🔧 _Import diagnostic: `{DOCX_IMPORT_ERROR}`_"
+                        )
 
     # ---- ⚡ Performance + cost footer (Topic 2.6 §Performance) -----------
     #
