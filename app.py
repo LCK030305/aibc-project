@@ -135,9 +135,17 @@ def _build_case_docx_bytes(narrative: str, recommendations) -> bytes:
     doc = Document()
     _navy = RGBColor(0x1F, 0x2A, 0x44)
 
-    # Title
-    title = doc.add_heading("Case Documentation", level=1)
-    for run in title.runs:
+    # Title (project title)
+    project_title = doc.add_heading(
+        "Matching Welfare Resources to the Families They Serve",
+        level=1,
+    )
+    for run in project_title.runs:
+        run.font.color.rgb = _navy
+
+    # Subtitle (document type)
+    subtitle = doc.add_heading("Case Documentation", level=2)
+    for run in subtitle.runs:
         run.font.color.rgb = _navy
 
     # Byline / date - "18 August 2026 at 10:49pm" style, Singapore time
@@ -145,7 +153,7 @@ def _build_case_docx_bytes(narrative: str, recommendations) -> bytes:
     meta = doc.add_paragraph()
     meta_run = meta.add_run(
         f"Generated: {stamp}  |  Ministry of Social and Family "
-        f"Development  |  SAO Co-Pilot (Programme Matcher)"
+        f"Development  |  AI-Powered Decision Support for SAOs"
     )
     meta_run.italic = True
     meta_run.font.size = Pt(10)
@@ -622,9 +630,11 @@ with st.sidebar:
 # ---------------------------------------------------------------------------
 # Main area
 # ---------------------------------------------------------------------------
-st.title("🤝 Matching Welfare Resources to the Families They Serve")
 st.markdown(
-    "### AI-Powered Decision Support for Social Assistance Officers (SAO)"
+    "## 🤝 Matching Welfare Resources to the Families They Serve"
+)
+st.markdown(
+    "#### AI-Powered Decision Support for Social Assistance Officers (SAO)"
 )
 st.caption(
     "**Lim Chee Kuen (Danny)** · 1998459F · Blended Class 2 · "
